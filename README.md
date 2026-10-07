@@ -16,7 +16,7 @@ Menüleisten-App, ohne Abhängigkeiten, Swift + AppKit.
 | Win + ← / → | **⌃⌥← / →** wandert durch die Spalten und weiter auf den nächsten Monitor |
 | Win + ↑ / ↓ | **⌃⌥↑** maximieren bzw. obere Hälfte · **⌃⌥↓** wiederherstellen, untere Hälfte, minimieren |
 | Gesnapptes Fenster wegziehen | bekommt seine ursprüngliche Größe zurück |
-| FancyZones: ⇧ + Ziehen | **⌥ + Ziehen** legt das Fenster in die Zonen des aktiven Layouts. Dabei wechseln **Tab / Mausrad / 1–9** das Layout, **⇧** verbindet mehrere Zonen, **Esc** bricht ab |
+| FancyZones: ⇧ + Ziehen | **⌘ + Ziehen** (Taste im Menü umstellbar: ⌘, ⌥ oder ⇧) legt das Fenster in die Zonen des aktiven Layouts. Dabei wechseln **Mausrad / 1–9 / Tab** das Layout, **⇧** verbindet mehrere Zonen, **Esc** bricht ab |
 | FancyZones: Layout wechseln | **⌃⌥1…9** wählt das aktive Layout des Monitors (kurz eingeblendet) |
 | FancyZones-Editor | **Layouts bearbeiten…**: Zonen teilen, Trennlinien ziehen, Zonen entfernen |
 | – | **Arbeitsbereiche**: aktuelle Anordnung speichern, mit **⌃⌥⇧1…9** wiederherstellen, fehlende Apps werden gestartet |

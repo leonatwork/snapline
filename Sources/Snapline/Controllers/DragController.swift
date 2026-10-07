@@ -4,8 +4,9 @@ import SnaplineCore
 
 /// Watches window drags and snaps on release:
 /// - plain drag: Aero Snap edges and the snap bar at the top center;
-/// - drag with ⌥: the zones of the monitor's active layout (FancyZones style),
-///   with Tab / 1–9 / scroll wheel to switch layouts and ⇧ to span zones.
+/// - drag with the zone key (⌘ by default): the zones of the monitor's active
+///   layout (FancyZones style), with scroll wheel / 1–9 / Tab to switch layouts and
+///   ⇧ to span zones.
 @MainActor
 final class DragController {
     private enum Target: Equatable {
@@ -28,10 +29,10 @@ final class DragController {
     private var moving = false
     private var probes = 0
     private var target: Target?
-    /// Esc during a ⌥-drag: drop without snapping.
+    /// Esc during a zone drag: drop without snapping.
     private var cancelled = false
 
-    // ⌥ zone mode.
+    // Zone mode.
     private var zoneScreen: NSScreen?
     private var zoneLayoutIndex = 0
     private var spanAnchor: Int?
@@ -75,13 +76,16 @@ final class DragController {
         reset()
         guard Settings.dragSnap || Settings.optionDragZones else { return }
         let cursor = Screens.cursorAX
-        guard let window = AXWindow.window(at: cursor), !window.isOwnWindow,
-              window.isStandard, !window.isFullScreen,
-              let frame = window.frame,
-              // Only clicks in the top band can be title bar drags – skips the AX
-              // polling for ordinary clicks into content.
-              cursor.y - frame.minY <= 90
-        else { return }
+        guard let window = AXWindow.window(at: cursor) else {
+            return debugLog("mouseDown: no window under cursor")
+        }
+        guard !window.isOwnWindow, window.isStandard, !window.isFullScreen, let frame = window.frame else {
+            return debugLog("mouseDown: ignored window (subrole \(window.subrole ?? "nil"))")
+        }
+        // Only clicks in the top band can be title bar drags – skips the AX
+        // polling for ordinary clicks into content.
+        guard cursor.y - frame.minY <= 90 else { return }
+        debugLog("mouseDown: candidate \(window.title) \(frame)")
 
         self.window = window
         startFrame = frame
@@ -98,13 +102,18 @@ final class DragController {
             probes += 1
             guard let frame = window.frame else { reset(); return }
             if !frame.size.isRoughlyEqual(to: startFrame.size) {
-                reset()  // resizing
+                debugLog("drag: resize, ignoring")
+                reset()
                 return
             }
             if frame.origin.isRoughlyEqual(to: startFrame.origin) {
-                if probes > 10 { reset() }  // not a window drag (text selection, etc.)
+                if probes > 10 {
+                    debugLog("drag: window did not move after \(probes) events, ignoring")
+                    reset()
+                }
                 return
             }
+            debugLog("drag: window move began (zone key \(Settings.zoneModifier.symbol) held: \(Settings.zoneModifier.isHeld))")
             moving = true
             moveBegan(window: window, frame: frame, cursor: cursor)
         }
@@ -129,7 +138,7 @@ final class DragController {
 
     private func update(cursor: CGPoint) {
         guard !cancelled else { return }
-        if Settings.optionDragZones && NSEvent.modifierFlags.contains(.option) {
+        if Settings.optionDragZones && Settings.zoneModifier.isHeld {
             updateZones(cursor: cursor)
             return
         }
@@ -219,6 +228,7 @@ final class DragController {
             zoneScreen = screen
             zoneLayoutIndex = store.activeLayoutIndex(for: screen)
             spanAnchor = nil
+            debugLog("zones: showing \(store.layouts(for: screen)[zoneLayoutIndex].name) on \(screen.localizedName)")
         }
 
         let layouts = store.layouts(for: screen)
@@ -231,8 +241,9 @@ final class DragController {
 
         var selected: Set<Int> = [hit]
         var rect = frames[hit]
-        if NSEvent.modifierFlags.contains(.shift) {
-            // ⇧ spans every zone touched by the box between the first and current zone.
+        let modifier = Settings.zoneModifier
+        if NSEvent.modifierFlags.contains(modifier.spanFlag) {
+            // ⇧ (or ⌥ when ⇧ is the zone key) spans every zone touched by the box between the first and current zone.
             let anchor = spanAnchor ?? hit
             spanAnchor = anchor
             let box = frames[anchor].union(frames[hit])
@@ -244,7 +255,8 @@ final class DragController {
 
         target = .rect(rect)
         zoneOverlay.show(layout: layout, number: zoneLayoutIndex + 1, count: layouts.count, on: screen,
-                         highlighted: selected, hint: "Tab / Mausrad / 1–9: Layout wechseln · ⇧: Zonen verbinden · Esc: abbrechen")
+                         highlighted: selected,
+                         hint: "Mausrad / 1–9 / Tab: Layout wechseln · \(modifier.spanSymbol): Zonen verbinden · Esc: abbrechen")
     }
 
     private func leaveZoneMode() {

@@ -15,6 +15,8 @@ enum Settings {
         static let suppressNativeMenu = "suppressNativeMenu"
         static let livePreviews = "livePreviews"
         static let launchAppsForWorkspaces = "launchAppsForWorkspaces"
+        static let zoneModifier = "zoneModifier"
+        static let debugLog = "debugLog"
     }
 
     static func registerDefaults() {
@@ -29,6 +31,8 @@ enum Settings {
             Key.suppressNativeMenu: true,
             Key.livePreviews: true,
             Key.launchAppsForWorkspaces: true,
+            Key.zoneModifier: ZoneModifier.command.rawValue,
+            Key.debugLog: false,
         ])
     }
 
@@ -74,6 +78,16 @@ enum Settings {
         set { defaults.set(newValue, forKey: Key.optionDragZones) }
     }
 
+    /// Key held while dragging to drop into zones.
+    static var zoneModifier: ZoneModifier {
+        get { ZoneModifier(rawValue: defaults.string(forKey: Key.zoneModifier) ?? "") ?? .command }
+        set { defaults.set(newValue.rawValue, forKey: Key.zoneModifier) }
+    }
+
+    /// `defaults write io.github.leonatwork.snapline debugLog -bool true`, then
+    /// `log stream --predicate 'process == "Snapline"'`.
+    static var debugLog: Bool { defaults.bool(forKey: Key.debugLog) }
+
     /// Keep macOS' own tiling menu on the green button from appearing.
     static var suppressNativeMenu: Bool {
         get { defaults.bool(forKey: Key.suppressNativeMenu) }
@@ -104,6 +118,37 @@ enum Settings {
     }
 }
 
+/// Which key turns a window drag into a drop into zones (FancyZones uses ⇧).
+enum ZoneModifier: String, CaseIterable {
+    case command, option, shift
+
+    var flag: NSEvent.ModifierFlags {
+        switch self {
+        case .command: return .command
+        case .option: return .option
+        case .shift: return .shift
+        }
+    }
+
+    var symbol: String {
+        switch self {
+        case .command: return "⌘"
+        case .option: return "⌥"
+        case .shift: return "⇧"
+        }
+    }
+
+    /// Spanning several zones needs a second key; ⇧ unless that is already taken.
+    var spanFlag: NSEvent.ModifierFlags { self == .shift ? .option : .shift }
+    var spanSymbol: String { self == .shift ? "⌥" : "⇧" }
+
+    var isHeld: Bool { NSEvent.modifierFlags.contains(flag) }
+}
+
+func debugLog(_ message: @autoclosure () -> String) {
+    if Settings.debugLog { NSLog("Snapline: %@", message()) }
+}
+
 /// The built-in macOS tiling (Sequoia and later) fights with our drag snapping.
 enum NativeTiling {
     private static var domain: UserDefaults? { UserDefaults(suiteName: "com.apple.WindowManager") }
@@ -123,7 +168,9 @@ enum NativeTiling {
         (domain?.object(forKey: "EnableTilingOptionAccelerator") as? Bool) ?? true
     }
 
-    static var conflicts: Bool { edgeDragEnabled || topEdgeDragEnabled || optionDragEnabled }
+    static var conflicts: Bool {
+        edgeDragEnabled || topEdgeDragEnabled || (optionDragEnabled && Settings.zoneModifier == .option)
+    }
 
     static func openSettings() {
         if let url = URL(string: "x-apple.systempreferences:com.apple.Desktop-Settings.extension") {

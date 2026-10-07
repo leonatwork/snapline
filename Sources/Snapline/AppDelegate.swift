@@ -134,7 +134,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         // Behaviour.
         let behaviour = NSMenu()
         behaviour.addItem(toggle("Fenster an Ränder ziehen (Aero Snap)", Settings.dragSnap, #selector(toggleDragSnap)))
-        behaviour.addItem(toggle("⌥ + Ziehen: in Zonen des aktiven Layouts", Settings.optionDragZones, #selector(toggleOptionZones)))
+        behaviour.addItem(toggle("\(Settings.zoneModifier.symbol) + Ziehen: in Zonen des aktiven Layouts", Settings.optionDragZones, #selector(toggleOptionZones)))
         behaviour.addItem(toggle("Snap-Layouts beim Hover über grünen Knopf", Settings.hoverFlyout, #selector(toggleHover)))
         behaviour.addItem(toggle("macOS-Menü am grünen Knopf unterdrücken", Settings.suppressNativeMenu, #selector(toggleSuppress)))
         behaviour.addItem(toggle("Snap Assist", Settings.snapAssist, #selector(toggleAssist)))
@@ -142,6 +142,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         behaviour.addItem(toggle("Ursprungsgröße beim Wegziehen", Settings.restoreOnDrag, #selector(toggleRestore)))
         behaviour.addItem(toggle("Arbeitsbereiche: fehlende Apps starten", Settings.launchAppsForWorkspaces, #selector(toggleLaunchApps)))
         menu.addItem(submenu("Verhalten", behaviour))
+
+        let modifierMenu = NSMenu()
+        for (modifier, title) in [(ZoneModifier.command, "⌘ Befehl"), (.option, "⌥ Wahl"), (.shift, "⇧ Umschalt (wie FancyZones)")] {
+            let i = toggle(title, Settings.zoneModifier == modifier, #selector(setZoneModifier(_:)))
+            i.representedObject = modifier.rawValue
+            modifierMenu.addItem(i)
+        }
+        menu.addItem(submenu("Taste für Zonen-Ziehen", modifierMenu))
 
         let gapMenu = NSMenu()
         for gap in [0, 4, 8, 12, 16] {
@@ -167,9 +175,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             "⌃⌥←/→  Spalte links/rechts, weiter zum nächsten Monitor",
             "⌃⌥↑  Maximieren / obere Hälfte der Spalte",
             "⌃⌥↓  Wiederherstellen / untere Hälfte / Minimieren",
-            "⌥ + Ziehen  In Zonen des aktiven Layouts ablegen",
-            "   … Tab / Mausrad / 1–9  Layout wechseln",
-            "   … ⇧  mehrere Zonen verbinden · Esc  abbrechen",
+            "\(Settings.zoneModifier.symbol) + Ziehen  In Zonen des aktiven Layouts ablegen",
+            "   … Mausrad / 1–9 / Tab  Layout wechseln",
+            "   … \(Settings.zoneModifier.spanSymbol)  mehrere Zonen verbinden · Esc  abbrechen",
             "Ziehen an Rand/Ecke  Spalte bzw. halbe Spalte",
             "Ziehen oben Mitte  Snap-Leiste mit Layouts",
         ] {
@@ -320,6 +328,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     @objc private func toggleDragSnap() { Settings.dragSnap.toggle() }
     @objc private func toggleOptionZones() { Settings.optionDragZones.toggle() }
+    @objc private func setZoneModifier(_ sender: NSMenuItem) {
+        if let raw = sender.representedObject as? String, let modifier = ZoneModifier(rawValue: raw) {
+            Settings.zoneModifier = modifier
+        }
+    }
     @objc private func toggleHover() { Settings.hoverFlyout.toggle() }
     @objc private func toggleSuppress() { Settings.suppressNativeMenu.toggle() }
     @objc private func toggleAssist() { Settings.snapAssist.toggle() }
