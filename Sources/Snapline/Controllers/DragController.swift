@@ -37,6 +37,10 @@ final class DragController {
     private var zoneLayoutIndex = 0
     private var spanAnchor: Int?
     private var scrollAccumulator: Double = 0
+    /// Modifier keys as of the latest event. Read from the events themselves:
+    /// `NSEvent.modifierFlags` can still report the old state while the event tap
+    /// is handling a key press, so pressing the zone key mid-drag would be missed.
+    private var flags: NSEvent.ModifierFlags = []
     private var lastScrollStep: CFTimeInterval = 0
 
     private var store: LayoutStore { .shared }
@@ -58,12 +62,22 @@ final class DragController {
                 self.monitors.append(m)
             }
         }
-        add(.leftMouseDown) { [weak self] _ in self?.mouseDown() }
-        add(.leftMouseDragged) { [weak self] _ in self?.mouseDragged() }
+        add(.leftMouseDown) { [weak self] event in
+            self?.flags = event.modifierFlags
+            self?.mouseDown()
+        }
+        add(.leftMouseDragged) { [weak self] event in
+            self?.flags = event.modifierFlags
+            self?.mouseDragged()
+        }
         add(.leftMouseUp) { [weak self] _ in self?.mouseUp() }
 
-        tap.onFlagsChanged = { [weak self] _ in
-            guard let self, self.moving else { return }
+        tap.onFlagsChanged = { [weak self] cgFlags in
+            guard let self else { return }
+            // CGEventFlags and NSEvent.ModifierFlags share the same bit layout.
+            self.flags = NSEvent.ModifierFlags(rawValue: UInt(cgFlags.rawValue))
+            debugLog("flags changed: zone key held \(self.zoneKeyHeld), moving \(self.moving)")
+            guard self.moving else { return }
             self.update(cursor: Screens.cursorAX)
         }
         tap.onKeyDown = { [weak self] keyCode, flags in self?.keyDown(Int(keyCode), flags: flags) ?? false }
@@ -113,7 +127,7 @@ final class DragController {
                 }
                 return
             }
-            debugLog("drag: window move began (zone key \(Settings.zoneModifier.symbol) held: \(Settings.zoneModifier.isHeld))")
+            debugLog("drag: window move began (zone key \(Settings.zoneModifier.symbol) held: \(zoneKeyHeld))")
             moving = true
             moveBegan(window: window, frame: frame, cursor: cursor)
         }
@@ -136,9 +150,11 @@ final class DragController {
         SnapEngine.shared.forget(window)
     }
 
+    private var zoneKeyHeld: Bool { flags.contains(Settings.zoneModifier.flag) }
+
     private func update(cursor: CGPoint) {
         guard !cancelled else { return }
-        if Settings.optionDragZones && Settings.zoneModifier.isHeld {
+        if Settings.optionDragZones && zoneKeyHeld {
             updateZones(cursor: cursor)
             return
         }
@@ -242,7 +258,7 @@ final class DragController {
         var selected: Set<Int> = [hit]
         var rect = frames[hit]
         let modifier = Settings.zoneModifier
-        if NSEvent.modifierFlags.contains(modifier.spanFlag) {
+        if flags.contains(modifier.spanFlag) {
             // ⇧ (or ⌥ when ⇧ is the zone key) spans every zone touched by the box between the first and current zone.
             let anchor = spanAnchor ?? hit
             spanAnchor = anchor

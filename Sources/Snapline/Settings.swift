@@ -141,8 +141,6 @@ enum ZoneModifier: String, CaseIterable {
     /// Spanning several zones needs a second key; ⇧ unless that is already taken.
     var spanFlag: NSEvent.ModifierFlags { self == .shift ? .option : .shift }
     var spanSymbol: String { self == .shift ? "⌥" : "⇧" }
-
-    var isHeld: Bool { NSEvent.modifierFlags.contains(flag) }
 }
 
 func debugLog(_ message: @autoclosure () -> String) {
