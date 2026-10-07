@@ -27,7 +27,11 @@ final class DragController {
     private var startFrame: CGRect = .zero
     private var startCursor: CGPoint = .zero
     private var moving = false
-    private var probes = 0
+    /// Window server ID of the dragged window – its bounds update immediately,
+    /// unlike AX positions, which apps like Electron report with a delay.
+    private var windowID: CGWindowID?
+    /// When the cursor first moved past the drag threshold.
+    private var dragStartedAt: CFTimeInterval?
     private var target: Target?
     /// Esc during a zone drag: drop without snapping.
     private var cancelled = false
@@ -94,16 +98,42 @@ final class DragController {
             return debugLog("mouseDown: no window under cursor")
         }
         guard !window.isOwnWindow, window.isStandard, !window.isFullScreen, let frame = window.frame else {
-            return debugLog("mouseDown: ignored window (subrole \(window.subrole ?? "nil"))")
+            return debugLog("mouseDown: ignored window (subrole \(window.subrole ?? "nil"), own \(window.isOwnWindow), fullscreen \(window.isFullScreen), frame \(String(describing: window.frame)))")
         }
         // Only clicks in the top band can be title bar drags – skips the AX
         // polling for ordinary clicks into content.
         guard cursor.y - frame.minY <= 90 else { return }
-        debugLog("mouseDown: candidate \(window.title) \(frame)")
-
         self.window = window
-        startFrame = frame
+        windowID = Self.windowNumber(at: cursor, pid: window.pid)
+        startFrame = windowID.flatMap(Self.bounds(of:)) ?? frame
         startCursor = cursor
+        debugLog("mouseDown: candidate \(window.title) \(startFrame) id \(windowID.map(String.init) ?? "–")")
+    }
+
+    /// Frontmost normal window of `pid` under the cursor, from the window server.
+    private static func windowNumber(at point: CGPoint, pid: pid_t) -> CGWindowID? {
+        let options: CGWindowListOption = [.optionOnScreenOnly, .excludeDesktopElements]
+        guard let info = CGWindowListCopyWindowInfo(options, kCGNullWindowID) as? [[String: Any]] else { return nil }
+        for entry in info {
+            guard (entry[kCGWindowLayer as String] as? Int) == 0,
+                  let dict = entry[kCGWindowBounds as String] as? NSDictionary,
+                  let bounds = CGRect(dictionaryRepresentation: dict), bounds.contains(point) else { continue }
+            // The topmost window under the cursor must be the one we clicked.
+            guard (entry[kCGWindowOwnerPID as String] as? pid_t) == pid else { return nil }
+            return entry[kCGWindowNumber as String] as? CGWindowID
+        }
+        return nil
+    }
+
+    private static func bounds(of id: CGWindowID) -> CGRect? {
+        guard let info = CGWindowListCopyWindowInfo([.optionIncludingWindow], id) as? [[String: Any]],
+              let dict = info.first?[kCGWindowBounds as String] as? NSDictionary else { return nil }
+        return CGRect(dictionaryRepresentation: dict)
+    }
+
+    private func currentFrame(of window: AXWindow) -> CGRect? {
+        if let windowID, let bounds = Self.bounds(of: windowID) { return bounds }
+        return window.frame
     }
 
     private func mouseDragged() {
@@ -113,16 +143,20 @@ final class DragController {
         if !moving {
             guard hypot(cursor.x - startCursor.x, cursor.y - startCursor.y) > 3 else { return }
             // Find out whether this is a move (origin changes, size stays) or a resize.
-            probes += 1
-            guard let frame = window.frame else { reset(); return }
+            let now = CACurrentMediaTime()
+            if dragStartedAt == nil { dragStartedAt = now }
+            guard let frame = currentFrame(of: window) else { reset(); return }
             if !frame.size.isRoughlyEqual(to: startFrame.size) {
                 debugLog("drag: resize, ignoring")
                 reset()
                 return
             }
             if frame.origin.isRoughlyEqual(to: startFrame.origin) {
-                if probes > 10 {
-                    debugLog("drag: window did not move after \(probes) events, ignoring")
+                // Give up only after real time and distance – a 1000 Hz mouse sends
+                // dozens of events before a window has visibly moved.
+                let travelled = hypot(cursor.x - startCursor.x, cursor.y - startCursor.y)
+                if now - dragStartedAt! > 0.8 && travelled > 40 {
+                    debugLog("drag: window did not move (\(Int(travelled)) pt in \(Int((now - dragStartedAt!) * 1000)) ms), ignoring")
                     reset()
                 }
                 return
@@ -331,7 +365,8 @@ final class DragController {
     private func reset() {
         window = nil
         moving = false
-        probes = 0
+        windowID = nil
+        dragStartedAt = nil
         target = nil
         cancelled = false
         scrollAccumulator = 0

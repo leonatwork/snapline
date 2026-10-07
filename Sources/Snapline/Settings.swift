@@ -85,7 +85,7 @@ enum Settings {
     }
 
     /// `defaults write io.github.leonatwork.snapline debugLog -bool true`, then
-    /// `log stream --predicate 'process == "Snapline"'`.
+    /// `tail -f ~/Library/Logs/Snapline/debug.log`.
     static var debugLog: Bool { defaults.bool(forKey: Key.debugLog) }
 
     /// Keep macOS' own tiling menu on the green button from appearing.
@@ -143,8 +143,21 @@ enum ZoneModifier: String, CaseIterable {
     var spanSymbol: String { self == .shift ? "⌥" : "⇧" }
 }
 
+/// Diagnostics go to a plain file: the unified log redacts NSLog text as <private>.
 func debugLog(_ message: @autoclosure () -> String) {
-    if Settings.debugLog { NSLog("Snapline: %@", message()) }
+    guard Settings.debugLog else { return }
+    let dir = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Library/Logs/Snapline")
+    let url = dir.appendingPathComponent("debug.log")
+    let stamp = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: [.withTime, .withFractionalSeconds])
+    guard let data = "\(stamp) \(message())\n".data(using: .utf8) else { return }
+    if let handle = try? FileHandle(forWritingTo: url) {
+        handle.seekToEndOfFile()
+        handle.write(data)
+        try? handle.close()
+    } else {
+        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        try? data.write(to: url)
+    }
 }
 
 /// The built-in macOS tiling (Sequoia and later) fights with our drag snapping.
