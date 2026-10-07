@@ -2,31 +2,33 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>CFBundleName</key>
-    <string>Snapline</string>
-    <key>CFBundleDisplayName</key>
-    <string>Snapline</string>
-    <key>CFBundleIdentifier</key>
-    <string>io.github.leonatwork.snapline</string>
-    <key>CFBundleExecutable</key>
-    <string>Snapline</string>
-    <key>CFBundlePackageType</key>
-    <string>APPL</string>
-    <key>CFBundleShortVersionString</key>
-    <string>0.1.0</string>
-    <key>CFBundleVersion</key>
-    <string>1</string>
-    <key>CFBundleDevelopmentRegion</key>
-    <string>de</string>
-    <key>LSMinimumSystemVersion</key>
-    <string>14.0</string>
-    <key>LSUIElement</key>
-    <true/>
-    <key>LSApplicationCategoryType</key>
-    <string>public.app-category.productivity</string>
-    <key>NSHighResolutionCapable</key>
-    <true/>
-    <key>NSHumanReadableCopyright</key>
-    <string>Windows-11-Fensterverwaltung für macOS</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>de</string>
+	<key>CFBundleDisplayName</key>
+	<string>Snapline</string>
+	<key>CFBundleExecutable</key>
+	<string>Snapline</string>
+	<key>CFBundleIconFile</key>
+	<string>AppIcon</string>
+	<key>CFBundleIdentifier</key>
+	<string>io.github.leonatwork.snapline</string>
+	<key>CFBundleName</key>
+	<string>Snapline</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>0.2.0</string>
+	<key>CFBundleVersion</key>
+	<string>2</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.productivity</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>14.0</string>
+	<key>LSUIElement</key>
+	<true/>
+	<key>NSHighResolutionCapable</key>
+	<true/>
+	<key>NSHumanReadableCopyright</key>
+	<string>Windows-11-Fensterverwaltung für macOS</string>
 </dict>
 </plist>

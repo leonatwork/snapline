@@ -13,6 +13,8 @@ final class FlyoutController {
     private var screen: NSScreen?
     private var outsideClickMonitor: Any?
 
+    private var store: LayoutStore { .shared }
+
     init(assist: SnapAssistController) {
         self.assist = assist
         flyout.grid.onPick = { [weak self] pick in self?.commit(pick) }
@@ -31,8 +33,8 @@ final class FlyoutController {
         assist.dismiss()
 
         let topLeft = Screens.toCocoa(CGPoint(x: anchor.minX - 12, y: anchor.maxY + 6))
-        flyout.present(layouts: LayoutCatalog.layouts(for: screen.screenClass), screen: screen,
-                       anchor: topLeft, interactive: true)
+        flyout.present(layouts: store.layouts(for: screen), activeIndex: store.activeLayoutIndex(for: screen),
+                       screen: screen, anchor: topLeft, interactive: true, numbered: mode == .hotkey)
         if mode == .hotkey {
             flyout.makeKey()
             installOutsideClickMonitor()
@@ -45,7 +47,7 @@ final class FlyoutController {
         self.screen = screen
         mode = .drag
         target = nil
-        flyout.present(layouts: LayoutCatalog.layouts(for: screen.screenClass), screen: screen,
+        flyout.present(layouts: store.layouts(for: screen), activeIndex: nil, screen: screen,
                        anchor: NSPoint(x: screen.visibleFrame.midX, y: screen.visibleFrame.maxY - 8),
                        centered: true, interactive: false)
     }

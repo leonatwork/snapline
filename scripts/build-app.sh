@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # Builds dist/Snapline.app (release, signed).
 #
-# Signing: uses $SIGN_IDENTITY if set, otherwise a code-signing identity named
-# "Snapline Dev" if one exists, otherwise ad-hoc. With ad-hoc signing macOS treats
-# every build as a new app, so the Accessibility permission must be granted again
-# after each rebuild – see README.
+# Signing: $SIGN_IDENTITY if set, otherwise "Snapline Local Signing" (create it once
+# with scripts/setup-signing.sh) or Tappi's local identity, otherwise ad-hoc. With
+# ad-hoc signing macOS treats every build as a new app and forgets the
+# Accessibility / Screen Recording grants.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -20,9 +20,18 @@ cp Resources/Info.plist "$APP/Contents/Info.plist"
 [ -f Resources/AppIcon.icns ] && cp Resources/AppIcon.icns "$APP/Contents/Resources/"
 
 IDENTITY="${SIGN_IDENTITY:-}"
-if [ -z "$IDENTITY" ] && security find-identity -v -p codesigning 2>/dev/null | grep -q "Snapline Dev"; then
-    IDENTITY="Snapline Dev"
+if [ -z "$IDENTITY" ]; then
+    for candidate in "Snapline Local Signing" "Tappi Local Signing"; do
+        if security find-identity -p codesigning 2>/dev/null | grep -q "$candidate"; then
+            IDENTITY="$candidate"
+            break
+        fi
+    done
 fi
-codesign --force --options runtime --sign "${IDENTITY:--}" "$APP"
+if [ -z "$IDENTITY" ]; then
+    echo "!!  signing ad-hoc: macOS forgets granted permissions on every rebuild."
+    echo "!!  run scripts/setup-signing.sh once to avoid that."
+fi
+codesign --force --options runtime --timestamp=none --sign "${IDENTITY:--}" "$APP"
 
 echo "Built $APP (signed with: ${IDENTITY:-ad-hoc})"

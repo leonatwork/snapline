@@ -4,6 +4,9 @@ import AppKit
 struct WindowCandidate: Identifiable {
     let id = UUID()
     let window: AXWindow
+    let windowID: CGWindowID
+    let bundleID: String?
+    let frame: CGRect
     let title: String
     let appName: String
     let icon: NSImage
@@ -25,6 +28,7 @@ enum WindowList {
 
         for entry in info {
             guard (entry[kCGWindowLayer as String] as? Int) == 0,
+                  let windowID = entry[kCGWindowNumber as String] as? CGWindowID,
                   let pid = entry[kCGWindowOwnerPID as String] as? pid_t, pid != ownPid,
                   let boundsDict = entry[kCGWindowBounds as String] as? NSDictionary,
                   let bounds = CGRect(dictionaryRepresentation: boundsDict),
@@ -48,7 +52,8 @@ enum WindowList {
 
             let appName = app.localizedName ?? ""
             let title = match.title.isEmpty ? appName : match.title
-            result.append(WindowCandidate(window: match, title: title, appName: appName,
+            result.append(WindowCandidate(window: match, windowID: windowID, bundleID: app.bundleIdentifier,
+                                          frame: bounds, title: title, appName: appName,
                                           icon: app.icon ?? NSImage(named: NSImage.applicationIconName)!))
         }
         return result

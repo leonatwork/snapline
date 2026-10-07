@@ -11,6 +11,10 @@ enum Settings {
         static let restoreOnDrag = "restoreOnDrag"
         static let gap = "gap"
         static let superWideColumns = "superWideColumns"
+        static let optionDragZones = "optionDragZones"
+        static let suppressNativeMenu = "suppressNativeMenu"
+        static let livePreviews = "livePreviews"
+        static let launchAppsForWorkspaces = "launchAppsForWorkspaces"
     }
 
     static func registerDefaults() {
@@ -19,8 +23,12 @@ enum Settings {
             Key.hoverFlyout: true,
             Key.snapAssist: true,
             Key.restoreOnDrag: true,
-            Key.gap: 8.0,
+            Key.gap: 0.0,
             Key.superWideColumns: 3,
+            Key.optionDragZones: true,
+            Key.suppressNativeMenu: true,
+            Key.livePreviews: true,
+            Key.launchAppsForWorkspaces: true,
         ])
     }
 
@@ -60,6 +68,30 @@ enum Settings {
         set { defaults.set(newValue, forKey: Key.superWideColumns) }
     }
 
+    /// Hold ⌥ while dragging a window to drop it into the zones of the active layout.
+    static var optionDragZones: Bool {
+        get { defaults.bool(forKey: Key.optionDragZones) }
+        set { defaults.set(newValue, forKey: Key.optionDragZones) }
+    }
+
+    /// Keep macOS' own tiling menu on the green button from appearing.
+    static var suppressNativeMenu: Bool {
+        get { defaults.bool(forKey: Key.suppressNativeMenu) }
+        set { defaults.set(newValue, forKey: Key.suppressNativeMenu) }
+    }
+
+    /// Live window thumbnails in Snap Assist (needs Screen Recording).
+    static var livePreviews: Bool {
+        get { defaults.bool(forKey: Key.livePreviews) }
+        set { defaults.set(newValue, forKey: Key.livePreviews) }
+    }
+
+    /// Start apps that are missing when restoring a workspace.
+    static var launchAppsForWorkspaces: Bool {
+        get { defaults.bool(forKey: Key.launchAppsForWorkspaces) }
+        set { defaults.set(newValue, forKey: Key.launchAppsForWorkspaces) }
+    }
+
     static var launchAtLogin: Bool {
         get { SMAppService.mainApp.status == .enabled }
         set {
@@ -86,7 +118,12 @@ enum NativeTiling {
         (domain?.object(forKey: "EnableTopTilingByEdgeDrag") as? Bool) ?? true
     }
 
-    static var conflicts: Bool { edgeDragEnabled || topEdgeDragEnabled }
+    /// "Hold ⌥ while dragging windows to tile" – collides with ⌥-drag into zones.
+    static var optionDragEnabled: Bool {
+        (domain?.object(forKey: "EnableTilingOptionAccelerator") as? Bool) ?? true
+    }
+
+    static var conflicts: Bool { edgeDragEnabled || topEdgeDragEnabled || optionDragEnabled }
 
     static func openSettings() {
         if let url = URL(string: "x-apple.systempreferences:com.apple.Desktop-Settings.extension") {

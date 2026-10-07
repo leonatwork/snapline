@@ -27,7 +27,7 @@ let macbook = CGRect(x: 0, y: 0, width: 1512, height: 982)
 @Suite struct LayoutCatalogTests {
     @Test(arguments: ScreenClass.allCases)
     func everyLayoutTilesTheScreenExactly(screenClass: ScreenClass) {
-        for layout in LayoutCatalog.layouts(for: screenClass) {
+        for layout in LayoutCatalog.builtIn(for: screenClass) {
             let area = layout.zones.reduce(CGFloat(0)) { $0 + $1.width * $1.height }
             #expect(abs(area - 1) < 0.0001, "\(layout.id) covers \(area)")
             for zone in layout.zones {
@@ -39,13 +39,13 @@ let macbook = CGRect(x: 0, y: 0, width: 1512, height: 982)
 
     @Test func layoutIdsAreUniquePerClass() {
         for screenClass in ScreenClass.allCases {
-            let ids = LayoutCatalog.layouts(for: screenClass).map(\.id)
+            let ids = LayoutCatalog.builtIn(for: screenClass).map(\.id)
             #expect(Set(ids).count == ids.count)
         }
     }
 
     @Test func superWideLeadsWithThirds() {
-        let first = LayoutCatalog.layouts(for: .superWide)[0]
+        let first = LayoutCatalog.builtIn(for: .superWide)[0]
         #expect(first.zones.count == 3)
         #expect(first.zones[1].isClose(to: Zone(1.0 / 3, 0, 1.0 / 3, 1)))
     }

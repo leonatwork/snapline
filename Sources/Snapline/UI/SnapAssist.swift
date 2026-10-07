@@ -32,10 +32,28 @@ final class SnapAssistController {
             panels[i] = panel
         }
         panels.values.first?.makeKey()
+        loadThumbnails()
 
         // Clicking anywhere outside our panels ends Snap Assist, like on Windows.
         clickMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown]) { [weak self] _ in
             MainActor.assumeIsolated { self?.dismiss() }
+        }
+    }
+
+    /// Live previews (Tappi's approach): cards are already on screen with icons,
+    /// thumbnails fade in as they arrive.
+    private func loadThumbnails() {
+        let provider = ThumbnailProvider.shared
+        provider.refreshPermission()
+        guard Settings.livePreviews else { return }
+        guard provider.isGranted else { return provider.requestAccessIfNeeded() }
+        let ids = candidates.map(\.windowID)
+        provider.prepare { [weak self] in
+            for id in ids {
+                provider.request(id, size: CGSize(width: 320, height: 200)) { image in
+                    self?.panels.values.forEach { $0.setThumbnail(image, for: id) }
+                }
+            }
         }
     }
 
@@ -52,6 +70,9 @@ final class SnapAssistController {
         } else {
             for panel in panels.values {
                 panel.show(candidates)
+                for c in candidates {
+                    if let image = ThumbnailProvider.shared.cached(for: c.windowID) { panel.setThumbnail(image, for: c.windowID) }
+                }
                 // Stay above the window we just focused.
                 panel.orderFrontRegardless()
             }
@@ -137,6 +158,10 @@ private final class AssistPanel: NSPanel {
         }
     }
 
+    func setThumbnail(_ image: NSImage, for id: CGWindowID) {
+        grid.setThumbnail(image, for: id)
+    }
+
     override var canBecomeKey: Bool { true }
 
     override func cancelOperation(_ sender: Any?) {
@@ -149,14 +174,16 @@ private final class AssistPanel: NSPanel {
 private final class CardGridView: NSView {
     var onPick: ((WindowCandidate) -> Void)?
 
-    private let minCardWidth: CGFloat = 150
-    private let cardHeight: CGFloat = 128
+    private let minCardWidth: CGFloat = 200
+    private let cardHeight: CGFloat = 176
     private let spacing: CGFloat = 12
+    private var cards: [CGWindowID: CandidateCard] = [:]
 
     override var isFlipped: Bool { true }
 
     func setCandidates(_ candidates: [WindowCandidate], width: CGFloat) {
         subviews.forEach { $0.removeFromSuperview() }
+        cards.removeAll()
         let columns = max(1, Int((width + spacing) / (minCardWidth + spacing)))
         let cardWidth = ((width - CGFloat(columns - 1) * spacing) / CGFloat(columns)).rounded(.down)
 
@@ -167,9 +194,14 @@ private final class CardGridView: NSView {
                                 width: cardWidth, height: cardHeight)
             card.onClick = { [weak self] in self?.onPick?(candidate) }
             addSubview(card)
+            cards[candidate.windowID] = card
         }
         let rows = Int((Double(candidates.count) / Double(columns)).rounded(.up))
         frame = NSRect(x: 0, y: 0, width: width, height: max(CGFloat(rows) * (cardHeight + spacing) - spacing, 0))
+    }
+
+    func setThumbnail(_ image: NSImage, for id: CGWindowID) {
+        cards[id]?.setThumbnail(image)
     }
 }
 
@@ -177,42 +209,69 @@ private final class CardGridView: NSView {
 private final class CandidateCard: NSView {
     var onClick: (() -> Void)?
     private var hovering = false { didSet { updateAppearance() } }
+    private let preview = NSImageView()
+    private let bigIcon: NSImageView
 
     init(candidate: WindowCandidate) {
+        bigIcon = NSImageView(image: candidate.icon)
         super.init(frame: .zero)
         wantsLayer = true
         layer?.cornerRadius = 10
         layer?.borderWidth = 2
 
+        // Preview area: the app icon until a live thumbnail arrives.
+        let well = NSView()
+        well.wantsLayer = true
+        well.layer?.cornerRadius = 6
+        well.layer?.masksToBounds = true
+        well.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.18).cgColor
+        bigIcon.imageScaling = .scaleProportionallyUpOrDown
+        preview.imageScaling = .scaleProportionallyDown
+        preview.alphaValue = 0
+
         let icon = NSImageView(image: candidate.icon)
         icon.imageScaling = .scaleProportionallyUpOrDown
         let title = NSTextField(labelWithString: candidate.title)
-        title.font = .systemFont(ofSize: 13, weight: .medium)
-        title.alignment = .center
-        title.maximumNumberOfLines = 2
+        title.font = .systemFont(ofSize: 12, weight: .medium)
         title.lineBreakMode = .byTruncatingTail
-        title.cell?.truncatesLastVisibleLine = true
+        title.toolTip = "\(candidate.title) – \(candidate.appName)"
         let app = NSTextField(labelWithString: candidate.appName)
-        app.font = .systemFont(ofSize: 11)
+        app.font = .systemFont(ofSize: 10)
         app.textColor = .secondaryLabelColor
-        app.alignment = .center
         app.lineBreakMode = .byTruncatingTail
 
-        for v in [icon, title, app] {
+        for v in [well, bigIcon, preview, icon, title, app] {
             v.translatesAutoresizingMaskIntoConstraints = false
-            addSubview(v)
         }
+        addSubview(well)
+        well.addSubview(bigIcon)
+        well.addSubview(preview)
+        for v in [icon, title, app] { addSubview(v) }
+
         NSLayoutConstraint.activate([
-            icon.topAnchor.constraint(equalTo: topAnchor, constant: 14),
-            icon.centerXAnchor.constraint(equalTo: centerXAnchor),
-            icon.widthAnchor.constraint(equalToConstant: 44),
-            icon.heightAnchor.constraint(equalToConstant: 44),
-            title.topAnchor.constraint(equalTo: icon.bottomAnchor, constant: 8),
-            title.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            well.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            well.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+            well.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+            well.bottomAnchor.constraint(equalTo: icon.topAnchor, constant: -8),
+            bigIcon.centerXAnchor.constraint(equalTo: well.centerXAnchor),
+            bigIcon.centerYAnchor.constraint(equalTo: well.centerYAnchor),
+            bigIcon.widthAnchor.constraint(equalToConstant: 56),
+            bigIcon.heightAnchor.constraint(equalToConstant: 56),
+            preview.topAnchor.constraint(equalTo: well.topAnchor),
+            preview.bottomAnchor.constraint(equalTo: well.bottomAnchor),
+            preview.leadingAnchor.constraint(equalTo: well.leadingAnchor),
+            preview.trailingAnchor.constraint(equalTo: well.trailingAnchor),
+
+            icon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            icon.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
+            icon.widthAnchor.constraint(equalToConstant: 26),
+            icon.heightAnchor.constraint(equalToConstant: 26),
+            title.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: 8),
             title.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
-            app.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 2),
-            app.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            app.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            title.topAnchor.constraint(equalTo: icon.topAnchor, constant: -2),
+            app.leadingAnchor.constraint(equalTo: title.leadingAnchor),
+            app.trailingAnchor.constraint(equalTo: title.trailingAnchor),
+            app.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 0),
         ])
         addTrackingArea(NSTrackingArea(rect: .zero, options: [.mouseEnteredAndExited, .activeAlways, .inVisibleRect],
                                        owner: self, userInfo: nil))
@@ -220,6 +279,15 @@ private final class CandidateCard: NSView {
     }
 
     required init?(coder: NSCoder) { fatalError() }
+
+    func setThumbnail(_ image: NSImage) {
+        preview.image = image
+        NSAnimationContext.runAnimationGroup { ctx in
+            ctx.duration = 0.2
+            preview.animator().alphaValue = 1
+            bigIcon.animator().alphaValue = 0
+        }
+    }
 
     override func viewDidChangeEffectiveAppearance() {
         super.viewDidChangeEffectiveAppearance()
