@@ -16,6 +16,12 @@ Menüleisten-App, ohne Abhängigkeiten, Swift + AppKit.
 | Win + ← / → | **⌃⌥← / →** wandert durch die Spalten und weiter auf den nächsten Monitor |
 | Win + ↑ / ↓ | **⌃⌥↑** maximieren bzw. obere Hälfte · **⌃⌥↓** wiederherstellen, untere Hälfte, minimieren |
 | Gesnapptes Fenster wegziehen | bekommt seine ursprüngliche Größe zurück |
+| FancyZones: ⇧ + Ziehen | **⌥ + Ziehen** legt das Fenster in die Zonen des aktiven Layouts. Dabei wechseln **Tab / Mausrad / 1–9** das Layout, **⇧** verbindet mehrere Zonen, **Esc** bricht ab |
+| FancyZones: Layout wechseln | **⌃⌥1…9** wählt das aktive Layout des Monitors (kurz eingeblendet) |
+| FancyZones-Editor | **Layouts bearbeiten…**: Zonen teilen, Trennlinien ziehen, Zonen entfernen |
+| – | **Arbeitsbereiche**: aktuelle Anordnung speichern, mit **⌃⌥⇧1…9** wiederherstellen, fehlende Apps werden gestartet |
+
+Das macOS-eigene Kachel-Menü am grünen Knopf wird unterdrückt. Snapline fängt die Hover-Events dort per Event Tap ab (wie Tappi), sodass nur noch das Snapline-Flyout erscheint. Snap Assist zeigt Live-Vorschauen der Fenster (ScreenCaptureKit, wie in Tappi).
 
 ### Seitenverhältnisse
 
@@ -44,11 +50,20 @@ Seit macOS 15 kachelt macOS selbst, wenn man Fenster an den Rand zieht. Das koll
 - „Fenster an Bildschirmränder ziehen, um sie zu kacheln“
 - „Fenster in die Menüleiste ziehen, um den Bildschirm zu füllen“
 
-### Berechtigung nach jedem Neubau
+Außerdem „Halte ⌥ beim Ziehen gedrückt, um zu kacheln“, sonst kollidiert es mit ⌥ + Ziehen.
 
-Ohne Apple-Developer-Zertifikat wird die App ad-hoc signiert. macOS behandelt dann jeden Build als neue App, deshalb musst du nach einem Neubau unter *Datenschutz & Sicherheit → Bedienungshilfen* den alten Snapline-Eintrag entfernen und neu erlauben.
+### Berechtigungen
 
-Abhilfe: In der Schlüsselbundverwaltung ein selbstsigniertes Zertifikat zur Codesignierung mit dem Namen **„Snapline Dev“** anlegen (*Zertifikatsassistent → Zertifikat erstellen → Typ: Codesignierung*). `scripts/build-app.sh` verwendet es dann automatisch, und die Berechtigung bleibt erhalten. Alternativ: `SIGN_IDENTITY="Apple Development: …" scripts/build-app.sh`.
+- **Bedienungshilfen**: Fenster verschieben, Event Tap
+- **Bildschirmaufnahme** (optional): Live-Vorschau in Snap Assist
+
+Damit die Berechtigungen einen Neubau überleben, einmal ausführen:
+
+```bash
+scripts/setup-signing.sh
+```
+
+Das legt ein lokales, selbstsigniertes Zertifikat „Snapline Local Signing“ an (wie bei Tappi). `scripts/build-app.sh` nutzt es automatisch, ansonsten wird ad-hoc signiert, und macOS vergisst die Berechtigungen bei jedem Build.
 
 ## Entwicklung
 
@@ -63,6 +78,10 @@ Aufbau:
 - `Sources/SnaplineCore`: reine Logik ohne AppKit, vollständig getestet
 - `Sources/Snapline/AX`: Accessibility-Zugriff auf Fenster
 - `Sources/Snapline/Controllers`: Drag, Hover, Tastatur, Hotkeys
-- `Sources/Snapline/UI`: Vorschau, Layout-Flyout, Snap Assist
+- `Sources/Snapline/UI`: Vorschau, Layout-Flyout, Zonen-Overlay, Snap Assist, Layout-Editor
+
+Eigene Layouts und Arbeitsbereiche liegen als JSON in `~/Library/Application Support/Snapline/`.
+
+Das Icon wird mit `swift scripts/make-icon.swift` erzeugt.
 
 Details und Roadmap stehen in [PLAN.md](PLAN.md).

@@ -73,10 +73,19 @@ scripts/build-app.sh     baut Snapline.app (Release, signiert)
 7. **Menüleiste** – Einstellungen, Anmeldestart, Berechtigungs-Onboarding
 8. **Build-Skript, README, privates GitHub-Repo**
 
-## Später (nicht in v1)
+## v0.2 (umgesetzt)
+
+- Event Tap (Tappi-Ansatz): macOS-Kachelmenü am grünen Knopf unterdrückt
+- ⌥ + Ziehen in Zonen des aktiven Layouts, Layoutwechsel live (Tab / Mausrad / 1–9), ⇧ verbindet Zonen
+- Aktives Layout pro Monitor, ⌃⌥1–9
+- Win+Z-Ziffernauswahl im Flyout
+- Layout-Editor (Zonen-Baum: teilen, Trennlinien ziehen, entfernen)
+- Arbeitsbereiche speichern/wiederherstellen, ⌃⌥⇧1–9
+- Live-Vorschau in Snap Assist (ScreenCaptureKit, aus Tappi)
+- Abstand 0 als Standard, App-Icon, stabile lokale Signatur
+
+## Später
 
 - Snap Groups (gemeinsam gesnappte Fenster als Gruppe wiederherstellen)
-- Gemeinsames Resize benachbarter Fenster (Trennlinie ziehen)
-- Eigene Layouts im Editor (FancyZones)
-- Live-Thumbnails in Snap Assist (ScreenCaptureKit)
+- Gemeinsames Resize benachbarter Fenster (Trennlinie zwischen Fenstern ziehen)
 - Konfigurierbare Tastenkürzel
