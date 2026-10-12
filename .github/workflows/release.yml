@@ -83,7 +83,7 @@ jobs:
 
           Step 3 is needed because this build is not notarised.
 
-          Snapline asks for **Accessibility** (required, to move windows) and **Screen Recording** (optional, for live previews in Snap Assist). Turn off macOS' own tiling under **System Settings ▸ Desktop & Dock ▸ Windows**, see the README.
+          Snapline asks for **Accessibility** (required, to move windows) and **Screen Recording** (optional, for live previews in Snap Assist). Turn off the built-in macOS tiling under **System Settings ▸ Desktop & Dock ▸ Windows**, see the README.
 
           > **Note:** this build is signed with a stable certificate. Permissions granted once survive later updates that are signed the same way. Coming from 0.2.0, which was ad-hoc signed, grant them once more.
           EOF
