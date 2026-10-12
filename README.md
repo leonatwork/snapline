@@ -1,8 +1,25 @@
 # Snapline
 
+[![Package: I love macOS, but I miss some Windows features](https://img.shields.io/badge/Package-I_love_macOS%2C_but_I_miss_some_Windows_features-0A84FF)](https://github.com/search?q=topic%3Ai-love-macos-but-i-miss-windows-features+user%3Aleonatwork&type=repositories)
+
 Windows-11-Fensterverwaltung für macOS: Snap Layouts, Snap Bar, Aero Snap, Snap Assist und Win+Pfeiltasten. Gebaut für Ultrawide- und Super-Ultrawide-Monitore wie den Samsung Odyssey G9 (32:9).
 
 Menüleisten-App, ohne Abhängigkeiten, Swift + AppKit.
+
+Sprachen: Snapline folgt der macOS-Sprache und spricht Englisch, Deutsch, Französisch, Spanisch, Italienisch, Portugiesisch (Brasilien), Niederländisch, Japanisch, Chinesisch (vereinfacht) und Koreanisch.
+
+## Teil des Pakets
+
+Snapline gehört zum Paket **„I love macOS, but I miss some Windows features“**: vier kleine Tools, die Windows-Funktionen auf den Mac bringen.
+
+| Tool | Was es macht | Download |
+|---|---|---|
+| [Tappi](https://github.com/leonatwork/Tappi) | Alt+Tab zwischen Fenstern statt Apps | [Neueste Version](https://github.com/leonatwork/Tappi/releases/latest) |
+| [Klemmi](https://github.com/leonatwork/Klemmi) | Zwischenablage-Verlauf wie Win+V, mit Quell-App | [Neueste Version](https://github.com/leonatwork/Klemmi/releases/latest) |
+| **[Snapline](https://github.com/leonatwork/snapline)** (dieses Tool) | Snap Layouts, Aero Snap und Snap Assist aus Windows 11 | [Neueste Version](https://github.com/leonatwork/snapline/releases/latest) |
+| [Snapboard](https://github.com/leonatwork/snapboard) | Screenshots wie mit dem Snipping Tool, direkt in die Zwischenablage | [Neueste Version](https://github.com/leonatwork/snapboard/releases/latest) |
+
+Vermisst du mehr als eine dieser Funktionen? Dann lad dir am besten [alle vier](https://github.com/search?q=topic%3Ai-love-macos-but-i-miss-windows-features+user%3Aleonatwork&type=repositories) herunter. In Snapline findest du sie auch im Menü unter **Weitere Apps, die dir gefallen könnten**.
 
 ## Funktionen
 
@@ -71,6 +88,7 @@ Das legt ein lokales, selbstsigniertes Zertifikat „Snapline Local Signing“ a
 swift test               # Logik-Tests (Layouts, Geometrie, Rand- und Tastaturlogik)
 swift run Snapline       # direkt starten (Berechtigung gilt dann fürs Terminal)
 scripts/build-app.sh     # dist/Snapline.app bauen
+scripts/check-localizations.sh  # Übersetzungen prüfen (alle Schlüssel in allen Sprachen, plutil -lint)
 ```
 
 Aufbau:
@@ -79,6 +97,7 @@ Aufbau:
 - `Sources/Snapline/AX`: Accessibility-Zugriff auf Fenster
 - `Sources/Snapline/Controllers`: Drag, Hover, Tastatur, Hotkeys
 - `Sources/Snapline/UI`: Vorschau, Layout-Flyout, Zonen-Overlay, Snap Assist, Layout-Editor
+- `Resources/<Sprache>.lproj/Localizable.strings`: Texte der Oberfläche (Englisch ist die Entwicklungssprache), Zugriff über `L10n.tr("schlüssel")`
 
 Eigene Layouts und Arbeitsbereiche liegen als JSON in `~/Library/Application Support/Snapline/`.
 

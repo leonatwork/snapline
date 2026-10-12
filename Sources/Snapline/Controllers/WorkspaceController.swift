@@ -119,9 +119,9 @@ final class WorkspaceController {
         NSApp.activate()
         let alert = NSAlert()
         alert.messageText = title
-        alert.informativeText = "Alle sichtbaren Fenster werden mit Position und Monitor gespeichert."
-        alert.addButton(withTitle: "Speichern")
-        alert.addButton(withTitle: "Abbrechen")
+        alert.informativeText = L10n.tr("workspace.prompt.info")
+        alert.addButton(withTitle: L10n.tr("common.save"))
+        alert.addButton(withTitle: L10n.tr("common.cancel"))
         let field = NSTextField(frame: NSRect(x: 0, y: 0, width: 260, height: 24))
         field.stringValue = defaultName
         alert.accessoryView = field

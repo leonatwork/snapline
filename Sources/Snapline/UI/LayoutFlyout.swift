@@ -239,7 +239,7 @@ final class LayoutGridView: NSView {
             }
 
             let prefix = showsNumbers && i < 9 ? "\(i + 1)  " : ""
-            let caption = NSAttributedString(string: prefix + layout.name, attributes: [
+            let caption = NSAttributedString(string: prefix + layout.displayName, attributes: [
                 .font: captionFont,
                 .foregroundColor: NSColor.secondaryLabelColor.withAlphaComponent(dimmed ? 0.4 : 1),
             ])

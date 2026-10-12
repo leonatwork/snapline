@@ -1,0 +1,122 @@
+/* Snapline – de. Keys must match en.lproj; check with scripts/check-localizations.sh. */
+
+/* Main menu (keyboard shortcuts in text fields) */
+"mainMenu.closeWindow" = "Fenster schließen";
+"mainMenu.edit" = "Bearbeiten";
+"mainMenu.undo" = "Widerrufen";
+"mainMenu.cut" = "Ausschneiden";
+"mainMenu.copy" = "Kopieren";
+"mainMenu.paste" = "Einsetzen";
+"mainMenu.selectAll" = "Alles auswählen";
+
+/* Menu bar menu */
+"menu.quit" = "Snapline beenden";
+"menu.warning.accessibility" = "⚠️ Bedienungshilfen-Zugriff erteilen…";
+"menu.warning.eventTap" = "⚠️ Event Tap nicht aktiv – Snapline neu starten";
+"menu.warning.nativeTiling" = "⚠️ macOS-Kacheln ist noch aktiv – deaktivieren…";
+"menu.warning.screenRecording" = "⚠️ Bildschirmaufnahme für Live-Vorschau erlauben…";
+"menu.restartForPreviews" = "↻ Neu starten, um Live-Vorschau zu aktivieren";
+"menu.showLayouts" = "Snap-Layouts für aktives Fenster";
+"menu.activeLayout" = "Aktives Layout";
+"menu.activeLayoutOnScreen" = "Aktives Layout – %@";
+"menu.editLayouts" = "Layouts bearbeiten…";
+"menu.workspaces" = "Arbeitsbereiche";
+"menu.behavior" = "Verhalten";
+"menu.zoneKey" = "Taste für Zonen-Ziehen";
+"menu.gap" = "Abstand zwischen Fenstern";
+"menu.edgeColumns" = "Rand-Spalten auf 32:9-Monitoren";
+"menu.shortcuts" = "Tastenkürzel & Gesten";
+"menu.launchAtLogin" = "Bei Anmeldung starten";
+
+/* Behavior submenu */
+"behavior.dragSnap" = "Fenster an Ränder ziehen (Aero Snap)";
+"behavior.zoneDrag" = "%@ + Ziehen: in Zonen des aktiven Layouts";
+"behavior.hoverFlyout" = "Snap-Layouts beim Hover über grünen Knopf";
+"behavior.suppressNativeMenu" = "macOS-Menü am grünen Knopf unterdrücken";
+"behavior.snapAssist" = "Snap Assist";
+"behavior.livePreviews" = "Live-Vorschau in Snap Assist";
+"behavior.restoreOnDrag" = "Ursprungsgröße beim Wegziehen";
+"behavior.launchMissingApps" = "Arbeitsbereiche: fehlende Apps starten";
+
+/* Zone key, gap and column submenus */
+"zoneKey.command" = "⌘ Befehl";
+"zoneKey.option" = "⌥ Wahl";
+"zoneKey.shift" = "⇧ Umschalt (wie FancyZones)";
+"gap.none" = "Kein Abstand";
+"gap.points" = "%d pt";
+"columns.halves" = "Hälften";
+"columns.thirds" = "Drittel";
+"columns.quarters" = "Viertel";
+
+/* Keyboard shortcuts & gestures submenu */
+"shortcut.flyout" = "⌃⌥Z  Snap-Layouts, dann Ziffer für Layout und Zone";
+"shortcut.activeLayout" = "⌃⌥1…9  Aktives Layout des Monitors wählen";
+"shortcut.workspace" = "⌃⌥⇧1…9  Arbeitsbereich wiederherstellen";
+"shortcut.leftRight" = "⌃⌥←/→  Spalte links/rechts, weiter zum nächsten Monitor";
+"shortcut.up" = "⌃⌥↑  Maximieren / obere Hälfte der Spalte";
+"shortcut.down" = "⌃⌥↓  Wiederherstellen / untere Hälfte / Minimieren";
+"shortcut.zoneDrag" = "%@ + Ziehen  In Zonen des aktiven Layouts ablegen";
+"shortcut.zoneDragSwitch" = "   … Mausrad / 1–9 / Tab  Layout wechseln";
+"shortcut.zoneDragSpan" = "   … %@  mehrere Zonen verbinden · Esc  abbrechen";
+"shortcut.edgeDrag" = "Ziehen an Rand/Ecke  Spalte bzw. halbe Spalte";
+"shortcut.topDrag" = "Ziehen oben Mitte  Snap-Leiste mit Layouts";
+
+/* More apps (the other tools of the package) */
+"menu.moreApps" = "Weitere Apps, die dir gefallen könnten";
+"moreApps.tappi" = "Alt+Tab zwischen Fenstern statt Apps";
+"moreApps.klemmi" = "Zwischenablage-Verlauf wie Win+V, mit Quell-App";
+"moreApps.snapboard" = "Screenshots wie mit dem Snipping Tool, direkt in die Zwischenablage";
+"moreApps.wholePackage" = "Das ganze Paket…";
+
+/* Workspaces */
+"workspace.saveCurrent" = "Aktuelle Anordnung speichern…";
+"workspace.restore" = "Wiederherstellen";
+"workspace.overwrite" = "Mit aktueller Anordnung überschreiben";
+"workspace.rename" = "Umbenennen…";
+"workspace.defaultName" = "Arbeitsbereich %d";
+"workspace.saveTitle" = "Arbeitsbereich speichern";
+"workspace.renameTitle" = "Arbeitsbereich umbenennen";
+"workspace.prompt.info" = "Alle sichtbaren Fenster werden mit Position und Monitor gespeichert.";
+
+/* Common buttons */
+"common.save" = "Speichern";
+"common.cancel" = "Abbrechen";
+"common.delete" = "Löschen";
+
+/* Snap Assist and zone overlay */
+"assist.title" = "Fenster für diese Zone wählen";
+"zones.hint" = "Mausrad / 1–9 / Tab: Layout wechseln · %@: Zonen verbinden · Esc: abbrechen";
+"zones.activeLayoutHint" = "Aktives Layout für diesen Monitor";
+
+/* Layout editor */
+"editor.newLayout" = "Neues Layout";
+"editor.duplicate" = "Duplizieren";
+"editor.namePlaceholder" = "Name";
+"editor.display" = "Monitor:";
+"editor.portrait" = "Hochformat";
+"editor.customLayouts" = "Eigene Layouts";
+"editor.templates" = "Vorlagen für diesen Monitor";
+"editor.activeOnDisplay" = "✓ Aktiv auf diesem Monitor";
+"editor.makeActive" = "Als aktiv setzen";
+"editor.activeTag" = "aktiv";
+"editor.shortcutActivates" = "⌃⌥%d aktiviert dieses Layout.";
+"editor.hint.custom" = "Klick: Zone senkrecht teilen · ⇧-Klick: waagerecht teilen · Trennlinie ziehen: Größe (rastet bei ¼ ⅓ ½ ⅔ ¾ ein) · ⌥-Klick: Zone entfernen.";
+"editor.hint.builtIn" = "Vorlage – zum Bearbeiten „Duplizieren“.";
+"editor.template.empty" = "Leer (eine Zone)";
+"editor.template.columns" = "%d Spalten";
+"editor.template.grid" = "Raster %d×%d";
+"editor.copyName" = "%@ (Kopie)";
+"editor.deleteConfirm" = "„%@“ löschen?";
+
+/* Built-in layout names (keyed by layout id) */
+"layout.rows-2" = "Zeilen ½";
+"layout.rows-3" = "Zeilen ⅓";
+"layout.rows-2-1" = "Zeilen ⅔ + ⅓";
+"layout.grid-2x2" = "Raster 2×2";
+"layout.grid-3x2" = "Raster 3×2";
+"layout.cols-1-1" = "Hälften";
+"layout.cols-1-1-1" = "Drittel";
+"layout.cols-1-1-1-1" = "Viertel";
+"layout.half-stack" = "½ + Stapel";
+"layout.thirds-stack" = "Drittel + Stapel";
+"layout.stacks-center" = "Stapel · ½ · Stapel";

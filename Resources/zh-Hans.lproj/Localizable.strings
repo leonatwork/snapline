@@ -1,0 +1,122 @@
+/* Snapline – zh-Hans. Keys must match en.lproj; check with scripts/check-localizations.sh. */
+
+/* Main menu (keyboard shortcuts in text fields) */
+"mainMenu.closeWindow" = "关闭窗口";
+"mainMenu.edit" = "编辑";
+"mainMenu.undo" = "撤销";
+"mainMenu.cut" = "剪切";
+"mainMenu.copy" = "拷贝";
+"mainMenu.paste" = "粘贴";
+"mainMenu.selectAll" = "全选";
+
+/* Menu bar menu */
+"menu.quit" = "退出 Snapline";
+"menu.warning.accessibility" = "⚠️ 授予辅助功能权限…";
+"menu.warning.eventTap" = "⚠️ 事件监听未启用 – 重新启动 Snapline";
+"menu.warning.nativeTiling" = "⚠️ macOS 平铺仍处于开启状态 – 关闭…";
+"menu.warning.screenRecording" = "⚠️ 允许屏幕录制以显示实时预览…";
+"menu.restartForPreviews" = "↻ 重新启动以启用实时预览";
+"menu.showLayouts" = "当前窗口的 Snap Layouts";
+"menu.activeLayout" = "当前布局";
+"menu.activeLayoutOnScreen" = "当前布局 – %@";
+"menu.editLayouts" = "编辑布局…";
+"menu.workspaces" = "工作区";
+"menu.behavior" = "行为";
+"menu.zoneKey" = "拖入区域的按键";
+"menu.gap" = "窗口间距";
+"menu.edgeColumns" = "32:9 显示器的边缘列";
+"menu.shortcuts" = "键盘快捷键与手势";
+"menu.launchAtLogin" = "登录时打开";
+
+/* Behavior submenu */
+"behavior.dragSnap" = "将窗口拖到边缘 (Aero Snap)";
+"behavior.zoneDrag" = "%@ + 拖移：放入当前布局的区域";
+"behavior.hoverFlyout" = "悬停在绿色按钮上时显示 Snap Layouts";
+"behavior.suppressNativeMenu" = "隐藏绿色按钮的 macOS 菜单";
+"behavior.snapAssist" = "Snap Assist";
+"behavior.livePreviews" = "Snap Assist 中的实时预览";
+"behavior.restoreOnDrag" = "拖离时恢复原始大小";
+"behavior.launchMissingApps" = "工作区：打开缺少的应用";
+
+/* Zone key, gap and column submenus */
+"zoneKey.command" = "⌘ Command";
+"zoneKey.option" = "⌥ Option";
+"zoneKey.shift" = "⇧ Shift（同 FancyZones）";
+"gap.none" = "无间距";
+"gap.points" = "%d pt";
+"columns.halves" = "二等分";
+"columns.thirds" = "三等分";
+"columns.quarters" = "四等分";
+
+/* Keyboard shortcuts & gestures submenu */
+"shortcut.flyout" = "⌃⌥Z  Snap Layouts，再按数字选择布局和区域";
+"shortcut.activeLayout" = "⌃⌥1…9  选择显示器的当前布局";
+"shortcut.workspace" = "⌃⌥⇧1…9  恢复工作区";
+"shortcut.leftRight" = "⌃⌥←/→  左/右一列，继续移到下一个显示器";
+"shortcut.up" = "⌃⌥↑  最大化 / 该列的上半部分";
+"shortcut.down" = "⌃⌥↓  恢复 / 下半部分 / 最小化";
+"shortcut.zoneDrag" = "%@ + 拖移  放入当前布局的区域";
+"shortcut.zoneDragSwitch" = "   … 滚轮 / 1–9 / Tab  切换布局";
+"shortcut.zoneDragSpan" = "   … %@  合并多个区域 · Esc  取消";
+"shortcut.edgeDrag" = "拖到边缘/角落  一列或半列";
+"shortcut.topDrag" = "拖到顶部中央  带布局的 Snap 栏";
+
+/* More apps (the other tools of the package) */
+"menu.moreApps" = "你可能喜欢的其他应用";
+"moreApps.tappi" = "在窗口之间而非应用之间 Alt+Tab";
+"moreApps.klemmi" = "类似 Win+V 的剪贴板历史，显示每条内容的来源应用";
+"moreApps.snapboard" = "截图工具风格的截屏，直接存入剪贴板";
+"moreApps.wholePackage" = "查看完整套件…";
+
+/* Workspaces */
+"workspace.saveCurrent" = "存储当前排列…";
+"workspace.restore" = "恢复";
+"workspace.overwrite" = "用当前排列覆盖";
+"workspace.rename" = "重新命名…";
+"workspace.defaultName" = "工作区 %d";
+"workspace.saveTitle" = "存储工作区";
+"workspace.renameTitle" = "重新命名工作区";
+"workspace.prompt.info" = "所有可见窗口都会连同位置和显示器一起存储。";
+
+/* Common buttons */
+"common.save" = "存储";
+"common.cancel" = "取消";
+"common.delete" = "删除";
+
+/* Snap Assist and zone overlay */
+"assist.title" = "为此区域选择一个窗口";
+"zones.hint" = "滚轮 / 1–9 / Tab：切换布局 · %@：合并区域 · Esc：取消";
+"zones.activeLayoutHint" = "此显示器的当前布局";
+
+/* Layout editor */
+"editor.newLayout" = "新建布局";
+"editor.duplicate" = "复制";
+"editor.namePlaceholder" = "名称";
+"editor.display" = "显示器：";
+"editor.portrait" = "竖屏";
+"editor.customLayouts" = "我的布局";
+"editor.templates" = "此显示器的模板";
+"editor.activeOnDisplay" = "✓ 已在此显示器上启用";
+"editor.makeActive" = "设为当前布局";
+"editor.activeTag" = "当前";
+"editor.shortcutActivates" = "⌃⌥%d 启用此布局。";
+"editor.hint.custom" = "点按：竖向拆分区域 · ⇧-点按：横向拆分 · 拖移分隔线：调整大小（在 ¼ ⅓ ½ ⅔ ¾ 处吸附） · ⌥-点按：移除区域。";
+"editor.hint.builtIn" = "模板 – 如需编辑，请先“复制”。";
+"editor.template.empty" = "空（一个区域）";
+"editor.template.columns" = "%d 列";
+"editor.template.grid" = "网格 %d×%d";
+"editor.copyName" = "%@（副本）";
+"editor.deleteConfirm" = "删除“%@”？";
+
+/* Built-in layout names (keyed by layout id) */
+"layout.rows-2" = "行 ½";
+"layout.rows-3" = "行 ⅓";
+"layout.rows-2-1" = "行 ⅔ + ⅓";
+"layout.grid-2x2" = "网格 2×2";
+"layout.grid-3x2" = "网格 3×2";
+"layout.cols-1-1" = "二等分";
+"layout.cols-1-1-1" = "三等分";
+"layout.cols-1-1-1-1" = "四等分";
+"layout.half-stack" = "½ + 堆叠";
+"layout.thirds-stack" = "三等分 + 堆叠";
+"layout.stacks-center" = "堆叠 · ½ · 堆叠";

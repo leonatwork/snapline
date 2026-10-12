@@ -1,0 +1,122 @@
+/* Snapline – nl. Keys must match en.lproj; check with scripts/check-localizations.sh. */
+
+/* Main menu (keyboard shortcuts in text fields) */
+"mainMenu.closeWindow" = "Sluit venster";
+"mainMenu.edit" = "Wijzig";
+"mainMenu.undo" = "Herstel";
+"mainMenu.cut" = "Knip";
+"mainMenu.copy" = "Kopieer";
+"mainMenu.paste" = "Plak";
+"mainMenu.selectAll" = "Selecteer alles";
+
+/* Menu bar menu */
+"menu.quit" = "Stop Snapline";
+"menu.warning.accessibility" = "⚠️ Toegang tot Toegankelijkheid verlenen…";
+"menu.warning.eventTap" = "⚠️ Event tap niet actief – Snapline opnieuw starten";
+"menu.warning.nativeTiling" = "⚠️ Tegelen van macOS staat nog aan – uitschakelen…";
+"menu.warning.screenRecording" = "⚠️ Schermopname toestaan voor live voorvertoningen…";
+"menu.restartForPreviews" = "↻ Opnieuw starten om live voorvertoningen in te schakelen";
+"menu.showLayouts" = "Snap Layouts voor actief venster";
+"menu.activeLayout" = "Actieve indeling";
+"menu.activeLayoutOnScreen" = "Actieve indeling – %@";
+"menu.editLayouts" = "Indelingen bewerken…";
+"menu.workspaces" = "Werkruimtes";
+"menu.behavior" = "Gedrag";
+"menu.zoneKey" = "Toets voor slepen naar zones";
+"menu.gap" = "Ruimte tussen vensters";
+"menu.edgeColumns" = "Randkolommen op 32:9-schermen";
+"menu.shortcuts" = "Toetscombinaties en gebaren";
+"menu.launchAtLogin" = "Open bij inloggen";
+
+/* Behavior submenu */
+"behavior.dragSnap" = "Vensters naar randen slepen (Aero Snap)";
+"behavior.zoneDrag" = "%@ + slepen: naar zones van de actieve indeling";
+"behavior.hoverFlyout" = "Snap Layouts bij aanwijzen van de groene knop";
+"behavior.suppressNativeMenu" = "macOS-menu op de groene knop verbergen";
+"behavior.snapAssist" = "Snap Assist";
+"behavior.livePreviews" = "Live voorvertoningen in Snap Assist";
+"behavior.restoreOnDrag" = "Oorspronkelijke grootte bij wegslepen";
+"behavior.launchMissingApps" = "Werkruimtes: ontbrekende apps openen";
+
+/* Zone key, gap and column submenus */
+"zoneKey.command" = "⌘ Command";
+"zoneKey.option" = "⌥ Option";
+"zoneKey.shift" = "⇧ Shift (zoals FancyZones)";
+"gap.none" = "Geen ruimte";
+"gap.points" = "%d pt";
+"columns.halves" = "Helften";
+"columns.thirds" = "Derden";
+"columns.quarters" = "Kwarten";
+
+/* Keyboard shortcuts & gestures submenu */
+"shortcut.flyout" = "⌃⌥Z  Snap Layouts, dan een cijfer voor indeling en zone";
+"shortcut.activeLayout" = "⌃⌥1…9  Actieve indeling van het scherm kiezen";
+"shortcut.workspace" = "⌃⌥⇧1…9  Werkruimte herstellen";
+"shortcut.leftRight" = "⌃⌥←/→  Kolom links/rechts, door naar het volgende scherm";
+"shortcut.up" = "⌃⌥↑  Maximaliseren / bovenste helft van de kolom";
+"shortcut.down" = "⌃⌥↓  Herstellen / onderste helft / minimaliseren";
+"shortcut.zoneDrag" = "%@ + slepen  Neerzetten in zones van de actieve indeling";
+"shortcut.zoneDragSwitch" = "   … Scrollwiel / 1–9 / Tab  Andere indeling";
+"shortcut.zoneDragSpan" = "   … %@  Meerdere zones samenvoegen · Esc  Annuleren";
+"shortcut.edgeDrag" = "Slepen naar rand/hoek  Kolom of halve kolom";
+"shortcut.topDrag" = "Slepen naar midden boven  Snap-balk met indelingen";
+
+/* More apps (the other tools of the package) */
+"menu.moreApps" = "Meer apps die je misschien leuk vindt";
+"moreApps.tappi" = "Alt+Tab tussen vensters, niet tussen apps";
+"moreApps.klemmi" = "Klembordgeschiedenis zoals Win+V, met de app waar elk item vandaan komt";
+"moreApps.snapboard" = "Schermafbeeldingen zoals met het Knipprogramma, direct naar het klembord";
+"moreApps.wholePackage" = "Het hele pakket…";
+
+/* Workspaces */
+"workspace.saveCurrent" = "Huidige rangschikking bewaren…";
+"workspace.restore" = "Herstel";
+"workspace.overwrite" = "Overschrijven met huidige rangschikking";
+"workspace.rename" = "Wijzig naam…";
+"workspace.defaultName" = "Werkruimte %d";
+"workspace.saveTitle" = "Werkruimte bewaren";
+"workspace.renameTitle" = "Wijzig naam van werkruimte";
+"workspace.prompt.info" = "Alle zichtbare vensters worden met hun positie en scherm bewaard.";
+
+/* Common buttons */
+"common.save" = "Bewaar";
+"common.cancel" = "Annuleer";
+"common.delete" = "Verwijder";
+
+/* Snap Assist and zone overlay */
+"assist.title" = "Kies een venster voor deze zone";
+"zones.hint" = "Scrollwiel / 1–9 / Tab: andere indeling · %@: zones samenvoegen · Esc: annuleren";
+"zones.activeLayoutHint" = "Actieve indeling voor dit scherm";
+
+/* Layout editor */
+"editor.newLayout" = "Nieuwe indeling";
+"editor.duplicate" = "Dupliceer";
+"editor.namePlaceholder" = "Naam";
+"editor.display" = "Scherm:";
+"editor.portrait" = "Staand";
+"editor.customLayouts" = "Mijn indelingen";
+"editor.templates" = "Sjablonen voor dit scherm";
+"editor.activeOnDisplay" = "✓ Actief op dit scherm";
+"editor.makeActive" = "Actief maken";
+"editor.activeTag" = "actief";
+"editor.shortcutActivates" = "⌃⌥%d activeert deze indeling.";
+"editor.hint.custom" = "Klik: zone verticaal splitsen · ⇧-klik: horizontaal splitsen · Scheidingslijn slepen: grootte (klikt vast bij ¼ ⅓ ½ ⅔ ¾) · ⌥-klik: zone verwijderen.";
+"editor.hint.builtIn" = "Sjabloon – om te bewerken, eerst „Dupliceer”.";
+"editor.template.empty" = "Leeg (één zone)";
+"editor.template.columns" = "%d kolommen";
+"editor.template.grid" = "Raster %d×%d";
+"editor.copyName" = "%@ (kopie)";
+"editor.deleteConfirm" = "„%@” verwijderen?";
+
+/* Built-in layout names (keyed by layout id) */
+"layout.rows-2" = "Rijen ½";
+"layout.rows-3" = "Rijen ⅓";
+"layout.rows-2-1" = "Rijen ⅔ + ⅓";
+"layout.grid-2x2" = "Raster 2×2";
+"layout.grid-3x2" = "Raster 3×2";
+"layout.cols-1-1" = "Helften";
+"layout.cols-1-1-1" = "Derden";
+"layout.cols-1-1-1-1" = "Kwarten";
+"layout.half-stack" = "½ + stapel";
+"layout.thirds-stack" = "Derden + stapel";
+"layout.stacks-center" = "Stapel · ½ · stapel";

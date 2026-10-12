@@ -1,0 +1,122 @@
+/* Snapline – en. Keys must match en.lproj; check with scripts/check-localizations.sh. */
+
+/* Main menu (keyboard shortcuts in text fields) */
+"mainMenu.closeWindow" = "Close Window";
+"mainMenu.edit" = "Edit";
+"mainMenu.undo" = "Undo";
+"mainMenu.cut" = "Cut";
+"mainMenu.copy" = "Copy";
+"mainMenu.paste" = "Paste";
+"mainMenu.selectAll" = "Select All";
+
+/* Menu bar menu */
+"menu.quit" = "Quit Snapline";
+"menu.warning.accessibility" = "⚠️ Grant Accessibility access…";
+"menu.warning.eventTap" = "⚠️ Event tap not active – restart Snapline";
+"menu.warning.nativeTiling" = "⚠️ macOS tiling is still on – turn it off…";
+"menu.warning.screenRecording" = "⚠️ Allow Screen Recording for live previews…";
+"menu.restartForPreviews" = "↻ Restart to enable live previews";
+"menu.showLayouts" = "Snap Layouts for active window";
+"menu.activeLayout" = "Active layout";
+"menu.activeLayoutOnScreen" = "Active layout – %@";
+"menu.editLayouts" = "Edit layouts…";
+"menu.workspaces" = "Workspaces";
+"menu.behavior" = "Behavior";
+"menu.zoneKey" = "Key for zone dragging";
+"menu.gap" = "Gap between windows";
+"menu.edgeColumns" = "Edge columns on 32:9 displays";
+"menu.shortcuts" = "Keyboard shortcuts & gestures";
+"menu.launchAtLogin" = "Open at login";
+
+/* Behavior submenu */
+"behavior.dragSnap" = "Drag windows to edges (Aero Snap)";
+"behavior.zoneDrag" = "%@ + drag: into zones of the active layout";
+"behavior.hoverFlyout" = "Snap Layouts on hovering the green button";
+"behavior.suppressNativeMenu" = "Hide the macOS menu on the green button";
+"behavior.snapAssist" = "Snap Assist";
+"behavior.livePreviews" = "Live previews in Snap Assist";
+"behavior.restoreOnDrag" = "Restore original size when dragged away";
+"behavior.launchMissingApps" = "Workspaces: open missing apps";
+
+/* Zone key, gap and column submenus */
+"zoneKey.command" = "⌘ Command";
+"zoneKey.option" = "⌥ Option";
+"zoneKey.shift" = "⇧ Shift (like FancyZones)";
+"gap.none" = "No gap";
+"gap.points" = "%d pt";
+"columns.halves" = "Halves";
+"columns.thirds" = "Thirds";
+"columns.quarters" = "Quarters";
+
+/* Keyboard shortcuts & gestures submenu */
+"shortcut.flyout" = "⌃⌥Z  Snap Layouts, then a digit for layout and zone";
+"shortcut.activeLayout" = "⌃⌥1…9  Choose the display’s active layout";
+"shortcut.workspace" = "⌃⌥⇧1…9  Restore workspace";
+"shortcut.leftRight" = "⌃⌥←/→  Column left/right, on to the next display";
+"shortcut.up" = "⌃⌥↑  Maximize / top half of the column";
+"shortcut.down" = "⌃⌥↓  Restore / bottom half / minimize";
+"shortcut.zoneDrag" = "%@ + drag  Drop into zones of the active layout";
+"shortcut.zoneDragSwitch" = "   … Scroll wheel / 1–9 / Tab  Switch layout";
+"shortcut.zoneDragSpan" = "   … %@  Join several zones · Esc  Cancel";
+"shortcut.edgeDrag" = "Drag to edge/corner  Column or half column";
+"shortcut.topDrag" = "Drag to top center  Snap bar with layouts";
+
+/* More apps (the other tools of the package) */
+"menu.moreApps" = "More apps you might like";
+"moreApps.tappi" = "Alt+Tab between windows, not apps";
+"moreApps.klemmi" = "Clipboard history like Win+V, with the app each entry came from";
+"moreApps.snapboard" = "Snipping-Tool-style screenshots straight to the clipboard";
+"moreApps.wholePackage" = "The whole package…";
+
+/* Workspaces */
+"workspace.saveCurrent" = "Save current arrangement…";
+"workspace.restore" = "Restore";
+"workspace.overwrite" = "Overwrite with current arrangement";
+"workspace.rename" = "Rename…";
+"workspace.defaultName" = "Workspace %d";
+"workspace.saveTitle" = "Save workspace";
+"workspace.renameTitle" = "Rename workspace";
+"workspace.prompt.info" = "All visible windows are saved with their position and display.";
+
+/* Common buttons */
+"common.save" = "Save";
+"common.cancel" = "Cancel";
+"common.delete" = "Delete";
+
+/* Snap Assist and zone overlay */
+"assist.title" = "Choose a window for this zone";
+"zones.hint" = "Scroll wheel / 1–9 / Tab: switch layout · %@: join zones · Esc: cancel";
+"zones.activeLayoutHint" = "Active layout for this display";
+
+/* Layout editor */
+"editor.newLayout" = "New layout";
+"editor.duplicate" = "Duplicate";
+"editor.namePlaceholder" = "Name";
+"editor.display" = "Display:";
+"editor.portrait" = "Portrait";
+"editor.customLayouts" = "My layouts";
+"editor.templates" = "Templates for this display";
+"editor.activeOnDisplay" = "✓ Active on this display";
+"editor.makeActive" = "Make active";
+"editor.activeTag" = "active";
+"editor.shortcutActivates" = "⌃⌥%d activates this layout.";
+"editor.hint.custom" = "Click: split zone vertically · ⇧-click: split horizontally · Drag a divider: resize (snaps at ¼ ⅓ ½ ⅔ ¾) · ⌥-click: remove zone.";
+"editor.hint.builtIn" = "Template – to edit it, “Duplicate” it.";
+"editor.template.empty" = "Empty (one zone)";
+"editor.template.columns" = "%d columns";
+"editor.template.grid" = "Grid %d×%d";
+"editor.copyName" = "%@ (copy)";
+"editor.deleteConfirm" = "Delete “%@”?";
+
+/* Built-in layout names (keyed by layout id) */
+"layout.rows-2" = "Rows ½";
+"layout.rows-3" = "Rows ⅓";
+"layout.rows-2-1" = "Rows ⅔ + ⅓";
+"layout.grid-2x2" = "Grid 2×2";
+"layout.grid-3x2" = "Grid 3×2";
+"layout.cols-1-1" = "Halves";
+"layout.cols-1-1-1" = "Thirds";
+"layout.cols-1-1-1-1" = "Quarters";
+"layout.half-stack" = "½ + stack";
+"layout.thirds-stack" = "Thirds + stack";
+"layout.stacks-center" = "Stack · ½ · stack";

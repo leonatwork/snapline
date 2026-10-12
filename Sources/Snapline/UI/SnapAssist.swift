@@ -120,7 +120,7 @@ private final class AssistPanel: NSPanel {
         background.layer?.borderWidth = 1
         background.layer?.borderColor = NSColor.separatorColor.cgColor
 
-        let title = NSTextField(labelWithString: "Fenster für diese Zone wählen")
+        let title = NSTextField(labelWithString: L10n.tr("assist.title"))
         title.font = .systemFont(ofSize: 13, weight: .semibold)
         title.textColor = .secondaryLabelColor
         title.translatesAutoresizingMaskIntoConstraints = false

@@ -306,7 +306,7 @@ final class DragController {
         target = .rect(rect)
         zoneOverlay.show(layout: layout, number: zoneLayoutIndex + 1, count: layouts.count, on: screen,
                          highlighted: selected,
-                         hint: "Mausrad / 1–9 / Tab: Layout wechseln · \(modifier.spanSymbol): Zonen verbinden · Esc: abbrechen")
+                         hint: L10n.tr("zones.hint", modifier.spanSymbol))
     }
 
     private func leaveZoneMode() {

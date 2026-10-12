@@ -1,0 +1,122 @@
+/* Snapline – ja. Keys must match en.lproj; check with scripts/check-localizations.sh. */
+
+/* Main menu (keyboard shortcuts in text fields) */
+"mainMenu.closeWindow" = "ウインドウを閉じる";
+"mainMenu.edit" = "編集";
+"mainMenu.undo" = "取り消す";
+"mainMenu.cut" = "カット";
+"mainMenu.copy" = "コピー";
+"mainMenu.paste" = "ペースト";
+"mainMenu.selectAll" = "すべてを選択";
+
+/* Menu bar menu */
+"menu.quit" = "Snapline を終了";
+"menu.warning.accessibility" = "⚠️ アクセシビリティへのアクセスを許可…";
+"menu.warning.eventTap" = "⚠️ イベントタップが無効です – Snapline を再起動";
+"menu.warning.nativeTiling" = "⚠️ macOS のタイル表示がオンのままです – オフにする…";
+"menu.warning.screenRecording" = "⚠️ ライブプレビューのために画面収録を許可…";
+"menu.restartForPreviews" = "↻ 再起動してライブプレビューを有効にする";
+"menu.showLayouts" = "アクティブなウインドウの Snap Layouts";
+"menu.activeLayout" = "アクティブなレイアウト";
+"menu.activeLayoutOnScreen" = "アクティブなレイアウト – %@";
+"menu.editLayouts" = "レイアウトを編集…";
+"menu.workspaces" = "ワークスペース";
+"menu.behavior" = "動作";
+"menu.zoneKey" = "ゾーンへのドラッグに使うキー";
+"menu.gap" = "ウインドウ間の間隔";
+"menu.edgeColumns" = "32:9 ディスプレイの端の列";
+"menu.shortcuts" = "キーボードショートカットとジェスチャ";
+"menu.launchAtLogin" = "ログイン時に開く";
+
+/* Behavior submenu */
+"behavior.dragSnap" = "ウインドウを端へドラッグ (Aero Snap)";
+"behavior.zoneDrag" = "%@ + ドラッグ: アクティブなレイアウトのゾーンへ";
+"behavior.hoverFlyout" = "緑のボタンにポインタを置くと Snap Layouts";
+"behavior.suppressNativeMenu" = "緑のボタンの macOS メニューを表示しない";
+"behavior.snapAssist" = "Snap Assist";
+"behavior.livePreviews" = "Snap Assist のライブプレビュー";
+"behavior.restoreOnDrag" = "ドラッグで離すと元のサイズに戻す";
+"behavior.launchMissingApps" = "ワークスペース: 足りないアプリを開く";
+
+/* Zone key, gap and column submenus */
+"zoneKey.command" = "⌘ コマンド";
+"zoneKey.option" = "⌥ オプション";
+"zoneKey.shift" = "⇧ シフト (FancyZones と同様)";
+"gap.none" = "間隔なし";
+"gap.points" = "%d pt";
+"columns.halves" = "2 分割";
+"columns.thirds" = "3 分割";
+"columns.quarters" = "4 分割";
+
+/* Keyboard shortcuts & gestures submenu */
+"shortcut.flyout" = "⌃⌥Z  Snap Layouts、続けて数字でレイアウトとゾーン";
+"shortcut.activeLayout" = "⌃⌥1…9  ディスプレイのアクティブなレイアウトを選択";
+"shortcut.workspace" = "⌃⌥⇧1…9  ワークスペースを復元";
+"shortcut.leftRight" = "⌃⌥←/→  左右の列へ、さらに次のディスプレイへ";
+"shortcut.up" = "⌃⌥↑  最大化 / 列の上半分";
+"shortcut.down" = "⌃⌥↓  元に戻す / 下半分 / しまう";
+"shortcut.zoneDrag" = "%@ + ドラッグ  アクティブなレイアウトのゾーンにドロップ";
+"shortcut.zoneDragSwitch" = "   … スクロールホイール / 1–9 / Tab  レイアウトを切り替え";
+"shortcut.zoneDragSpan" = "   … %@  複数のゾーンを結合 · Esc  キャンセル";
+"shortcut.edgeDrag" = "端/隅へドラッグ  列または列の半分";
+"shortcut.topDrag" = "上端中央へドラッグ  レイアウト付きスナップバー";
+
+/* More apps (the other tools of the package) */
+"menu.moreApps" = "こちらのアプリもおすすめ";
+"moreApps.tappi" = "アプリではなくウインドウ間で Alt+Tab";
+"moreApps.klemmi" = "Win+V のようなクリップボード履歴、各項目のコピー元アプリ付き";
+"moreApps.snapboard" = "Snipping Tool 風のスクリーンショットをそのままクリップボードへ";
+"moreApps.wholePackage" = "パッケージ全体を見る…";
+
+/* Workspaces */
+"workspace.saveCurrent" = "現在の配置を保存…";
+"workspace.restore" = "復元";
+"workspace.overwrite" = "現在の配置で上書き";
+"workspace.rename" = "名称変更…";
+"workspace.defaultName" = "ワークスペース %d";
+"workspace.saveTitle" = "ワークスペースを保存";
+"workspace.renameTitle" = "ワークスペースの名称を変更";
+"workspace.prompt.info" = "表示中のすべてのウインドウを位置とディスプレイごとに保存します。";
+
+/* Common buttons */
+"common.save" = "保存";
+"common.cancel" = "キャンセル";
+"common.delete" = "削除";
+
+/* Snap Assist and zone overlay */
+"assist.title" = "このゾーンに配置するウインドウを選択";
+"zones.hint" = "スクロールホイール / 1–9 / Tab: レイアウト切り替え · %@: ゾーンを結合 · Esc: キャンセル";
+"zones.activeLayoutHint" = "このディスプレイのアクティブなレイアウト";
+
+/* Layout editor */
+"editor.newLayout" = "新規レイアウト";
+"editor.duplicate" = "複製";
+"editor.namePlaceholder" = "名前";
+"editor.display" = "ディスプレイ:";
+"editor.portrait" = "縦向き";
+"editor.customLayouts" = "マイレイアウト";
+"editor.templates" = "このディスプレイ用のテンプレート";
+"editor.activeOnDisplay" = "✓ このディスプレイでアクティブ";
+"editor.makeActive" = "アクティブにする";
+"editor.activeTag" = "アクティブ";
+"editor.shortcutActivates" = "⌃⌥%d でこのレイアウトをアクティブにします。";
+"editor.hint.custom" = "クリック: ゾーンを縦に分割 · ⇧-クリック: 横に分割 · 区切り線をドラッグ: サイズ変更 (¼ ⅓ ½ ⅔ ¾ でスナップ) · ⌥-クリック: ゾーンを削除。";
+"editor.hint.builtIn" = "テンプレート – 編集するには「複製」します。";
+"editor.template.empty" = "空 (ゾーン 1 つ)";
+"editor.template.columns" = "%d 列";
+"editor.template.grid" = "グリッド %d×%d";
+"editor.copyName" = "%@ (コピー)";
+"editor.deleteConfirm" = "“%@”を削除しますか?";
+
+/* Built-in layout names (keyed by layout id) */
+"layout.rows-2" = "行 ½";
+"layout.rows-3" = "行 ⅓";
+"layout.rows-2-1" = "行 ⅔ + ⅓";
+"layout.grid-2x2" = "グリッド 2×2";
+"layout.grid-3x2" = "グリッド 3×2";
+"layout.cols-1-1" = "2 分割";
+"layout.cols-1-1-1" = "3 分割";
+"layout.cols-1-1-1-1" = "4 分割";
+"layout.half-stack" = "½ + スタック";
+"layout.thirds-stack" = "3 分割 + スタック";
+"layout.stacks-center" = "スタック · ½ · スタック";

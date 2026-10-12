@@ -46,7 +46,7 @@ final class ZoneOverlay {
     /// Briefly shows a layout, then fades out – confirmation for ⌃⌥1…9.
     func flash(layout: Layout, number: Int, count: Int, on screen: NSScreen) {
         show(layout: layout, number: number, count: count, on: screen, highlighted: [],
-             hint: "Aktives Layout für diesen Monitor")
+             hint: L10n.tr("zones.activeLayoutHint"))
         let work = DispatchWorkItem { [weak self] in
             MainActor.assumeIsolated { self?.hide() }
         }
@@ -119,7 +119,7 @@ private final class ZoneOverlayView: NSView {
             label.draw(at: NSPoint(x: inset.midX - size.width / 2, y: inset.midY - size.height / 2))
         }
 
-        drawHeader(title: "\(layout.name)   \(number)/\(count)")
+        drawHeader(title: "\(layout.displayName)   \(number)/\(count)")
     }
 
     private func drawHeader(title: String) {

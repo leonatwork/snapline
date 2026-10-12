@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>de</string>
+	<string>en</string>
 	<key>CFBundleDisplayName</key>
 	<string>Snapline</string>
 	<key>CFBundleExecutable</key>
@@ -12,6 +12,19 @@
 	<string>AppIcon</string>
 	<key>CFBundleIdentifier</key>
 	<string>io.github.leonatwork.snapline</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>de</string>
+		<string>fr</string>
+		<string>es</string>
+		<string>it</string>
+		<string>pt-BR</string>
+		<string>nl</string>
+		<string>ja</string>
+		<string>zh-Hans</string>
+		<string>ko</string>
+	</array>
 	<key>CFBundleName</key>
 	<string>Snapline</string>
 	<key>CFBundlePackageType</key>
@@ -29,6 +42,6 @@
 	<key>NSHighResolutionCapable</key>
 	<true/>
 	<key>NSHumanReadableCopyright</key>
-	<string>Windows-11-Fensterverwaltung für macOS</string>
+	<string>Windows 11 window management for macOS</string>
 </dict>
 </plist>

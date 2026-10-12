@@ -1,0 +1,122 @@
+/* Snapline – pt-BR. Keys must match en.lproj; check with scripts/check-localizations.sh. */
+
+/* Main menu (keyboard shortcuts in text fields) */
+"mainMenu.closeWindow" = "Fechar Janela";
+"mainMenu.edit" = "Editar";
+"mainMenu.undo" = "Desfazer";
+"mainMenu.cut" = "Recortar";
+"mainMenu.copy" = "Copiar";
+"mainMenu.paste" = "Colar";
+"mainMenu.selectAll" = "Selecionar Tudo";
+
+/* Menu bar menu */
+"menu.quit" = "Encerrar Snapline";
+"menu.warning.accessibility" = "⚠️ Conceder acesso à Acessibilidade…";
+"menu.warning.eventTap" = "⚠️ Event tap inativo – reiniciar o Snapline";
+"menu.warning.nativeTiling" = "⚠️ A organização lado a lado do macOS está ativa – desativar…";
+"menu.warning.screenRecording" = "⚠️ Permitir Gravação de Tela para pré-visualizações ao vivo…";
+"menu.restartForPreviews" = "↻ Reiniciar para ativar as pré-visualizações ao vivo";
+"menu.showLayouts" = "Snap Layouts para a janela ativa";
+"menu.activeLayout" = "Layout ativo";
+"menu.activeLayoutOnScreen" = "Layout ativo – %@";
+"menu.editLayouts" = "Editar layouts…";
+"menu.workspaces" = "Áreas de trabalho";
+"menu.behavior" = "Comportamento";
+"menu.zoneKey" = "Tecla para arrastar para zonas";
+"menu.gap" = "Espaço entre janelas";
+"menu.edgeColumns" = "Colunas de borda em telas 32:9";
+"menu.shortcuts" = "Atalhos de teclado e gestos";
+"menu.launchAtLogin" = "Abrir ao iniciar sessão";
+
+/* Behavior submenu */
+"behavior.dragSnap" = "Arrastar janelas para as bordas (Aero Snap)";
+"behavior.zoneDrag" = "%@ + arrastar: para as zonas do layout ativo";
+"behavior.hoverFlyout" = "Snap Layouts ao passar sobre o botão verde";
+"behavior.suppressNativeMenu" = "Ocultar o menu do macOS no botão verde";
+"behavior.snapAssist" = "Snap Assist";
+"behavior.livePreviews" = "Pré-visualizações ao vivo no Snap Assist";
+"behavior.restoreOnDrag" = "Tamanho original ao arrastar para fora";
+"behavior.launchMissingApps" = "Áreas de trabalho: abrir apps ausentes";
+
+/* Zone key, gap and column submenus */
+"zoneKey.command" = "⌘ Command";
+"zoneKey.option" = "⌥ Option";
+"zoneKey.shift" = "⇧ Shift (como no FancyZones)";
+"gap.none" = "Sem espaço";
+"gap.points" = "%d pt";
+"columns.halves" = "Metades";
+"columns.thirds" = "Terços";
+"columns.quarters" = "Quartos";
+
+/* Keyboard shortcuts & gestures submenu */
+"shortcut.flyout" = "⌃⌥Z  Snap Layouts, depois um número para layout e zona";
+"shortcut.activeLayout" = "⌃⌥1…9  Escolher o layout ativo da tela";
+"shortcut.workspace" = "⌃⌥⇧1…9  Restaurar área de trabalho";
+"shortcut.leftRight" = "⌃⌥←/→  Coluna à esquerda/direita, depois a próxima tela";
+"shortcut.up" = "⌃⌥↑  Maximizar / metade superior da coluna";
+"shortcut.down" = "⌃⌥↓  Restaurar / metade inferior / minimizar";
+"shortcut.zoneDrag" = "%@ + arrastar  Soltar nas zonas do layout ativo";
+"shortcut.zoneDragSwitch" = "   … Roda do mouse / 1–9 / Tab  Trocar layout";
+"shortcut.zoneDragSpan" = "   … %@  Unir várias zonas · Esc  Cancelar";
+"shortcut.edgeDrag" = "Arrastar para borda/canto  Coluna ou meia coluna";
+"shortcut.topDrag" = "Arrastar para o topo central  Barra Snap com layouts";
+
+/* More apps (the other tools of the package) */
+"menu.moreApps" = "Outros apps que você pode gostar";
+"moreApps.tappi" = "Alt+Tab entre janelas, não entre apps";
+"moreApps.klemmi" = "Histórico da área de transferência como Win+V, com o app de origem de cada item";
+"moreApps.snapboard" = "Capturas de tela no estilo Ferramenta de Captura, direto para a área de transferência";
+"moreApps.wholePackage" = "O pacote completo…";
+
+/* Workspaces */
+"workspace.saveCurrent" = "Salvar a disposição atual…";
+"workspace.restore" = "Restaurar";
+"workspace.overwrite" = "Substituir pela disposição atual";
+"workspace.rename" = "Renomear…";
+"workspace.defaultName" = "Área de trabalho %d";
+"workspace.saveTitle" = "Salvar área de trabalho";
+"workspace.renameTitle" = "Renomear área de trabalho";
+"workspace.prompt.info" = "Todas as janelas visíveis são salvas com sua posição e tela.";
+
+/* Common buttons */
+"common.save" = "Salvar";
+"common.cancel" = "Cancelar";
+"common.delete" = "Apagar";
+
+/* Snap Assist and zone overlay */
+"assist.title" = "Escolha uma janela para esta zona";
+"zones.hint" = "Roda do mouse / 1–9 / Tab: trocar layout · %@: unir zonas · Esc: cancelar";
+"zones.activeLayoutHint" = "Layout ativo para esta tela";
+
+/* Layout editor */
+"editor.newLayout" = "Novo layout";
+"editor.duplicate" = "Duplicar";
+"editor.namePlaceholder" = "Nome";
+"editor.display" = "Tela:";
+"editor.portrait" = "Retrato";
+"editor.customLayouts" = "Meus layouts";
+"editor.templates" = "Modelos para esta tela";
+"editor.activeOnDisplay" = "✓ Ativo nesta tela";
+"editor.makeActive" = "Tornar ativo";
+"editor.activeTag" = "ativo";
+"editor.shortcutActivates" = "⌃⌥%d ativa este layout.";
+"editor.hint.custom" = "Clique: dividir a zona na vertical · ⇧-clique: dividir na horizontal · Arrastar um divisor: redimensionar (encaixa em ¼ ⅓ ½ ⅔ ¾) · ⌥-clique: remover zona.";
+"editor.hint.builtIn" = "Modelo – para editar, “Duplicar”.";
+"editor.template.empty" = "Vazio (uma zona)";
+"editor.template.columns" = "%d colunas";
+"editor.template.grid" = "Grade %d×%d";
+"editor.copyName" = "%@ (cópia)";
+"editor.deleteConfirm" = "Apagar “%@”?";
+
+/* Built-in layout names (keyed by layout id) */
+"layout.rows-2" = "Linhas ½";
+"layout.rows-3" = "Linhas ⅓";
+"layout.rows-2-1" = "Linhas ⅔ + ⅓";
+"layout.grid-2x2" = "Grade 2×2";
+"layout.grid-3x2" = "Grade 3×2";
+"layout.cols-1-1" = "Metades";
+"layout.cols-1-1-1" = "Terços";
+"layout.cols-1-1-1-1" = "Quartos";
+"layout.half-stack" = "½ + pilha";
+"layout.thirds-stack" = "Terços + pilha";
+"layout.stacks-center" = "Pilha · ½ · pilha";

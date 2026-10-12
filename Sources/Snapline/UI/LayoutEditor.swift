@@ -1,7 +1,7 @@
 import AppKit
 import SnaplineCore
 
-/// "Layouts bearbeiten…": list of layouts on the left, monitor-shaped editor on the right.
+/// "Edit layouts…": list of layouts on the left, monitor-shaped editor on the right.
 @MainActor
 final class LayoutEditorController: NSWindowController, NSWindowDelegate, NSTableViewDataSource, NSTableViewDelegate, NSTextFieldDelegate {
     static let shared = LayoutEditorController()
@@ -79,16 +79,17 @@ final class LayoutEditorController: NSWindowController, NSWindowDelegate, NSTabl
         let addButton = NSPopUpButton(frame: .zero, pullsDown: true)
         addButton.bezelStyle = .rounded
         let addMenu = addButton.menu!
-        addMenu.addItem(withTitle: "Neues Layout", action: nil, keyEquivalent: "")
-        for (title, tree) in Self.templates {
+        addMenu.addItem(withTitle: L10n.tr("editor.newLayout"), action: nil, keyEquivalent: "")
+        for (index, (title, tree)) in Self.templates.enumerated() {
             let item = NSMenuItem(title: title, action: #selector(addFromTemplate(_:)), keyEquivalent: "")
+            item.tag = index
             item.target = self
             item.representedObject = TreeBox(tree)
             addMenu.addItem(item)
         }
 
-        configure(duplicateButton, title: "Duplizieren", action: #selector(duplicate))
-        configure(deleteButton, title: "Löschen", action: #selector(deleteLayout))
+        configure(duplicateButton, title: L10n.tr("editor.duplicate"), action: #selector(duplicate))
+        configure(deleteButton, title: L10n.tr("common.delete"), action: #selector(deleteLayout))
         configure(upButton, symbol: "chevron.up", action: #selector(moveLayoutUp))
         configure(downButton, symbol: "chevron.down", action: #selector(moveLayoutDown))
 
@@ -96,7 +97,7 @@ final class LayoutEditorController: NSWindowController, NSWindowDelegate, NSTabl
         sidebarButtons.spacing = 6
 
         // Header.
-        nameField.placeholderString = "Name"
+        nameField.placeholderString = L10n.tr("editor.namePlaceholder")
         nameField.font = .systemFont(ofSize: 15, weight: .semibold)
         nameField.delegate = self
         screenPopup.target = self
@@ -105,7 +106,7 @@ final class LayoutEditorController: NSWindowController, NSWindowDelegate, NSTabl
         activeButton.target = self
         activeButton.action = #selector(makeActive)
 
-        let monitorLabel = NSTextField(labelWithString: "Monitor:")
+        let monitorLabel = NSTextField(labelWithString: L10n.tr("editor.display"))
         let header = NSStackView(views: [nameField, monitorLabel, screenPopup, activeButton])
         header.spacing = 10
         nameField.setContentHuggingPriority(.defaultLow, for: .horizontal)
@@ -164,7 +165,7 @@ final class LayoutEditorController: NSWindowController, NSWindowDelegate, NSTabl
             case .superWide: ratio = "32:9"
             case .wide: ratio = "21:9"
             case .standard: ratio = "16:9"
-            case .portrait: ratio = "Hochformat"
+            case .portrait: ratio = L10n.tr("editor.portrait")
             }
             screenPopup.addItem(withTitle: "\(s.localizedName) (\(ratio))")
         }
@@ -182,9 +183,9 @@ final class LayoutEditorController: NSWindowController, NSWindowDelegate, NSTabl
         let custom = all.enumerated().filter { $0.element.isCustom }
         let builtIn = all.enumerated().filter { !$0.element.isCustom }
 
-        rows = [.header("Eigene Layouts")]
+        rows = [.header(L10n.tr("editor.customLayouts"))]
         rows += custom.map { .layout($0.element, number: $0.offset + 1) }
-        rows.append(.header("Vorlagen für diesen Monitor"))
+        rows.append(.header(L10n.tr("editor.templates")))
         rows += builtIn.map { .layout($0.element, number: $0.offset + 1) }
 
         table.reloadData()
@@ -207,23 +208,23 @@ final class LayoutEditorController: NSWindowController, NSWindowDelegate, NSTabl
         editor.show(tree: custom?.root, zones: layout.zones, editable: custom != nil,
                     screenSize: screen.frame.size)
 
-        nameField.stringValue = layout.name
+        nameField.stringValue = layout.displayName
         nameField.isEditable = custom != nil
         nameField.isBezeled = custom != nil
         nameField.drawsBackground = custom != nil
 
         let isActive = store.activeLayout(for: screen).id == layout.id
-        activeButton.title = isActive ? "✓ Aktiv auf diesem Monitor" : "Als aktiv setzen"
+        activeButton.title = isActive ? L10n.tr("editor.activeOnDisplay") : L10n.tr("editor.makeActive")
         activeButton.isEnabled = !isActive
         deleteButton.isEnabled = custom != nil
         upButton.isEnabled = custom != nil
         downButton.isEnabled = custom != nil
 
         let number = (store.layouts(for: screen).firstIndex { $0.id == layout.id } ?? 0) + 1
-        let shortcut = number <= 9 ? "⌃⌥\(number) aktiviert dieses Layout. " : ""
+        let shortcut = number <= 9 ? L10n.tr("editor.shortcutActivates", number) : ""
         hint.stringValue = custom != nil
-            ? "Klick: Zone senkrecht teilen · ⇧-Klick: waagerecht teilen · Trennlinie ziehen: Größe (rastet bei ¼ ⅓ ½ ⅔ ¾ ein) · ⌥-Klick: Zone entfernen. \(shortcut)"
-            : "Vorlage – zum Bearbeiten „Duplizieren“. \(shortcut)"
+            ? L10n.tr("editor.hint.custom") + " " + shortcut
+            : L10n.tr("editor.hint.builtIn") + " " + shortcut
     }
 
     // MARK: Table
@@ -281,20 +282,21 @@ final class LayoutEditorController: NSWindowController, NSWindowDelegate, NSTabl
             ZoneNode.from(zones: Layout.grid("", "", columns: c, rows: r).zones) ?? .leaf
         }
         return [
-            ("Leer (eine Zone)", .leaf),
-            ("2 Spalten", cols([1, 1])),
-            ("3 Spalten", cols([1, 1, 1])),
-            ("4 Spalten", cols([1, 1, 1, 1])),
+            // Index 0 is the empty template, see addFromTemplate.
+            (L10n.tr("editor.template.empty"), .leaf),
+            (L10n.tr("editor.template.columns", 2), cols([1, 1])),
+            (L10n.tr("editor.template.columns", 3), cols([1, 1, 1])),
+            (L10n.tr("editor.template.columns", 4), cols([1, 1, 1, 1])),
             ("20 · 60 · 20", cols([1, 3, 1])),
             ("25 · 50 · 25", cols([1, 2, 1])),
-            ("Raster 2×2", grid(2, 2)),
-            ("Raster 3×2", grid(3, 2)),
+            (L10n.tr("editor.template.grid", 2, 2), grid(2, 2)),
+            (L10n.tr("editor.template.grid", 3, 2), grid(3, 2)),
         ]
     }()
 
     @objc private func addFromTemplate(_ sender: NSMenuItem) {
         guard let box = sender.representedObject as? TreeBox else { return }
-        let layout = CustomLayout(id: UUID().uuidString, name: sender.title == "Leer (eine Zone)" ? "Neues Layout" : sender.title,
+        let layout = CustomLayout(id: UUID().uuidString, name: sender.tag == 0 ? L10n.tr("editor.newLayout") : sender.title,
                                   root: box.tree)
         selectedID = layout.id
         store.upsert(layout)
@@ -304,7 +306,7 @@ final class LayoutEditorController: NSWindowController, NSWindowDelegate, NSTabl
     @objc private func duplicate() {
         guard let layout = selectedLayout else { return }
         let root = store.custom(id: layout.id)?.root ?? ZoneNode.from(zones: layout.zones) ?? .leaf
-        let copy = CustomLayout(id: UUID().uuidString, name: "\(layout.name) (Kopie)", root: root)
+        let copy = CustomLayout(id: UUID().uuidString, name: L10n.tr("editor.copyName", layout.displayName), root: root)
         selectedID = copy.id
         store.upsert(copy)
     }
@@ -312,9 +314,9 @@ final class LayoutEditorController: NSWindowController, NSWindowDelegate, NSTabl
     @objc private func deleteLayout() {
         guard let layout = selectedLayout, layout.isCustom else { return }
         let alert = NSAlert()
-        alert.messageText = "„\(layout.name)“ löschen?"
-        alert.addButton(withTitle: "Löschen")
-        alert.addButton(withTitle: "Abbrechen")
+        alert.messageText = L10n.tr("editor.deleteConfirm", layout.displayName)
+        alert.addButton(withTitle: L10n.tr("common.delete"))
+        alert.addButton(withTitle: L10n.tr("common.cancel"))
         alert.buttons[0].hasDestructiveAction = true
         guard alert.runModal() == .alertFirstButtonReturn else { return }
         selectedID = nil
@@ -359,10 +361,10 @@ private final class LayoutRowView: NSView {
         self.aspect = aspect
         super.init(frame: .zero)
 
-        let name = NSTextField(labelWithString: layout.name)
+        let name = NSTextField(labelWithString: layout.displayName)
         name.font = .systemFont(ofSize: 13, weight: active ? .semibold : .regular)
         name.lineBreakMode = .byTruncatingTail
-        let detail = NSTextField(labelWithString: (number <= 9 ? "⌃⌥\(number)" : "") + (active ? "  ·  aktiv" : ""))
+        let detail = NSTextField(labelWithString: (number <= 9 ? "⌃⌥\(number)" : "") + (active ? "  ·  " + L10n.tr("editor.activeTag") : ""))
         detail.font = .systemFont(ofSize: 11)
         detail.textColor = active ? .controlAccentColor : .secondaryLabelColor
 

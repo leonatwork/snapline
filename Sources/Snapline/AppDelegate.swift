@@ -62,19 +62,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let main = NSMenu()
         let appItem = NSMenuItem()
         let appMenu = NSMenu()
-        appMenu.addItem(NSMenuItem(title: "Fenster schließen", action: #selector(NSWindow.performClose(_:)), keyEquivalent: "w"))
-        appMenu.addItem(NSMenuItem(title: "Snapline beenden", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
+        appMenu.addItem(NSMenuItem(title: L10n.tr("mainMenu.closeWindow"), action: #selector(NSWindow.performClose(_:)), keyEquivalent: "w"))
+        appMenu.addItem(NSMenuItem(title: L10n.tr("menu.quit"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
         appItem.submenu = appMenu
         main.addItem(appItem)
 
         let editItem = NSMenuItem()
-        let edit = NSMenu(title: "Bearbeiten")
-        edit.addItem(NSMenuItem(title: "Widerrufen", action: Selector(("undo:")), keyEquivalent: "z"))
+        let edit = NSMenu(title: L10n.tr("mainMenu.edit"))
+        edit.addItem(NSMenuItem(title: L10n.tr("mainMenu.undo"), action: Selector(("undo:")), keyEquivalent: "z"))
         edit.addItem(.separator())
-        edit.addItem(NSMenuItem(title: "Ausschneiden", action: #selector(NSText.cut(_:)), keyEquivalent: "x"))
-        edit.addItem(NSMenuItem(title: "Kopieren", action: #selector(NSText.copy(_:)), keyEquivalent: "c"))
-        edit.addItem(NSMenuItem(title: "Einsetzen", action: #selector(NSText.paste(_:)), keyEquivalent: "v"))
-        edit.addItem(NSMenuItem(title: "Alles auswählen", action: #selector(NSText.selectAll(_:)), keyEquivalent: "a"))
+        edit.addItem(NSMenuItem(title: L10n.tr("mainMenu.cut"), action: #selector(NSText.cut(_:)), keyEquivalent: "x"))
+        edit.addItem(NSMenuItem(title: L10n.tr("mainMenu.copy"), action: #selector(NSText.copy(_:)), keyEquivalent: "c"))
+        edit.addItem(NSMenuItem(title: L10n.tr("mainMenu.paste"), action: #selector(NSText.paste(_:)), keyEquivalent: "v"))
+        edit.addItem(NSMenuItem(title: L10n.tr("mainMenu.selectAll"), action: #selector(NSText.selectAll(_:)), keyEquivalent: "a"))
         editItem.submenu = edit
         main.addItem(editItem)
         NSApp.mainMenu = main
@@ -100,97 +100,101 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         // Warnings first, so they can't be missed.
         if !AXIsProcessTrusted() {
-            menu.addItem(item("⚠️ Bedienungshilfen-Zugriff erteilen…", #selector(openAccessibilitySettings)))
+            menu.addItem(item(L10n.tr("menu.warning.accessibility"), #selector(openAccessibilitySettings)))
         } else if !tap.isInstalled {
-            menu.addItem(item("⚠️ Event Tap nicht aktiv – Snapline neu starten", #selector(relaunch)))
+            menu.addItem(item(L10n.tr("menu.warning.eventTap"), #selector(relaunch)))
         }
         if NativeTiling.conflicts && (Settings.dragSnap || Settings.optionDragZones) {
-            menu.addItem(item("⚠️ macOS-Kacheln ist noch aktiv – deaktivieren…", #selector(openTilingSettings)))
+            menu.addItem(item(L10n.tr("menu.warning.nativeTiling"), #selector(openTilingSettings)))
         }
         let thumbs = ThumbnailProvider.shared
         if Settings.livePreviews && !thumbs.isGranted {
-            menu.addItem(item("⚠️ Bildschirmaufnahme für Live-Vorschau erlauben…", #selector(openScreenCaptureSettings)))
+            menu.addItem(item(L10n.tr("menu.warning.screenRecording"), #selector(openScreenCaptureSettings)))
         } else if Settings.livePreviews && thumbs.needsRestart {
-            menu.addItem(item("↻ Neu starten, um Live-Vorschau zu aktivieren", #selector(relaunch)))
+            menu.addItem(item(L10n.tr("menu.restartForPreviews"), #selector(relaunch)))
         }
         menu.addItem(.separator())
 
         // Layouts.
-        let layoutsItem = item("Snap-Layouts für aktives Fenster", #selector(showLayouts))
+        let layoutsItem = item(L10n.tr("menu.showLayouts"), #selector(showLayouts))
         layoutsItem.keyEquivalent = "z"
         layoutsItem.keyEquivalentModifierMask = [.control, .option]
         menu.addItem(layoutsItem)
         for screen in NSScreen.screens {
-            menu.addItem(submenu(NSScreen.screens.count > 1 ? "Aktives Layout – \(screen.localizedName)" : "Aktives Layout",
+            menu.addItem(submenu(NSScreen.screens.count > 1
+                                    ? L10n.tr("menu.activeLayoutOnScreen", screen.localizedName)
+                                    : L10n.tr("menu.activeLayout"),
                                  activeLayoutMenu(for: screen)))
         }
-        menu.addItem(item("Layouts bearbeiten…", #selector(openEditor)))
+        menu.addItem(item(L10n.tr("menu.editLayouts"), #selector(openEditor)))
         menu.addItem(.separator())
 
         // Workspaces.
-        menu.addItem(submenu("Arbeitsbereiche", workspacesMenu()))
+        menu.addItem(submenu(L10n.tr("menu.workspaces"), workspacesMenu()))
         menu.addItem(.separator())
 
         // Behaviour.
         let behaviour = NSMenu()
-        behaviour.addItem(toggle("Fenster an Ränder ziehen (Aero Snap)", Settings.dragSnap, #selector(toggleDragSnap)))
-        behaviour.addItem(toggle("\(Settings.zoneModifier.symbol) + Ziehen: in Zonen des aktiven Layouts", Settings.optionDragZones, #selector(toggleOptionZones)))
-        behaviour.addItem(toggle("Snap-Layouts beim Hover über grünen Knopf", Settings.hoverFlyout, #selector(toggleHover)))
-        behaviour.addItem(toggle("macOS-Menü am grünen Knopf unterdrücken", Settings.suppressNativeMenu, #selector(toggleSuppress)))
-        behaviour.addItem(toggle("Snap Assist", Settings.snapAssist, #selector(toggleAssist)))
-        behaviour.addItem(toggle("Live-Vorschau in Snap Assist", Settings.livePreviews, #selector(togglePreviews)))
-        behaviour.addItem(toggle("Ursprungsgröße beim Wegziehen", Settings.restoreOnDrag, #selector(toggleRestore)))
-        behaviour.addItem(toggle("Arbeitsbereiche: fehlende Apps starten", Settings.launchAppsForWorkspaces, #selector(toggleLaunchApps)))
-        menu.addItem(submenu("Verhalten", behaviour))
+        behaviour.addItem(toggle(L10n.tr("behavior.dragSnap"), Settings.dragSnap, #selector(toggleDragSnap)))
+        behaviour.addItem(toggle(L10n.tr("behavior.zoneDrag", Settings.zoneModifier.symbol), Settings.optionDragZones, #selector(toggleOptionZones)))
+        behaviour.addItem(toggle(L10n.tr("behavior.hoverFlyout"), Settings.hoverFlyout, #selector(toggleHover)))
+        behaviour.addItem(toggle(L10n.tr("behavior.suppressNativeMenu"), Settings.suppressNativeMenu, #selector(toggleSuppress)))
+        behaviour.addItem(toggle(L10n.tr("behavior.snapAssist"), Settings.snapAssist, #selector(toggleAssist)))
+        behaviour.addItem(toggle(L10n.tr("behavior.livePreviews"), Settings.livePreviews, #selector(togglePreviews)))
+        behaviour.addItem(toggle(L10n.tr("behavior.restoreOnDrag"), Settings.restoreOnDrag, #selector(toggleRestore)))
+        behaviour.addItem(toggle(L10n.tr("behavior.launchMissingApps"), Settings.launchAppsForWorkspaces, #selector(toggleLaunchApps)))
+        menu.addItem(submenu(L10n.tr("menu.behavior"), behaviour))
 
         let modifierMenu = NSMenu()
-        for (modifier, title) in [(ZoneModifier.command, "⌘ Befehl"), (.option, "⌥ Wahl"), (.shift, "⇧ Umschalt (wie FancyZones)")] {
+        for (modifier, title) in [(ZoneModifier.command, L10n.tr("zoneKey.command")), (.option, L10n.tr("zoneKey.option")),
+                                  (.shift, L10n.tr("zoneKey.shift"))] {
             let i = toggle(title, Settings.zoneModifier == modifier, #selector(setZoneModifier(_:)))
             i.representedObject = modifier.rawValue
             modifierMenu.addItem(i)
         }
-        menu.addItem(submenu("Taste für Zonen-Ziehen", modifierMenu))
+        menu.addItem(submenu(L10n.tr("menu.zoneKey"), modifierMenu))
 
         let gapMenu = NSMenu()
         for gap in [0, 4, 8, 12, 16] {
-            let i = toggle(gap == 0 ? "Kein Abstand" : "\(gap) pt", Int(Settings.gap) == gap, #selector(setGap(_:)))
+            let i = toggle(gap == 0 ? L10n.tr("gap.none") : L10n.tr("gap.points", gap), Int(Settings.gap) == gap, #selector(setGap(_:)))
             i.tag = gap
             gapMenu.addItem(i)
         }
-        menu.addItem(submenu("Abstand zwischen Fenstern", gapMenu))
+        menu.addItem(submenu(L10n.tr("menu.gap"), gapMenu))
 
         let columnsMenu = NSMenu()
-        for (count, title) in [(2, "Hälften"), (3, "Drittel"), (4, "Viertel")] {
+        for (count, title) in [(2, L10n.tr("columns.halves")), (3, L10n.tr("columns.thirds")), (4, L10n.tr("columns.quarters"))] {
             let i = toggle(title, Settings.superWideColumns == count, #selector(setColumns(_:)))
             i.tag = count
             columnsMenu.addItem(i)
         }
-        menu.addItem(submenu("Rand-Spalten auf 32:9-Monitoren", columnsMenu))
+        menu.addItem(submenu(L10n.tr("menu.edgeColumns"), columnsMenu))
 
         let shortcuts = NSMenu()
         for line in [
-            "⌃⌥Z  Snap-Layouts, dann Ziffer für Layout und Zone",
-            "⌃⌥1…9  Aktives Layout des Monitors wählen",
-            "⌃⌥⇧1…9  Arbeitsbereich wiederherstellen",
-            "⌃⌥←/→  Spalte links/rechts, weiter zum nächsten Monitor",
-            "⌃⌥↑  Maximieren / obere Hälfte der Spalte",
-            "⌃⌥↓  Wiederherstellen / untere Hälfte / Minimieren",
-            "\(Settings.zoneModifier.symbol) + Ziehen  In Zonen des aktiven Layouts ablegen",
-            "   … Mausrad / 1–9 / Tab  Layout wechseln",
-            "   … \(Settings.zoneModifier.spanSymbol)  mehrere Zonen verbinden · Esc  abbrechen",
-            "Ziehen an Rand/Ecke  Spalte bzw. halbe Spalte",
-            "Ziehen oben Mitte  Snap-Leiste mit Layouts",
+            L10n.tr("shortcut.flyout"),
+            L10n.tr("shortcut.activeLayout"),
+            L10n.tr("shortcut.workspace"),
+            L10n.tr("shortcut.leftRight"),
+            L10n.tr("shortcut.up"),
+            L10n.tr("shortcut.down"),
+            L10n.tr("shortcut.zoneDrag", Settings.zoneModifier.symbol),
+            L10n.tr("shortcut.zoneDragSwitch"),
+            L10n.tr("shortcut.zoneDragSpan", Settings.zoneModifier.spanSymbol),
+            L10n.tr("shortcut.edgeDrag"),
+            L10n.tr("shortcut.topDrag"),
         ] {
             let i = NSMenuItem(title: line, action: nil, keyEquivalent: "")
             i.isEnabled = false
             shortcuts.addItem(i)
         }
-        menu.addItem(submenu("Tastenkürzel & Gesten", shortcuts))
+        menu.addItem(submenu(L10n.tr("menu.shortcuts"), shortcuts))
         menu.addItem(.separator())
 
-        menu.addItem(toggle("Bei Anmeldung starten", Settings.launchAtLogin, #selector(toggleLaunchAtLogin)))
+        menu.addItem(toggle(L10n.tr("menu.launchAtLogin"), Settings.launchAtLogin, #selector(toggleLaunchAtLogin)))
+        menu.addItem(submenu(L10n.tr("menu.moreApps"), moreAppsMenu()))
         menu.addItem(.separator())
-        menu.addItem(NSMenuItem(title: "Snapline beenden", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
+        menu.addItem(NSMenuItem(title: L10n.tr("menu.quit"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
     }
 
     private func activeLayoutMenu(for screen: NSScreen) -> NSMenu {
@@ -198,7 +202,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let layouts = LayoutStore.shared.layouts(for: screen)
         let active = LayoutStore.shared.activeLayoutIndex(for: screen)
         for (i, layout) in layouts.enumerated() {
-            let entry = toggle(layout.name, i == active, #selector(selectActiveLayout(_:)))
+            let entry = toggle(layout.displayName, i == active, #selector(selectActiveLayout(_:)))
             entry.representedObject = ActiveLayoutChoice(screen: screen, layout: layout, number: i + 1, count: layouts.count)
             if i < 9 {
                 entry.keyEquivalent = "\(i + 1)"
@@ -211,22 +215,22 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     private func workspacesMenu() -> NSMenu {
         let menu = NSMenu()
-        menu.addItem(item("Aktuelle Anordnung speichern…", #selector(saveWorkspace)))
+        menu.addItem(item(L10n.tr("workspace.saveCurrent"), #selector(saveWorkspace)))
         let all = LayoutStore.shared.workspaces
         if !all.isEmpty { menu.addItem(.separator()) }
         for (i, ws) in all.enumerated() {
             let sub = NSMenu()
-            let restore = item("Wiederherstellen", #selector(restoreWorkspace(_:)))
+            let restore = item(L10n.tr("workspace.restore"), #selector(restoreWorkspace(_:)))
             restore.representedObject = ws.id
             sub.addItem(restore)
-            let overwrite = item("Mit aktueller Anordnung überschreiben", #selector(overwriteWorkspace(_:)))
+            let overwrite = item(L10n.tr("workspace.overwrite"), #selector(overwriteWorkspace(_:)))
             overwrite.representedObject = ws.id
             sub.addItem(overwrite)
-            let rename = item("Umbenennen…", #selector(renameWorkspace(_:)))
+            let rename = item(L10n.tr("workspace.rename"), #selector(renameWorkspace(_:)))
             rename.representedObject = ws.id
             sub.addItem(rename)
             sub.addItem(.separator())
-            let delete = item("Löschen", #selector(deleteWorkspace(_:)))
+            let delete = item(L10n.tr("common.delete"), #selector(deleteWorkspace(_:)))
             delete.representedObject = ws.id
             sub.addItem(delete)
             let apps = Array(NSOrderedSet(array: ws.windows.map(\.appName))) as? [String] ?? []
@@ -237,6 +241,21 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             }
             menu.addItem(entry)
         }
+        return menu
+    }
+
+    /// The other tools of the "I love macOS, but I miss some Windows features" package.
+    private func moreAppsMenu() -> NSMenu {
+        let menu = NSMenu()
+        for app in PackageApps.others {
+            let entry = item("\(app.name) – \(L10n.tr(app.descriptionKey))", #selector(openLink(_:)))
+            entry.representedObject = app.url
+            menu.addItem(entry)
+        }
+        menu.addItem(.separator())
+        let all = item(L10n.tr("moreApps.wholePackage"), #selector(openLink(_:)))
+        all.representedObject = PackageApps.packageURL
+        menu.addItem(all)
         return menu
     }
 
@@ -289,10 +308,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @objc private func openEditor() { LayoutEditorController.shared.present() }
 
     @objc private func saveWorkspace() {
-        let name = "Arbeitsbereich \(LayoutStore.shared.workspaces.count + 1)"
+        let name = L10n.tr("workspace.defaultName", LayoutStore.shared.workspaces.count + 1)
         // Capture before the alert takes focus.
         let snapshot = workspaces.capture(name: name)
-        guard let chosen = WorkspaceController.promptForName(title: "Arbeitsbereich speichern", defaultName: name) else { return }
+        guard let chosen = WorkspaceController.promptForName(title: L10n.tr("workspace.saveTitle"), defaultName: name) else { return }
         var ws = snapshot
         ws.name = chosen
         LayoutStore.shared.upsert(ws)
@@ -315,7 +334,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     @objc private func renameWorkspace(_ sender: NSMenuItem) {
         guard var ws = workspace(sender),
-              let name = WorkspaceController.promptForName(title: "Arbeitsbereich umbenennen", defaultName: ws.name)
+              let name = WorkspaceController.promptForName(title: L10n.tr("workspace.renameTitle"), defaultName: ws.name)
         else { return }
         ws.name = name
         LayoutStore.shared.upsert(ws)
@@ -342,6 +361,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @objc private func setGap(_ sender: NSMenuItem) { Settings.gap = CGFloat(sender.tag) }
     @objc private func setColumns(_ sender: NSMenuItem) { Settings.superWideColumns = sender.tag }
     @objc private func openTilingSettings() { NativeTiling.openSettings() }
+
+    @objc private func openLink(_ sender: NSMenuItem) {
+        if let url = sender.representedObject as? URL { NSWorkspace.shared.open(url) }
+    }
 
     @objc private func togglePreviews() {
         Settings.livePreviews.toggle()

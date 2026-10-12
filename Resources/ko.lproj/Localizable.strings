@@ -1,0 +1,122 @@
+/* Snapline – ko. Keys must match en.lproj; check with scripts/check-localizations.sh. */
+
+/* Main menu (keyboard shortcuts in text fields) */
+"mainMenu.closeWindow" = "윈도우 닫기";
+"mainMenu.edit" = "편집";
+"mainMenu.undo" = "실행 취소";
+"mainMenu.cut" = "오려두기";
+"mainMenu.copy" = "복사하기";
+"mainMenu.paste" = "붙여넣기";
+"mainMenu.selectAll" = "모두 선택";
+
+/* Menu bar menu */
+"menu.quit" = "Snapline 종료";
+"menu.warning.accessibility" = "⚠️ 손쉬운 사용 접근 허용…";
+"menu.warning.eventTap" = "⚠️ 이벤트 탭이 비활성 상태 – Snapline 재시작";
+"menu.warning.nativeTiling" = "⚠️ macOS 타일 정렬이 아직 켜져 있음 – 끄기…";
+"menu.warning.screenRecording" = "⚠️ 실시간 미리보기를 위해 화면 기록 허용…";
+"menu.restartForPreviews" = "↻ 재시작하여 실시간 미리보기 활성화";
+"menu.showLayouts" = "활성 윈도우의 Snap Layouts";
+"menu.activeLayout" = "활성 레이아웃";
+"menu.activeLayoutOnScreen" = "활성 레이아웃 – %@";
+"menu.editLayouts" = "레이아웃 편집…";
+"menu.workspaces" = "작업 공간";
+"menu.behavior" = "동작";
+"menu.zoneKey" = "영역 드래그 키";
+"menu.gap" = "윈도우 간 간격";
+"menu.edgeColumns" = "32:9 디스플레이의 가장자리 열";
+"menu.shortcuts" = "키보드 단축키 및 제스처";
+"menu.launchAtLogin" = "로그인 시 열기";
+
+/* Behavior submenu */
+"behavior.dragSnap" = "윈도우를 가장자리로 드래그 (Aero Snap)";
+"behavior.zoneDrag" = "%@ + 드래그: 활성 레이아웃의 영역으로";
+"behavior.hoverFlyout" = "녹색 버튼 위에 놓으면 Snap Layouts";
+"behavior.suppressNativeMenu" = "녹색 버튼의 macOS 메뉴 숨기기";
+"behavior.snapAssist" = "Snap Assist";
+"behavior.livePreviews" = "Snap Assist 실시간 미리보기";
+"behavior.restoreOnDrag" = "끌어내면 원래 크기로 복원";
+"behavior.launchMissingApps" = "작업 공간: 없는 앱 열기";
+
+/* Zone key, gap and column submenus */
+"zoneKey.command" = "⌘ Command";
+"zoneKey.option" = "⌥ Option";
+"zoneKey.shift" = "⇧ Shift (FancyZones와 동일)";
+"gap.none" = "간격 없음";
+"gap.points" = "%d pt";
+"columns.halves" = "2분할";
+"columns.thirds" = "3분할";
+"columns.quarters" = "4분할";
+
+/* Keyboard shortcuts & gestures submenu */
+"shortcut.flyout" = "⌃⌥Z  Snap Layouts, 이어서 숫자로 레이아웃과 영역 선택";
+"shortcut.activeLayout" = "⌃⌥1…9  디스플레이의 활성 레이아웃 선택";
+"shortcut.workspace" = "⌃⌥⇧1…9  작업 공간 복원";
+"shortcut.leftRight" = "⌃⌥←/→  왼쪽/오른쪽 열, 다음 디스플레이로 이동";
+"shortcut.up" = "⌃⌥↑  최대화 / 열의 위쪽 절반";
+"shortcut.down" = "⌃⌥↓  복원 / 아래쪽 절반 / 최소화";
+"shortcut.zoneDrag" = "%@ + 드래그  활성 레이아웃의 영역에 놓기";
+"shortcut.zoneDragSwitch" = "   … 스크롤 휠 / 1–9 / Tab  레이아웃 전환";
+"shortcut.zoneDragSpan" = "   … %@  여러 영역 합치기 · Esc  취소";
+"shortcut.edgeDrag" = "가장자리/모서리로 드래그  열 또는 절반 열";
+"shortcut.topDrag" = "상단 중앙으로 드래그  레이아웃이 있는 스냅 바";
+
+/* More apps (the other tools of the package) */
+"menu.moreApps" = "이런 앱도 마음에 드실 거예요";
+"moreApps.tappi" = "앱이 아닌 윈도우 간 Alt+Tab";
+"moreApps.klemmi" = "Win+V 같은 클립보드 기록, 항목별 출처 앱 표시";
+"moreApps.snapboard" = "캡처 도구 스타일의 스크린샷을 바로 클립보드로";
+"moreApps.wholePackage" = "전체 패키지 보기…";
+
+/* Workspaces */
+"workspace.saveCurrent" = "현재 배치 저장…";
+"workspace.restore" = "복원";
+"workspace.overwrite" = "현재 배치로 덮어쓰기";
+"workspace.rename" = "이름 변경…";
+"workspace.defaultName" = "작업 공간 %d";
+"workspace.saveTitle" = "작업 공간 저장";
+"workspace.renameTitle" = "작업 공간 이름 변경";
+"workspace.prompt.info" = "보이는 모든 윈도우가 위치 및 디스플레이와 함께 저장됩니다.";
+
+/* Common buttons */
+"common.save" = "저장";
+"common.cancel" = "취소";
+"common.delete" = "삭제";
+
+/* Snap Assist and zone overlay */
+"assist.title" = "이 영역에 놓을 윈도우 선택";
+"zones.hint" = "스크롤 휠 / 1–9 / Tab: 레이아웃 전환 · %@: 영역 합치기 · Esc: 취소";
+"zones.activeLayoutHint" = "이 디스플레이의 활성 레이아웃";
+
+/* Layout editor */
+"editor.newLayout" = "새로운 레이아웃";
+"editor.duplicate" = "복제";
+"editor.namePlaceholder" = "이름";
+"editor.display" = "디스플레이:";
+"editor.portrait" = "세로";
+"editor.customLayouts" = "나의 레이아웃";
+"editor.templates" = "이 디스플레이용 템플릿";
+"editor.activeOnDisplay" = "✓ 이 디스플레이에서 활성";
+"editor.makeActive" = "활성화";
+"editor.activeTag" = "활성";
+"editor.shortcutActivates" = "⌃⌥%d 키로 이 레이아웃을 활성화합니다.";
+"editor.hint.custom" = "클릭: 영역을 세로로 분할 · ⇧-클릭: 가로로 분할 · 구분선 드래그: 크기 조절 (¼ ⅓ ½ ⅔ ¾에 맞춰짐) · ⌥-클릭: 영역 제거.";
+"editor.hint.builtIn" = "템플릿 – 편집하려면 ‘복제’하십시오.";
+"editor.template.empty" = "비어 있음 (영역 1개)";
+"editor.template.columns" = "%d열";
+"editor.template.grid" = "격자 %d×%d";
+"editor.copyName" = "%@ (사본)";
+"editor.deleteConfirm" = "‘%@’을(를) 삭제하겠습니까?";
+
+/* Built-in layout names (keyed by layout id) */
+"layout.rows-2" = "행 ½";
+"layout.rows-3" = "행 ⅓";
+"layout.rows-2-1" = "행 ⅔ + ⅓";
+"layout.grid-2x2" = "격자 2×2";
+"layout.grid-3x2" = "격자 3×2";
+"layout.cols-1-1" = "2분할";
+"layout.cols-1-1-1" = "3분할";
+"layout.cols-1-1-1-1" = "4분할";
+"layout.half-stack" = "½ + 스택";
+"layout.thirds-stack" = "3분할 + 스택";
+"layout.stacks-center" = "스택 · ½ · 스택";
