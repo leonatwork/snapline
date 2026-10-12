@@ -2,121 +2,151 @@
 
 [![Package: I love macOS, but I miss some Windows features](https://img.shields.io/badge/Package-I_love_macOS%2C_but_I_miss_some_Windows_features-0A84FF)](https://github.com/search?q=topic%3Ai-love-macos-but-i-miss-windows-features+user%3Aleonatwork&type=repositories)
 
-Windows-11-Fensterverwaltung für macOS: Snap Layouts, Snap Bar, Aero Snap, Snap Assist und Win+Pfeiltasten. Gebaut für Ultrawide- und Super-Ultrawide-Monitore wie den Samsung Odyssey G9 (32:9).
+*🇩🇪 [Deutsche Version](README.de.md)*
 
-Menüleisten-App, ohne Abhängigkeiten, Swift + AppKit.
+Windows 11 window management for macOS: Snap Layouts, the Snap Bar, Aero Snap, Snap Assist and Win+arrow keys. Built for ultrawide and super ultrawide monitors such as the Samsung Odyssey G9 (32:9).
 
-Sprachen: Snapline folgt der macOS-Sprache und spricht Englisch, Deutsch, Französisch, Spanisch, Italienisch, Portugiesisch (Brasilien), Niederländisch, Japanisch, Chinesisch (vereinfacht) und Koreanisch.
+A menu bar app with no dependencies, written in Swift + AppKit.
 
-## Teil des Pakets
+Languages: Snapline follows the macOS language and speaks English, German, French, Spanish, Italian, Portuguese (Brazil), Dutch, Japanese, Simplified Chinese and Korean.
 
-Snapline gehört zum Paket **„I love macOS, but I miss some Windows features“**: vier kleine Tools, die Windows-Funktionen auf den Mac bringen.
+## Part of the package
 
-| Tool | Was es macht | Download |
+Snapline belongs to the package **"I love macOS, but I miss some Windows features"**: four small tools that bring Windows features to the Mac.
+
+| Tool | What it does | Download |
 |---|---|---|
-| [Tappi](https://github.com/leonatwork/Tappi) | Alt+Tab zwischen Fenstern statt Apps | [Neueste Version](https://github.com/leonatwork/Tappi/releases/latest) |
-| [Klemmi](https://github.com/leonatwork/Klemmi) | Zwischenablage-Verlauf wie Win+V, mit Quell-App | [Neueste Version](https://github.com/leonatwork/Klemmi/releases/latest) |
-| **[Snapline](https://github.com/leonatwork/snapline)** (dieses Tool) | Snap Layouts, Aero Snap und Snap Assist aus Windows 11 | [Neueste Version](https://github.com/leonatwork/snapline/releases/latest) |
-| [Snapboard](https://github.com/leonatwork/snapboard) | Screenshots wie mit dem Snipping Tool, direkt in die Zwischenablage | [Neueste Version](https://github.com/leonatwork/snapboard/releases/latest) |
+| [Tappi](https://github.com/leonatwork/Tappi) | Alt+Tab between windows, not apps | [Latest release](https://github.com/leonatwork/Tappi/releases/latest) |
+| [Klemmi](https://github.com/leonatwork/Klemmi) | Clipboard history like Win+V, with the source app | [Latest release](https://github.com/leonatwork/Klemmi/releases/latest) |
+| **[Snapline](https://github.com/leonatwork/snapline)** (this tool) | Snap Layouts, Aero Snap and Snap Assist from Windows 11 | [Latest release](https://github.com/leonatwork/snapline/releases/latest) |
+| [Snapboard](https://github.com/leonatwork/snapboard) | Screenshots like the Snipping Tool, straight to the clipboard | [Latest release](https://github.com/leonatwork/snapboard/releases/latest) |
 
-Vermisst du mehr als eine dieser Funktionen? Dann lad dir am besten [alle vier](https://github.com/search?q=topic%3Ai-love-macos-but-i-miss-windows-features+user%3Aleonatwork&type=repositories) herunter. In Snapline findest du sie auch im Menü unter **Weitere Apps, die dir gefallen könnten**.
+Miss more than one of these features? Then it's best to download [all four](https://github.com/search?q=topic%3Ai-love-macos-but-i-miss-windows-features+user%3Aleonatwork&type=repositories). You'll also find them in Snapline's menu under **More apps you might like**.
 
-## Funktionen
+## Screenshots
+
+<div align="center">
+  <img src="docs/screenshots/snap-layouts.png" alt="Snap Layouts flyout below a window's green button" width="800" />
+  <br />
+  <em>Snap Layouts: hover over the green button, then click a zone</em>
+  <br /><br />
+  <img src="docs/screenshots/zone-overlay.png" alt="Zones of the active layout while dragging a window with ⌘ on a 32:9 display" width="800" />
+  <br />
+  <em>⌘ + drag: drop the window into a zone of the active layout</em>
+  <br /><br />
+  <img src="docs/screenshots/snap-assist.png" alt="Snap Assist offering the remaining windows for the free zones" width="800" />
+  <br />
+  <em>Snap Assist: the free zones offer the remaining windows</em>
+  <br /><br />
+  <img src="docs/screenshots/desktop.png" alt="Five windows arranged in the Stack · ½ · stack layout on a 32:9 display" width="800" />
+  <br />
+  <em>The result: "Stack · ½ · stack" on a 32:9 display</em>
+</div>
+
+The images are rendered, not screen captures: the windows are invented demo content, while the flyout, zone overlay and Snap Assist cards come from Snapline itself (see [Development](#development)).
+
+## Features
 
 | Windows 11 | Snapline |
 |---|---|
-| Hover über Maximieren → Snap Layouts | Hover über den **grünen Knopf** → Layout-Flyout, Zone anklicken |
-| Win + Z | **⌃⌥Z** (auf deutscher Tastatur auch ⌃⌥Y) |
-| Fenster oben in die Mitte ziehen → Snap Bar | genauso: Leiste mit Layouts erscheint, Fenster auf eine Zone ziehen |
-| Fenster an Rand/Ecke ziehen | linker/rechter Rand → äußere Spalte, Ecke → halbe Spalte, oberer Rand → maximieren, **unterer Rand → Spalte unter dem Cursor** |
-| Snap Assist | Nach dem Snappen per Layout werden die übrigen Fenster in den freien Zonen angeboten |
-| Win + ← / → | **⌃⌥← / →** wandert durch die Spalten und weiter auf den nächsten Monitor |
-| Win + ↑ / ↓ | **⌃⌥↑** maximieren bzw. obere Hälfte · **⌃⌥↓** wiederherstellen, untere Hälfte, minimieren |
-| Gesnapptes Fenster wegziehen | bekommt seine ursprüngliche Größe zurück |
-| FancyZones: ⇧ + Ziehen | **⌘ + Ziehen** (Taste im Menü umstellbar: ⌘, ⌥ oder ⇧) legt das Fenster in die Zonen des aktiven Layouts. Dabei wechseln **Mausrad / 1–9 / Tab** das Layout, **⇧** verbindet mehrere Zonen, **Esc** bricht ab |
-| FancyZones: Layout wechseln | **⌃⌥1…9** wählt das aktive Layout des Monitors (kurz eingeblendet) |
-| FancyZones-Editor | **Layouts bearbeiten…**: Zonen teilen, Trennlinien ziehen, Zonen entfernen |
-| – | **Arbeitsbereiche**: aktuelle Anordnung speichern, mit **⌃⌥⇧1…9** wiederherstellen, fehlende Apps werden gestartet |
+| Hover over Maximize → Snap Layouts | Hover over the **green button** → layout flyout, click a zone |
+| Win + Z | **⌃⌥Z** (on a German keyboard also ⌃⌥Y) |
+| Drag a window to the top center → Snap Bar | Same here: a bar with layouts appears, drag the window onto a zone |
+| Drag a window to an edge/corner | Left/right edge → outer column, corner → half column, top edge → maximize, **bottom edge → column under the cursor** |
+| Snap Assist | After snapping via a layout, the remaining windows are offered for the free zones |
+| Win + ← / → | **⌃⌥← / →** moves through the columns and on to the next display |
+| Win + ↑ / ↓ | **⌃⌥↑** maximize or top half · **⌃⌥↓** restore, bottom half, minimize |
+| Drag a snapped window away | It gets its original size back |
+| FancyZones: ⇧ + drag | **⌘ + drag** (key configurable in the menu: ⌘, ⌥ or ⇧) drops the window into the zones of the active layout. While dragging, **scroll wheel / 1–9 / Tab** switch the layout, **⇧** joins several zones, **Esc** cancels |
+| FancyZones: switch layout | **⌃⌥1…9** picks the display's active layout (shown briefly) |
+| FancyZones editor | **Edit layouts…**: split zones, drag dividers, remove zones |
+| – | **Workspaces**: save the current arrangement, restore it with **⌃⌥⇧1…9**; missing apps are launched |
 
-Das macOS-eigene Kachel-Menü am grünen Knopf wird unterdrückt. Snapline fängt die Hover-Events dort per Event Tap ab (wie Tappi), sodass nur noch das Snapline-Flyout erscheint. Snap Assist zeigt Live-Vorschauen der Fenster (ScreenCaptureKit, wie in Tappi).
+macOS's own tiling menu on the green button is suppressed. Snapline intercepts the hover events there with an event tap (like Tappi), so only the Snapline flyout appears. Snap Assist shows live previews of the windows (ScreenCaptureKit, like Tappi).
 
-### Seitenverhältnisse
+### Aspect ratios
 
-Layouts und Spalten passen sich pro Monitor an:
+Layouts and columns adapt per display:
 
-- **32:9** (z. B. G9, 5120×1440): Drittel, ¼+½+¼, Viertel, Hälften, Stapel-Layouts, 3×2-Raster. Rand und Tastatur arbeiten mit Dritteln (im Menü auf Hälften oder Viertel umstellbar).
-- **21:9**: Hälften, Drittel, ¼+½+¼, ⅔+⅓ …
-- **16:9 / 16:10**: Hälften, ⅔+⅓, Drittel, Viertel …
-- **Hochformat**: Zeilen statt Spalten.
+- **32:9** (e.g. G9, 5120×1440): thirds, ¼+½+¼, quarters, halves, stacked layouts, 3×2 grid. Edges and keyboard work with thirds (switchable to halves or quarters in the menu).
+- **21:9**: halves, thirds, ¼+½+¼, ⅔+⅓ …
+- **16:9 / 16:10**: halves, ⅔+⅓, thirds, quarters …
+- **Portrait**: rows instead of columns.
 
 ## Installation
 
-Benötigt macOS 14 oder neuer.
+Requires macOS 14 or later.
 
-### Herunterladen
+### Download
 
-1. `Snapline-<Version>.zip` aus dem [neuesten Release](https://github.com/leonatwork/snapline/releases/latest) laden und entpacken.
-2. `Snapline.app` in den Ordner **Programme** ziehen.
-3. Beim ersten Start: Rechtsklick ▸ **Öffnen**. Ab macOS 15 stattdessen unter **Systemeinstellungen → Datenschutz & Sicherheit** auf **Dennoch öffnen** klicken.
+1. Download `Snapline-<version>.zip` from the [latest release](https://github.com/leonatwork/snapline/releases/latest) and unzip it.
+2. Drag `Snapline.app` into your **Applications** folder.
+3. On first launch: right-click ▸ **Open**. On macOS 15 and later, click **Open Anyway** under **System Settings → Privacy & Security** instead.
 
-Schritt 3 ist nötig, weil Snapline nicht von Apple notarisiert ist.
+Step 3 is needed because Snapline is not notarized by Apple.
 
-### Selbst bauen
+Release builds are signed with the stable certificate "leonatwork Code Signing", so granted permissions (Accessibility, Screen Recording) survive updates.
 
-Dafür reichen die Xcode Command Line Tools (`xcode-select --install`).
+### Build it yourself
+
+All you need are the Xcode Command Line Tools (`xcode-select --install`).
 
 ```bash
 scripts/install.sh
 ```
 
-Das baut die App, kopiert sie nach `/Applications` und startet sie. Beim ersten Start fragt macOS nach dem Zugriff auf **Bedienungshilfen**. Den brauchen wir, um Fenster anderer Apps zu verschieben.
+This builds the app, copies it to `/Applications` and launches it. On first launch, macOS asks for **Accessibility** access. Snapline needs it to move other apps' windows.
 
-### macOS-eigenes Kacheln abschalten
+### Turn off macOS's own tiling
 
-Seit macOS 15 kachelt macOS selbst, wenn man Fenster an den Rand zieht. Das kollidiert mit Snapline. Snapline zeigt im Menü eine Warnung, solange es aktiv ist.
+Since macOS 15, macOS tiles windows itself when you drag them to the edge of the screen. That collides with Snapline. Snapline shows a warning in its menu as long as macOS tiling is on.
 
-**Systemeinstellungen → Schreibtisch & Dock → Fenster** und dort ausschalten:
-- „Fenster an Bildschirmränder ziehen, um sie zu kacheln“
-- „Fenster in die Menüleiste ziehen, um den Bildschirm zu füllen“
+Go to **System Settings → Desktop & Dock → Windows** and turn off:
+- "Drag windows to screen edges to tile"
+- "Drag windows to menu bar to fill screen"
 
-Außerdem „Halte ⌥ beim Ziehen gedrückt, um zu kacheln“, sonst kollidiert es mit ⌥ + Ziehen.
+Also turn off "Hold ⌥ key while dragging windows to tile", otherwise it collides with ⌥ + drag.
 
-### Berechtigungen
+### Permissions
 
-- **Bedienungshilfen**: Fenster verschieben, Event Tap
-- **Bildschirmaufnahme** (optional): Live-Vorschau in Snap Assist
+- **Accessibility**: moving windows, event tap
+- **Screen Recording** (optional): live previews in Snap Assist
 
-Damit die Berechtigungen einen Neubau überleben, einmal ausführen:
+Release builds are signed with "leonatwork Code Signing", so the permissions survive updates. Copies you build yourself are signed with a local identity. To make the permissions survive a rebuild as well, run once:
 
 ```bash
 scripts/setup-signing.sh
 ```
 
-Das legt ein lokales, selbstsigniertes Zertifikat „Snapline Local Signing“ an (wie bei Tappi). `scripts/build-app.sh` nutzt es automatisch, ansonsten wird ad-hoc signiert, und macOS vergisst die Berechtigungen bei jedem Build.
+This creates a local, self-signed certificate "Snapline Local Signing" (like Tappi). `scripts/build-app.sh` automatically uses "leonatwork Code Signing" if it is available, otherwise this local certificate; without either it signs ad hoc, and macOS forgets the permissions on every build.
 
-## Entwicklung
+The release build and a self-built copy carry different signatures. When you switch between them, you have to grant the permissions again (remove the old entry in System Settings and add Snapline again).
+
+## Development
 
 ```bash
-swift test               # Logik-Tests (Layouts, Geometrie, Rand- und Tastaturlogik)
-swift run Snapline       # direkt starten (Berechtigung gilt dann fürs Terminal)
-scripts/build-app.sh     # dist/Snapline.app bauen
-scripts/check-localizations.sh  # Übersetzungen prüfen (alle Schlüssel in allen Sprachen, plutil -lint)
+swift test               # logic tests (layouts, geometry, edge and keyboard logic)
+swift run Snapline       # run directly (the permission then applies to the terminal)
+scripts/build-app.sh     # build dist/Snapline.app
+scripts/check-localizations.sh  # check translations (every key in every language, plutil -lint)
 ```
 
-Aufbau:
+Structure:
 
-- `Sources/SnaplineCore`: reine Logik ohne AppKit, vollständig getestet
-- `Sources/Snapline/AX`: Accessibility-Zugriff auf Fenster
-- `Sources/Snapline/Controllers`: Drag, Hover, Tastatur, Hotkeys
-- `Sources/Snapline/UI`: Vorschau, Layout-Flyout, Zonen-Overlay, Snap Assist, Layout-Editor
-- `Resources/<Sprache>.lproj/Localizable.strings`: Texte der Oberfläche (Englisch ist die Entwicklungssprache), Zugriff über `L10n.tr("schlüssel")`
+- `Sources/SnaplineCore`: pure logic without AppKit, fully tested
+- `Sources/Snapline/AX`: Accessibility access to windows
+- `Sources/Snapline/Controllers`: drag, hover, keyboard, hotkeys
+- `Sources/Snapline/UI`: preview, layout flyout, zone overlay, Snap Assist, layout editor
+- `Resources/<language>.lproj/Localizable.strings`: UI text (English is the development language), accessed via `L10n.tr("key")`
 
-Eigene Layouts und Arbeitsbereiche liegen als JSON in `~/Library/Application Support/Snapline/`.
+Custom layouts and workspaces are stored as JSON in `~/Library/Application Support/Snapline/`.
 
-Das Icon wird mit `swift scripts/make-icon.swift` erzeugt.
+The icon is generated with `swift scripts/make-icon.swift`.
 
-Details und Roadmap stehen in [PLAN.md](PLAN.md).
+The README screenshots in `docs/screenshots/` are regenerated with `scripts/screenshots/render.sh` (English `<name>.png`, German `<name>.de.png`). The script captures nothing from the screen and reads none of your data: it compiles SnaplineCore and the app's UI sources together with a small harness, renders the flyout, zone overlay and Snap Assist cards offscreen at 2× over invented demo windows, and runs inside a temporary `.app` bundle with the `.lproj` folders so the real translations apply. The harness is not part of `Snapline.app`.
 
-## Lizenz
+Details and the roadmap are in [PLAN.md](PLAN.md).
 
-[MIT](LICENSE) — freie Nutzung, Änderung und Weitergabe, ohne Gewährleistung.
+## License
+
+[MIT](LICENSE) — free to use, modify and redistribute, without warranty.
