@@ -51,7 +51,19 @@ Layouts und Spalten passen sich pro Monitor an:
 
 ## Installation
 
-Benötigt macOS 14 oder neuer und die Xcode Command Line Tools (`xcode-select --install`).
+Benötigt macOS 14 oder neuer.
+
+### Herunterladen
+
+1. `Snapline-<Version>.zip` aus dem [neuesten Release](https://github.com/leonatwork/snapline/releases/latest) laden und entpacken.
+2. `Snapline.app` in den Ordner **Programme** ziehen.
+3. Beim ersten Start: Rechtsklick ▸ **Öffnen**. Ab macOS 15 stattdessen unter **Systemeinstellungen → Datenschutz & Sicherheit** auf **Dennoch öffnen** klicken.
+
+Schritt 3 ist nötig, weil Snapline nicht von Apple notarisiert ist.
+
+### Selbst bauen
+
+Dafür reichen die Xcode Command Line Tools (`xcode-select --install`).
 
 ```bash
 scripts/install.sh
@@ -104,3 +116,7 @@ Eigene Layouts und Arbeitsbereiche liegen als JSON in `~/Library/Application Sup
 Das Icon wird mit `swift scripts/make-icon.swift` erzeugt.
 
 Details und Roadmap stehen in [PLAN.md](PLAN.md).
+
+## Lizenz
+
+[MIT](LICENSE) — freie Nutzung, Änderung und Weitergabe, ohne Gewährleistung.
