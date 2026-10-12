@@ -25,7 +25,7 @@ done
 
 IDENTITY="${SIGN_IDENTITY:-}"
 if [ -z "$IDENTITY" ]; then
-    for candidate in "Snapline Local Signing" "Tappi Local Signing"; do
+    for candidate in "leonatwork Code Signing" "Snapline Local Signing" "Tappi Local Signing"; do
         if security find-identity -p codesigning 2>/dev/null | grep -q "$candidate"; then
             IDENTITY="$candidate"
             break
