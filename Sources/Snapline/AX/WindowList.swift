@@ -1,4 +1,5 @@
 import AppKit
+import SnaplineCore
 
 /// A window offered in Snap Assist.
 struct WindowCandidate: Identifiable {
@@ -17,7 +18,10 @@ enum WindowList {
     ///
     /// `CGWindowList` provides the on-screen order and bounds (no Screen Recording
     /// permission needed for those); AX provides the controllable element and title.
-    static func visibleWindows(excluding excluded: Set<WindowKey> = []) -> [WindowCandidate] {
+    /// Workspace capture deliberately uses the empty default; only Snap Assist
+    /// supplies the global exclusions.
+    static func visibleWindows(excluding excluded: Set<WindowKey> = [],
+                               appExclusions: AppExclusions = AppExclusions()) -> [WindowCandidate] {
         let options: CGWindowListOption = [.optionOnScreenOnly, .excludeDesktopElements]
         guard let info = CGWindowListCopyWindowInfo(options, kCGNullWindowID) as? [[String: Any]] else { return [] }
 
@@ -34,7 +38,8 @@ enum WindowList {
                   let bounds = CGRect(dictionaryRepresentation: boundsDict),
                   bounds.width >= 100, bounds.height >= 60,
                   let app = NSRunningApplication(processIdentifier: pid),
-                  app.activationPolicy == .regular
+                  app.activationPolicy == .regular,
+                  !appExclusions.contains(bundleID: app.bundleIdentifier)
             else { continue }
 
             let axWindows = axCache[pid] ?? AXWindow.windows(of: pid)

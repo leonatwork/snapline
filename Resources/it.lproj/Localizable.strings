@@ -11,6 +11,10 @@
 
 /* Menu bar menu */
 "menu.quit" = "Esci da Snapline";
+"menu.disableForApp" = "Disattiva per %@";
+"menu.enableForApp" = "Riattiva per %@";
+"menu.excludedApps" = "App escluse";
+"menu.excludedApps.empty" = "Nessuna app esclusa";
 "menu.warning.accessibility" = "⚠️ Concedi l’accesso ad Accessibilità…";
 "menu.warning.eventTap" = "⚠️ Event tap non attivo – riavvia Snapline";
 "menu.warning.nativeTiling" = "⚠️ L’affiancamento di macOS è ancora attivo – disattivalo…";

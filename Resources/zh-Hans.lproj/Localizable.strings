@@ -11,6 +11,10 @@
 
 /* Menu bar menu */
 "menu.quit" = "退出 Snapline";
+"menu.disableForApp" = "对 %@ 停用";
+"menu.enableForApp" = "对 %@ 重新启用";
+"menu.excludedApps" = "已排除的应用";
+"menu.excludedApps.empty" = "没有已排除的应用";
 "menu.warning.accessibility" = "⚠️ 授予辅助功能权限…";
 "menu.warning.eventTap" = "⚠️ 事件监听未启用 – 重新启动 Snapline";
 "menu.warning.nativeTiling" = "⚠️ macOS 平铺仍处于开启状态 – 关闭…";

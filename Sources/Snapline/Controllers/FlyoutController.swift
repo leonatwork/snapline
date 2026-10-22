@@ -26,7 +26,7 @@ final class FlyoutController {
 
     /// Hover / hotkey: show the flyout for a specific window, anchored below `anchor`.
     func show(for window: AXWindow, anchorAX anchor: CGRect, mode: Mode) {
-        guard let frame = window.frame, let screen = Screens.screen(for: frame) else { return }
+        guard !window.isAppExcluded, let frame = window.frame, let screen = Screens.screen(for: frame) else { return }
         target = window
         self.screen = screen
         self.mode = mode
@@ -77,6 +77,7 @@ final class FlyoutController {
     private func commit(_ pick: LayoutPick) {
         guard let target, let screen else { return }
         hide()
+        guard !target.isAppExcluded else { return }
         SnapEngine.shared.snap(target, to: pick.zone, on: screen)
         target.focus()
         if Settings.snapAssist {
