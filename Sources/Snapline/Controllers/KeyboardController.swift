@@ -2,11 +2,17 @@ import AppKit
 import Carbon.HIToolbox
 import SnaplineCore
 
-/// Win + Arrow equivalents on ⌃⌥ + Arrow, ⌃⌥Z for the layouts flyout (Win + Z),
-/// ⌃⌥1…9 to switch the monitor's active layout and ⌃⌥⇧1…9 for workspaces.
+/// Registers the persisted shortcuts and replaces them when settings or input sources change.
 @MainActor
-final class KeyboardController {
-    static let modifiers = controlKey | optionKey
+final class KeyboardController: NSObject {
+    struct RegistrationFailure {
+        let action: ShortcutAction
+        let shortcut: Shortcut
+        let status: OSStatus
+    }
+    private(set) var registrationFailures: [RegistrationFailure] = []
+    private var recording = false
+    static let recordingDidChange = Notification.Name("Snapline.shortcutRecordingDidChange")
 
     private let flyouts: FlyoutController
     private let assist: SnapAssistController
@@ -18,25 +24,56 @@ final class KeyboardController {
         self.assist = assist
         self.zoneOverlay = zoneOverlay
         self.workspaces = workspaces
+        super.init()
     }
 
-    private static let digitKeys = [kVK_ANSI_1, kVK_ANSI_2, kVK_ANSI_3, kVK_ANSI_4, kVK_ANSI_5,
-                                    kVK_ANSI_6, kVK_ANSI_7, kVK_ANSI_8, kVK_ANSI_9]
-
     func start() {
-        let hk = HotKeyCenter.shared
-        let mods = Self.modifiers
-        hk.register(keyCode: kVK_LeftArrow, modifiers: mods) { [weak self] in self?.snap(.left) }
-        hk.register(keyCode: kVK_RightArrow, modifiers: mods) { [weak self] in self?.snap(.right) }
-        hk.register(keyCode: kVK_UpArrow, modifiers: mods) { [weak self] in self?.snap(.up) }
-        hk.register(keyCode: kVK_DownArrow, modifiers: mods) { [weak self] in self?.snap(.down) }
-        hk.register(keyCode: kVK_ANSI_Z, modifiers: mods) { [weak self] in self?.showFlyout() }
-        // ⌃⌥Y as well: on German keyboards Z and Y swap places.
-        hk.register(keyCode: kVK_ANSI_Y, modifiers: mods) { [weak self] in self?.showFlyout() }
+        _ = ShortcutDisplay.shared
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadShortcuts), name: Settings.shortcutsDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadShortcuts), name: ShortcutDisplay.inputSourceDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(recordingChanged(_:)), name: Self.recordingDidChange, object: nil)
+        reloadShortcuts()
+    }
 
-        for (i, key) in Self.digitKeys.enumerated() {
-            hk.register(keyCode: key, modifiers: mods) { [weak self] in self?.activateLayout(i) }
-            hk.register(keyCode: key, modifiers: mods | shiftKey) { [weak self] in self?.restoreWorkspace(i) }
+    @objc private func recordingChanged(_ notification: Notification) {
+        recording = notification.object as? Bool ?? false
+        reloadShortcuts()
+    }
+
+    @objc private func reloadShortcuts() {
+        let hk = HotKeyCenter.shared
+        let removalStatus = hk.unregisterAll()
+        registrationFailures.removeAll()
+        let display = ShortcutDisplay.shared
+        var registered: Set<Shortcut> = []
+        for action in ShortcutAction.allCases {
+            for (index, shortcut) in display.shortcuts(for: action).enumerated() {
+                // Failed unregistration is visible too; never activate overlapping old/new keys.
+                let status: OSStatus
+                if removalStatus != noErr { status = removalStatus }
+                else if recording { continue }
+                else if registered.contains(shortcut) { status = OSStatus(eventHotKeyExistsErr) }
+                else if shortcut.keyCode >= 128 || shortcut.modifiers.isEmpty || !shortcut.modifiers.subtracting(.all).isEmpty {
+                    status = OSStatus(paramErr)
+                }
+                else {
+                    status = hk.register(keyCode: Int(shortcut.keyCode), modifiers: shortcut.modifiers.carbon) { [weak self] in
+                        switch action {
+                        case .left: self?.snap(.left)
+                        case .right: self?.snap(.right)
+                        case .up: self?.snap(.up)
+                        case .down: self?.snap(.down)
+                        case .flyout: self?.showFlyout()
+                        case .layouts: self?.activateLayout(index)
+                        case .workspaces: self?.restoreWorkspace(index)
+                        }
+                    }
+                    if status == noErr { registered.insert(shortcut) }
+                }
+                if status != noErr {
+                    registrationFailures.append(RegistrationFailure(action: action, shortcut: shortcut, status: status))
+                }
+            }
         }
     }
 

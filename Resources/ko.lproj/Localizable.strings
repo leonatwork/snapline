@@ -49,12 +49,12 @@
 "columns.quarters" = "4분할";
 
 /* Keyboard shortcuts & gestures submenu */
-"shortcut.flyout" = "⌃⌥Z  Snap Layouts, 이어서 숫자로 레이아웃과 영역 선택";
-"shortcut.activeLayout" = "⌃⌥1…9  디스플레이의 활성 레이아웃 선택";
-"shortcut.workspace" = "⌃⌥⇧1…9  작업 공간 복원";
-"shortcut.leftRight" = "⌃⌥←/→  왼쪽/오른쪽 열, 다음 디스플레이로 이동";
-"shortcut.up" = "⌃⌥↑  최대화 / 열의 위쪽 절반";
-"shortcut.down" = "⌃⌥↓  복원 / 아래쪽 절반 / 최소화";
+"shortcut.flyout" = "%@  Snap Layouts, 이어서 숫자로 레이아웃과 영역 선택";
+"shortcut.activeLayout" = "%@  디스플레이의 활성 레이아웃 선택";
+"shortcut.workspace" = "%@  작업 공간 복원";
+"shortcut.leftRight" = "%@  왼쪽/오른쪽 열, 다음 디스플레이로 이동";
+"shortcut.up" = "%@  최대화 / 열의 위쪽 절반";
+"shortcut.down" = "%@  복원 / 아래쪽 절반 / 최소화";
 "shortcut.zoneDrag" = "%@ + 드래그  활성 레이아웃의 영역에 놓기";
 "shortcut.zoneDragSwitch" = "   … 스크롤 휠 / 1–9 / Tab  레이아웃 전환";
 "shortcut.zoneDragSpan" = "   … %@  여러 영역 합치기 · Esc  취소";
@@ -99,7 +99,31 @@
 "editor.activeOnDisplay" = "✓ 이 디스플레이에서 활성";
 "editor.makeActive" = "활성화";
 "editor.activeTag" = "활성";
-"editor.shortcutActivates" = "⌃⌥%d 키로 이 레이아웃을 활성화합니다.";
+"editor.shortcutActivates" = "%@ 키로 이 레이아웃을 활성화합니다.";
+
+/* 단축키 기록 */
+"menu.warning.shortcut" = "⚠️ 단축키 사용 불가: %@ (%@, 오류 %d)…";
+"recorder.title" = "키보드 단축키…";
+"recorder.left" = "창을 왼쪽으로";
+"recorder.right" = "창을 오른쪽으로";
+"recorder.up" = "창을 위로";
+"recorder.down" = "창을 아래로";
+"recorder.flyout" = "Snap Layouts 패널";
+"recorder.layouts" = "활성 레이아웃 1…9";
+"recorder.workspaces" = "작업 공간 1…9";
+"recorder.disabled" = "비활성화됨";
+"recorder.record" = "기록";
+"recorder.cancel" = "취소";
+"recorder.reset" = "재설정";
+"recorder.resetAll" = "모두 기본값으로 재설정";
+"recorder.help" = "변경 사항은 즉시 적용되고 저장됩니다. 기록한 단축키는 물리적 키를 사용합니다. 1…9 그룹은 보조 키만 변경하며 표시는 키보드 배열을 따릅니다.";
+"recorder.promptKey" = "Control, Option, Shift 또는 Command와 함께 키를 누르세요. Esc로 취소합니다. 기록 중에는 Snapline 단축키가 일시 중지됩니다.";
+"recorder.promptModifiers" = "원하는 보조 키를 함께 누른 다음 놓으세요(또는 키를 누르세요). Esc로 취소합니다. Snapline 단축키가 일시 중지되었습니다.";
+"recorder.errorModifiers" = "단축키에는 Control, Option, Shift 또는 Command 보조 키가 하나 이상 필요합니다.";
+"recorder.errorConflict" = "이 단축키는 이미 ‘%@’에서 사용 중입니다. 다른 조합을 선택하세요.";
+"recorder.errorBinding" = "이 키 설정은 이 동작에 사용할 수 없습니다.";
+"recorder.saved" = "저장되었습니다. 다른 앱과의 등록 충돌은 상태 메뉴에 표시됩니다.";
+"recorder.keyCode" = "키 %d";
 "editor.hint.custom" = "클릭: 영역을 세로로 분할 · ⇧-클릭: 가로로 분할 · 구분선 드래그: 크기 조절 (¼ ⅓ ½ ⅔ ¾에 맞춰짐) · ⌥-클릭: 영역 제거.";
 "editor.hint.builtIn" = "템플릿 – 편집하려면 ‘복제’하십시오.";
 "editor.template.empty" = "비어 있음 (영역 1개)";

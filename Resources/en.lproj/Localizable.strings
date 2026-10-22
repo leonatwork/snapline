@@ -49,12 +49,12 @@
 "columns.quarters" = "Quarters";
 
 /* Keyboard shortcuts & gestures submenu */
-"shortcut.flyout" = "⌃⌥Z  Snap Layouts, then a digit for layout and zone";
-"shortcut.activeLayout" = "⌃⌥1…9  Choose the display’s active layout";
-"shortcut.workspace" = "⌃⌥⇧1…9  Restore workspace";
-"shortcut.leftRight" = "⌃⌥←/→  Column left/right, on to the next display";
-"shortcut.up" = "⌃⌥↑  Maximize / top half of the column";
-"shortcut.down" = "⌃⌥↓  Restore / bottom half / minimize";
+"shortcut.flyout" = "%@  Snap Layouts, then a digit for layout and zone";
+"shortcut.activeLayout" = "%@  Choose the display’s active layout";
+"shortcut.workspace" = "%@  Restore workspace";
+"shortcut.leftRight" = "%@  Column left/right, on to the next display";
+"shortcut.up" = "%@  Maximize / top half of the column";
+"shortcut.down" = "%@  Restore / bottom half / minimize";
 "shortcut.zoneDrag" = "%@ + drag  Drop into zones of the active layout";
 "shortcut.zoneDragSwitch" = "   … Scroll wheel / 1–9 / Tab  Switch layout";
 "shortcut.zoneDragSpan" = "   … %@  Join several zones · Esc  Cancel";
@@ -99,7 +99,7 @@
 "editor.activeOnDisplay" = "✓ Active on this display";
 "editor.makeActive" = "Make active";
 "editor.activeTag" = "active";
-"editor.shortcutActivates" = "⌃⌥%d activates this layout.";
+"editor.shortcutActivates" = "%@ activates this layout.";
 "editor.hint.custom" = "Click: split zone vertically · ⇧-click: split horizontally · Drag a divider: resize (snaps at ¼ ⅓ ½ ⅔ ¾) · ⌥-click: remove zone.";
 "editor.hint.builtIn" = "Template – to edit it, “Duplicate” it.";
 "editor.template.empty" = "Empty (one zone)";
@@ -107,6 +107,30 @@
 "editor.template.grid" = "Grid %d×%d";
 "editor.copyName" = "%@ (copy)";
 "editor.deleteConfirm" = "Delete “%@”?";
+
+/* Shortcut recorder */
+"menu.warning.shortcut" = "⚠️ Shortcut unavailable: %@ (%@, error %d)…";
+"recorder.title" = "Keyboard shortcuts…";
+"recorder.left" = "Window left";
+"recorder.right" = "Window right";
+"recorder.up" = "Window up";
+"recorder.down" = "Window down";
+"recorder.flyout" = "Snap Layouts flyout";
+"recorder.layouts" = "Active layout 1…9";
+"recorder.workspaces" = "Workspace 1…9";
+"recorder.disabled" = "Disabled";
+"recorder.record" = "Record";
+"recorder.cancel" = "Cancel";
+"recorder.reset" = "Reset";
+"recorder.resetAll" = "Reset all to defaults";
+"recorder.help" = "Changes apply immediately and are saved. Recorded shortcuts use physical keys. For the 1…9 groups, only modifiers change; labels follow the keyboard layout.";
+"recorder.promptKey" = "Press a key with Control, Option, Shift or Command. Esc cancels. Snapline shortcuts are paused while recording.";
+"recorder.promptModifiers" = "Hold the desired modifiers together, then release them (or press a key). Esc cancels. Snapline shortcuts are paused.";
+"recorder.errorModifiers" = "A shortcut needs at least one modifier: Control, Option, Shift or Command.";
+"recorder.errorConflict" = "This shortcut is already used by “%@”. Choose another combination.";
+"recorder.errorBinding" = "This binding is not valid for this action.";
+"recorder.saved" = "Saved. Check the status menu for registration conflicts with other apps.";
+"recorder.keyCode" = "Key %d";
 
 /* Built-in layout names (keyed by layout id) */
 "layout.rows-2" = "Rows ½";

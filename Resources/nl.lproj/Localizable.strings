@@ -49,12 +49,12 @@
 "columns.quarters" = "Kwarten";
 
 /* Keyboard shortcuts & gestures submenu */
-"shortcut.flyout" = "⌃⌥Z  Snap Layouts, dan een cijfer voor indeling en zone";
-"shortcut.activeLayout" = "⌃⌥1…9  Actieve indeling van het scherm kiezen";
-"shortcut.workspace" = "⌃⌥⇧1…9  Werkruimte herstellen";
-"shortcut.leftRight" = "⌃⌥←/→  Kolom links/rechts, door naar het volgende scherm";
-"shortcut.up" = "⌃⌥↑  Maximaliseren / bovenste helft van de kolom";
-"shortcut.down" = "⌃⌥↓  Herstellen / onderste helft / minimaliseren";
+"shortcut.flyout" = "%@  Snap Layouts, dan een cijfer voor indeling en zone";
+"shortcut.activeLayout" = "%@  Actieve indeling van het scherm kiezen";
+"shortcut.workspace" = "%@  Werkruimte herstellen";
+"shortcut.leftRight" = "%@  Kolom links/rechts, door naar het volgende scherm";
+"shortcut.up" = "%@  Maximaliseren / bovenste helft van de kolom";
+"shortcut.down" = "%@  Herstellen / onderste helft / minimaliseren";
 "shortcut.zoneDrag" = "%@ + slepen  Neerzetten in zones van de actieve indeling";
 "shortcut.zoneDragSwitch" = "   … Scrollwiel / 1–9 / Tab  Andere indeling";
 "shortcut.zoneDragSpan" = "   … %@  Meerdere zones samenvoegen · Esc  Annuleren";
@@ -99,7 +99,31 @@
 "editor.activeOnDisplay" = "✓ Actief op dit scherm";
 "editor.makeActive" = "Actief maken";
 "editor.activeTag" = "actief";
-"editor.shortcutActivates" = "⌃⌥%d activeert deze indeling.";
+"editor.shortcutActivates" = "%@ activeert deze indeling.";
+
+/* Sneltoetsrecorder */
+"menu.warning.shortcut" = "⚠️ Sneltoets niet beschikbaar: %@ (%@, fout %d)…";
+"recorder.title" = "Sneltoetsen…";
+"recorder.left" = "Venster naar links";
+"recorder.right" = "Venster naar rechts";
+"recorder.up" = "Venster omhoog";
+"recorder.down" = "Venster omlaag";
+"recorder.flyout" = "Snap Layouts-paneel";
+"recorder.layouts" = "Actieve indeling 1…9";
+"recorder.workspaces" = "Werkruimte 1…9";
+"recorder.disabled" = "Uitgeschakeld";
+"recorder.record" = "Opnemen";
+"recorder.cancel" = "Annuleren";
+"recorder.reset" = "Herstellen";
+"recorder.resetAll" = "Alles naar standaard herstellen";
+"recorder.help" = "Wijzigingen gelden direct en worden opgeslagen. Opgenomen sneltoetsen gebruiken fysieke toetsen. Voor de groepen 1…9 veranderen alleen de modificatietoetsen; labels volgen de toetsenbordindeling.";
+"recorder.promptKey" = "Druk op een toets met Control, Option, Shift of Command. Esc annuleert. Snapline-sneltoetsen zijn gepauzeerd tijdens het opnemen.";
+"recorder.promptModifiers" = "Houd de gewenste modificatietoetsen samen ingedrukt en laat ze los (of druk op een toets). Esc annuleert. Snapline-sneltoetsen zijn gepauzeerd.";
+"recorder.errorModifiers" = "Een sneltoets vereist minstens één modificatietoets: Control, Option, Shift of Command.";
+"recorder.errorConflict" = "Deze sneltoets wordt al gebruikt door ‘%@’. Kies een andere combinatie.";
+"recorder.errorBinding" = "Deze combinatie is niet geldig voor deze actie.";
+"recorder.saved" = "Opgeslagen. Conflicten met andere apps verschijnen in het statusmenu.";
+"recorder.keyCode" = "Toets %d";
 "editor.hint.custom" = "Klik: zone verticaal splitsen · ⇧-klik: horizontaal splitsen · Scheidingslijn slepen: grootte (klikt vast bij ¼ ⅓ ½ ⅔ ¾) · ⌥-klik: zone verwijderen.";
 "editor.hint.builtIn" = "Sjabloon – om te bewerken, eerst „Dupliceer”.";
 "editor.template.empty" = "Leeg (één zone)";

@@ -50,7 +50,7 @@ Die Bilder sind gerendert, keine Bildschirmfotos: Die Fenster sind erfundene Dem
 | Windows 11 | Snapline |
 |---|---|
 | Hover über Maximieren → Snap Layouts | Hover über den **grünen Knopf** → Layout-Flyout, Zone anklicken |
-| Win + Z | **⌃⌥Z** (auf deutscher Tastatur auch ⌃⌥Y) |
+| Win + Z | Standard **⌃⌥Z**; folgt der Z-Taste auf QWERTZ und AZERTY |
 | Fenster oben in die Mitte ziehen → Snap Bar | genauso: Leiste mit Layouts erscheint, Fenster auf eine Zone ziehen |
 | Fenster an Rand/Ecke ziehen | linker/rechter Rand → äußere Spalte, Ecke → halbe Spalte, oberer Rand → maximieren, **unterer Rand → Spalte unter dem Cursor** |
 | Snap Assist | Nach dem Snappen per Layout werden die übrigen Fenster in den freien Zonen angeboten |
@@ -63,6 +63,12 @@ Die Bilder sind gerendert, keine Bildschirmfotos: Die Fenster sind erfundene Dem
 | – | **Arbeitsbereiche**: aktuelle Anordnung speichern, mit **⌃⌥⇧1…9** wiederherstellen, fehlende Apps werden gestartet |
 
 Das macOS-eigene Kachel-Menü am grünen Knopf wird unterdrückt. Snapline fängt die Hover-Events dort per Event Tap ab (wie Tappi), sodass nur noch das Snapline-Flyout erscheint. Snap Assist zeigt Live-Vorschauen der Fenster (ScreenCaptureKit, wie in Tappi).
+
+### Tastenkürzel
+
+Die Tabelle zeigt die Standardbelegung. Im Statusmenü unter **Tastenkürzel & Gesten → Tastenkürzel…** lassen sich Kürzel aufnehmen, löschen (deaktivieren) und zurücksetzen. Fensterrichtungen und Flyout verwenden eine physische Taste mit mindestens einem Modifier (Control, Option, Shift oder Command). Für Layout- und Arbeitsbereich-Gruppen die gewünschten Modifier gemeinsam halten und loslassen; die physischen Tasten 1…9 bleiben fest. Änderungen gelten sofort und bleiben über Neustarts in UserDefaults gespeichert.
+
+Snapline lehnt doppelte Belegungen und Kürzel ohne Modifier ab. Verhindert eine andere App wie Rectangle die Registrierung, nennt eine Warnung oben im Statusmenü Aktion und Kürzel; ein Klick öffnet den Recorder. Während der Aufnahme pausieren Snapline-Kürzel. Sie werden beim Abschluss, Abbruch oder Verlassen des Fensters wieder aktiviert. Menü, Editor und Recorder zeigen die Beschriftungen des aktiven Tastaturlayouts. Nur das Standard-Flyout folgt beim Eingabequellenwechsel dem Zeichen **Z**; aufgenommene Kürzel behalten ihre physische Taste.
 
 ### Seitenverhältnisse
 

@@ -99,6 +99,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         menu.addItem(header)
 
         // Warnings first, so they can't be missed.
+        for failure in keyboard.registrationFailures {
+            let display = ShortcutDisplay.shared
+            menu.addItem(item(L10n.tr("menu.warning.shortcut", display.actionName(failure.action),
+                                     display.label(failure.shortcut), Int(failure.status)), #selector(openShortcuts)))
+        }
         if !AXIsProcessTrusted() {
             menu.addItem(item(L10n.tr("menu.warning.accessibility"), #selector(openAccessibilitySettings)))
         } else if !tap.isInstalled {
@@ -117,8 +122,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         // Layouts.
         let layoutsItem = item(L10n.tr("menu.showLayouts"), #selector(showLayouts))
-        layoutsItem.keyEquivalent = "z"
-        layoutsItem.keyEquivalentModifierMask = [.control, .option]
+        showShortcut(on: layoutsItem, action: .flyout)
         menu.addItem(layoutsItem)
         for screen in NSScreen.screens {
             menu.addItem(submenu(NSScreen.screens.count > 1
@@ -171,13 +175,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         menu.addItem(submenu(L10n.tr("menu.edgeColumns"), columnsMenu))
 
         let shortcuts = NSMenu()
+        shortcuts.addItem(item(L10n.tr("recorder.title"), #selector(openShortcuts)))
+        shortcuts.addItem(.separator())
+        let display = ShortcutDisplay.shared
         for line in [
-            L10n.tr("shortcut.flyout"),
-            L10n.tr("shortcut.activeLayout"),
-            L10n.tr("shortcut.workspace"),
-            L10n.tr("shortcut.leftRight"),
-            L10n.tr("shortcut.up"),
-            L10n.tr("shortcut.down"),
+            L10n.tr("shortcut.flyout", display.label(for: .flyout)),
+            L10n.tr("shortcut.activeLayout", display.label(for: .layouts)),
+            L10n.tr("shortcut.workspace", display.label(for: .workspaces)),
+            L10n.tr("shortcut.leftRight", display.label(for: .left) + " / " + display.label(for: .right)),
+            L10n.tr("shortcut.up", display.label(for: .up)),
+            L10n.tr("shortcut.down", display.label(for: .down)),
             L10n.tr("shortcut.zoneDrag", Settings.zoneModifier.symbol),
             L10n.tr("shortcut.zoneDragSwitch"),
             L10n.tr("shortcut.zoneDragSpan", Settings.zoneModifier.spanSymbol),
@@ -205,8 +212,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             let entry = toggle(layout.displayName, i == active, #selector(selectActiveLayout(_:)))
             entry.representedObject = ActiveLayoutChoice(screen: screen, layout: layout, number: i + 1, count: layouts.count)
             if i < 9 {
-                entry.keyEquivalent = "\(i + 1)"
-                entry.keyEquivalentModifierMask = [.control, .option]
+                showShortcut(on: entry, action: .layouts, index: i)
             }
             menu.addItem(entry)
         }
@@ -236,8 +242,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             let apps = Array(NSOrderedSet(array: ws.windows.map(\.appName))) as? [String] ?? []
             let entry = submenu("\(ws.name)  (\(apps.prefix(4).joined(separator: ", ")))", sub)
             if i < 9 {
-                entry.keyEquivalent = "\(i + 1)"
-                entry.keyEquivalentModifierMask = [.control, .option, .shift]
+                showShortcut(on: entry, action: .workspaces, index: i)
             }
             menu.addItem(entry)
         }
@@ -278,6 +283,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         return i
     }
 
+    /// Text instead of AppKit key equivalents: those can invoke a second action while
+    /// Carbon handles the same event, and cannot represent physical AZERTY number keys.
+    private func showShortcut(on item: NSMenuItem, action: ShortcutAction, index: Int = 0) {
+        let label = ShortcutDisplay.shared.label(for: action, index: index)
+        if !label.isEmpty { item.title += "  " + label }
+    }
+
     private func toggle(_ title: String, _ on: Bool, _ action: Selector) -> NSMenuItem {
         let i = item(title, action)
         i.state = on ? .on : .off
@@ -306,6 +318,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     @objc private func openEditor() { LayoutEditorController.shared.present() }
+    @objc private func openShortcuts() { ShortcutRecorderController.shared.present() }
 
     @objc private func saveWorkspace() {
         let name = L10n.tr("workspace.defaultName", LayoutStore.shared.workspaces.count + 1)

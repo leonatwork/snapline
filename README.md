@@ -50,7 +50,7 @@ The images are rendered, not screen captures: the windows are invented demo cont
 | Windows 11 | Snapline |
 |---|---|
 | Hover over Maximize → Snap Layouts | Hover over the **green button** → layout flyout, click a zone |
-| Win + Z | **⌃⌥Z** (on a German keyboard also ⌃⌥Y) |
+| Win + Z | **⌃⌥Z** by default; follows the Z key on QWERTZ and AZERTY |
 | Drag a window to the top center → Snap Bar | Same here: a bar with layouts appears, drag the window onto a zone |
 | Drag a window to an edge/corner | Left/right edge → outer column, corner → half column, top edge → maximize, **bottom edge → column under the cursor** |
 | Snap Assist | After snapping via a layout, the remaining windows are offered for the free zones |
@@ -63,6 +63,12 @@ The images are rendered, not screen captures: the windows are invented demo cont
 | – | **Workspaces**: save the current arrangement, restore it with **⌃⌥⇧1…9**; missing apps are launched |
 
 macOS's own tiling menu on the green button is suppressed. Snapline intercepts the hover events there with an event tap (like Tappi), so only the Snapline flyout appears. Snap Assist shows live previews of the windows (ScreenCaptureKit, like Tappi).
+
+### Keyboard shortcuts
+
+The table shows the defaults. Open **Keyboard shortcuts & gestures → Keyboard shortcuts…** in the status menu to record, delete (disable), or reset a shortcut. Window directions and the flyout accept a physical key with at least one modifier (Control, Option, Shift or Command). For layout and workspace groups, hold the desired modifiers together and release them; the physical 1…9 keys stay fixed. Changes apply immediately and persist in UserDefaults across restarts.
+
+Snapline rejects duplicate bindings and shortcuts without modifiers. If another app such as Rectangle prevents registration, a warning at the top of the status menu names the action and shortcut; click it to open the recorder. Snapline shortcuts pause while recording and resume on completion, cancellation, or leaving the window. Menu, editor and recorder labels follow the active keyboard layout. Only the default flyout follows the character **Z** when the input source changes; recorded shortcuts keep their physical key.
 
 ### Aspect ratios
 

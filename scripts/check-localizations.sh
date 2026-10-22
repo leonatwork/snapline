@@ -16,14 +16,22 @@ failed=0
 # "key" = "value";  →  key<TAB>value (one entry per line, as the files are written)
 entries() { sed -n 's/^"\([^"]*\)"[[:space:]]*=[[:space:]]*"\(.*\)";[[:space:]]*$/\1	\2/p' "$1"; }
 placeholders() { grep -o '%[0-9$]*[@dDiuxXfs]' <<<"$1" | sort | tr -d '\n' || true; }
+lint_strings() {
+    if command -v plutil >/dev/null 2>&1; then
+        plutil -lint -s "$1"
+    else
+        # Linux has no Apple plutil. Validate OpenStep string-table syntax with stdlib Python.
+        python3 scripts/lint-strings.py "$1"
+    fi
+}
 
 for lang in "${LANGS[@]}"; do
     file="Resources/$lang.lproj/Localizable.strings"
     if [ ! -f "$file" ]; then
         echo "✗ $lang: $file is missing"; failed=1; continue
     fi
-    if ! plutil -lint -s "$file"; then
-        echo "✗ $lang: plutil -lint failed"; failed=1
+    if ! lint_strings "$file"; then
+        echo "✗ $lang: string-table syntax check failed"; failed=1
     fi
     entries "$file" | sort > "$WORK/$lang.tsv"
     # Every entry line must have been parsed (guards against odd formatting).
