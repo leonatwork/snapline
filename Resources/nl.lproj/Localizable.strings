@@ -11,6 +11,10 @@
 
 /* Menu bar menu */
 "menu.quit" = "Stop Snapline";
+"menu.disableForApp" = "Uitschakelen voor %@";
+"menu.enableForApp" = "Opnieuw inschakelen voor %@";
+"menu.excludedApps" = "Uitgesloten apps";
+"menu.excludedApps.empty" = "Geen uitgesloten apps";
 "menu.warning.accessibility" = "⚠️ Toegang tot Toegankelijkheid verlenen…";
 "menu.warning.eventTap" = "⚠️ Event tap niet actief – Snapline opnieuw starten";
 "menu.warning.nativeTiling" = "⚠️ Tegelen van macOS staat nog aan – uitschakelen…";

@@ -97,7 +97,7 @@ final class DragController {
         guard let window = AXWindow.window(at: cursor) else {
             return debugLog("mouseDown: no window under cursor")
         }
-        guard !window.isOwnWindow, window.isStandard, !window.isFullScreen, let frame = window.frame else {
+        guard !window.isOwnWindow, !window.isAppExcluded, window.isStandard, !window.isFullScreen, let frame = window.frame else {
             return debugLog("mouseDown: ignored window (subrole \(window.subrole ?? "nil"), own \(window.isOwnWindow), fullscreen \(window.isFullScreen), frame \(String(describing: window.frame)))")
         }
         // Only clicks in the top band can be title bar drags – skips the AX
@@ -138,6 +138,7 @@ final class DragController {
 
     private func mouseDragged() {
         guard let window else { return }
+        guard !window.isAppExcluded else { reset(); return }
         let cursor = Screens.cursorAX
 
         if !moving {
@@ -187,6 +188,7 @@ final class DragController {
     private var zoneKeyHeld: Bool { flags.contains(Settings.zoneModifier.flag) }
 
     private func update(cursor: CGPoint) {
+        guard let window, !window.isAppExcluded else { reset(); return }
         guard !cancelled else { return }
         if Settings.optionDragZones && zoneKeyHeld {
             updateZones(cursor: cursor)
@@ -204,6 +206,7 @@ final class DragController {
         // Let the window server finish the drag before we move the window.
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.03) { [assist] in
             MainActor.assumeIsolated {
+                guard !window.isAppExcluded else { return }
                 switch target {
                 case .zone(let zone, let screen):
                     SnapEngine.shared.snap(window, to: zone, on: screen)
@@ -360,6 +363,10 @@ final class DragController {
             lastScrollStep = now
         }
         return true
+    }
+
+    func appExclusionsDidChange() {
+        if window?.isAppExcluded == true { reset() }
     }
 
     private func reset() {

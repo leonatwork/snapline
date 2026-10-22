@@ -11,6 +11,10 @@
 
 /* Menu bar menu */
 "menu.quit" = "Snapline を終了";
+"menu.disableForApp" = "%@ で無効にする";
+"menu.enableForApp" = "%@ で再び有効にする";
+"menu.excludedApps" = "除外したアプリ";
+"menu.excludedApps.empty" = "除外したアプリはありません";
 "menu.warning.accessibility" = "⚠️ アクセシビリティへのアクセスを許可…";
 "menu.warning.eventTap" = "⚠️ イベントタップが無効です – Snapline を再起動";
 "menu.warning.nativeTiling" = "⚠️ macOS のタイル表示がオンのままです – オフにする…";

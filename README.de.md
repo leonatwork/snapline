@@ -64,6 +64,10 @@ Die Bilder sind gerendert, keine Bildschirmfotos: Die Fenster sind erfundene Dem
 
 Das macOS-eigene Kachel-Menü am grünen Knopf wird unterdrückt. Snapline fängt die Hover-Events dort per Event Tap ab (wie Tappi), sodass nur noch das Snapline-Flyout erscheint. Snap Assist zeigt Live-Vorschauen der Fenster (ScreenCaptureKit, wie in Tappi).
 
+### Ausgeschlossene Apps
+
+Aktiviere die gewünschte App und wähle im Snapline-Menü **Für &lt;App&gt; deaktivieren**, damit Snapline ihre Fenster in Ruhe lässt. Der Ausschluss gilt sofort für Rand- und Zonen-Ziehen, Snap Bar, Hover- und Tastatur-Snapping sowie Snap Assist; das macOS-eigene Menü am grünen Knopf wird nicht mehr unterdrückt. Mit **Für &lt;App&gt; wieder aktivieren** oder einem Klick auf die App unter **Ausgeschlossene Apps** entfernst du die Ausnahme. Die Liste startet leer und bleibt nach Neustarts erhalten. Arbeitsbereiche erfassen und platzieren weiterhin auch ausgeschlossene Apps.
+
 ### Seitenverhältnisse
 
 Layouts und Spalten passen sich pro Monitor an:

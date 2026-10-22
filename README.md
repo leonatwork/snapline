@@ -64,6 +64,10 @@ The images are rendered, not screen captures: the windows are invented demo cont
 
 macOS's own tiling menu on the green button is suppressed. Snapline intercepts the hover events there with an event tap (like Tappi), so only the Snapline flyout appears. Snap Assist shows live previews of the windows (ScreenCaptureKit, like Tappi).
 
+### Excluded apps
+
+To leave an app's windows alone, activate the app and choose **Disable for &lt;App&gt;** in Snapline's menu. This immediately excludes it from edge and zone dragging, the Snap Bar, hover and keyboard snapping, and Snap Assist; its native macOS green-button menu is no longer suppressed. Choose **Re-enable for &lt;App&gt;**, or click the app under **Excluded apps**, to remove the exception. The list starts empty and survives restarts. Saved workspaces still capture and restore excluded apps.
+
 ### Aspect ratios
 
 Layouts and columns adapt per display:

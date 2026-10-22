@@ -72,6 +72,7 @@ final class AXWindow {
     var isMinimized: Bool { element.attribute(kAXMinimizedAttribute) ?? false }
     var isFullScreen: Bool { element.attribute("AXFullScreen") ?? false }
     var isOwnWindow: Bool { pid == getpid() }
+    var isAppExcluded: Bool { Settings.isAppExcluded(pid: pid) }
 
     var zoomButton: AXUIElement? {
         element.attribute(kAXFullScreenButtonAttribute) ?? element.attribute(kAXZoomButtonAttribute)
