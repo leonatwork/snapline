@@ -45,6 +45,11 @@ final class LayoutEditorController: NSWindowController, NSWindowDelegate, NSTabl
         NotificationCenter.default.addObserver(forName: LayoutStore.didChange, object: nil, queue: .main) { [weak self] _ in
             MainActor.assumeIsolated { self?.reload() }
         }
+        for name in [Settings.shortcutsDidChange, ShortcutDisplay.inputSourceDidChange] {
+            NotificationCenter.default.addObserver(forName: name, object: nil, queue: .main) { [weak self] _ in
+                MainActor.assumeIsolated { self?.reload() }
+            }
+        }
     }
 
     required init?(coder: NSCoder) { fatalError() }
@@ -221,7 +226,8 @@ final class LayoutEditorController: NSWindowController, NSWindowDelegate, NSTabl
         downButton.isEnabled = custom != nil
 
         let number = (store.layouts(for: screen).firstIndex { $0.id == layout.id } ?? 0) + 1
-        let shortcut = number <= 9 ? L10n.tr("editor.shortcutActivates", number) : ""
+        let label = ShortcutDisplay.shared.label(for: .layouts, index: number - 1)
+        let shortcut = !label.isEmpty ? L10n.tr("editor.shortcutActivates", label) : ""
         hint.stringValue = custom != nil
             ? L10n.tr("editor.hint.custom") + " " + shortcut
             : L10n.tr("editor.hint.builtIn") + " " + shortcut
@@ -364,7 +370,7 @@ private final class LayoutRowView: NSView {
         let name = NSTextField(labelWithString: layout.displayName)
         name.font = .systemFont(ofSize: 13, weight: active ? .semibold : .regular)
         name.lineBreakMode = .byTruncatingTail
-        let detail = NSTextField(labelWithString: (number <= 9 ? "⌃⌥\(number)" : "") + (active ? "  ·  " + L10n.tr("editor.activeTag") : ""))
+        let detail = NSTextField(labelWithString: ShortcutDisplay.shared.label(for: .layouts, index: number - 1) + (active ? "  ·  " + L10n.tr("editor.activeTag") : ""))
         detail.font = .systemFont(ofSize: 11)
         detail.textColor = active ? .controlAccentColor : .secondaryLabelColor
 

@@ -53,12 +53,12 @@
 "columns.quarters" = "4 分割";
 
 /* Keyboard shortcuts & gestures submenu */
-"shortcut.flyout" = "⌃⌥Z  Snap Layouts、続けて数字でレイアウトとゾーン";
-"shortcut.activeLayout" = "⌃⌥1…9  ディスプレイのアクティブなレイアウトを選択";
-"shortcut.workspace" = "⌃⌥⇧1…9  ワークスペースを復元";
-"shortcut.leftRight" = "⌃⌥←/→  左右の列へ、さらに次のディスプレイへ";
-"shortcut.up" = "⌃⌥↑  最大化 / 列の上半分";
-"shortcut.down" = "⌃⌥↓  元に戻す / 下半分 / しまう";
+"shortcut.flyout" = "%@  Snap Layouts、続けて数字でレイアウトとゾーン";
+"shortcut.activeLayout" = "%@  ディスプレイのアクティブなレイアウトを選択";
+"shortcut.workspace" = "%@  ワークスペースを復元";
+"shortcut.leftRight" = "%@  左右の列へ、さらに次のディスプレイへ";
+"shortcut.up" = "%@  最大化 / 列の上半分";
+"shortcut.down" = "%@  元に戻す / 下半分 / しまう";
 "shortcut.zoneDrag" = "%@ + ドラッグ  アクティブなレイアウトのゾーンにドロップ";
 "shortcut.zoneDragSwitch" = "   … スクロールホイール / 1–9 / Tab  レイアウトを切り替え";
 "shortcut.zoneDragSpan" = "   … %@  複数のゾーンを結合 · Esc  キャンセル";
@@ -103,7 +103,31 @@
 "editor.activeOnDisplay" = "✓ このディスプレイでアクティブ";
 "editor.makeActive" = "アクティブにする";
 "editor.activeTag" = "アクティブ";
-"editor.shortcutActivates" = "⌃⌥%d でこのレイアウトをアクティブにします。";
+"editor.shortcutActivates" = "%@ でこのレイアウトをアクティブにします。";
+
+/* ショートカットの記録 */
+"menu.warning.shortcut" = "⚠️ ショートカットを使用できません：%@（%@、エラー %d）…";
+"recorder.title" = "キーボードショートカット…";
+"recorder.left" = "ウィンドウを左へ";
+"recorder.right" = "ウィンドウを右へ";
+"recorder.up" = "ウィンドウを上へ";
+"recorder.down" = "ウィンドウを下へ";
+"recorder.flyout" = "Snap Layouts パネル";
+"recorder.layouts" = "アクティブなレイアウト 1…9";
+"recorder.workspaces" = "ワークスペース 1…9";
+"recorder.disabled" = "無効";
+"recorder.record" = "記録";
+"recorder.cancel" = "キャンセル";
+"recorder.reset" = "リセット";
+"recorder.resetAll" = "すべて初期設定に戻す";
+"recorder.help" = "変更はすぐに適用・保存されます。記録したショートカットは物理キーを使います。1…9 のグループは修飾キーのみ変更でき、表示はキーボード配列に従います。";
+"recorder.promptKey" = "Control、Option、Shift、Command のいずれかとキーを押してください。Esc でキャンセル。記録中は Snapline のショートカットを一時停止します。";
+"recorder.promptModifiers" = "希望する修飾キーを同時に押してから離してください（またはキーを押してください）。Esc でキャンセル。Snapline のショートカットは一時停止中です。";
+"recorder.errorModifiers" = "Control、Option、Shift、Command の修飾キーが少なくとも1つ必要です。";
+"recorder.errorConflict" = "このショートカットは「%@」で使用中です。別の組み合わせを選んでください。";
+"recorder.errorBinding" = "このキー設定はこの操作には使用できません。";
+"recorder.saved" = "保存しました。他のアプリとの登録競合はステータスメニューに表示されます。";
+"recorder.keyCode" = "キー %d";
 "editor.hint.custom" = "クリック: ゾーンを縦に分割 · ⇧-クリック: 横に分割 · 区切り線をドラッグ: サイズ変更 (¼ ⅓ ½ ⅔ ¾ でスナップ) · ⌥-クリック: ゾーンを削除。";
 "editor.hint.builtIn" = "テンプレート – 編集するには「複製」します。";
 "editor.template.empty" = "空 (ゾーン 1 つ)";

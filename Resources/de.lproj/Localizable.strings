@@ -53,12 +53,12 @@
 "columns.quarters" = "Viertel";
 
 /* Keyboard shortcuts & gestures submenu */
-"shortcut.flyout" = "⌃⌥Z  Snap-Layouts, dann Ziffer für Layout und Zone";
-"shortcut.activeLayout" = "⌃⌥1…9  Aktives Layout des Monitors wählen";
-"shortcut.workspace" = "⌃⌥⇧1…9  Arbeitsbereich wiederherstellen";
-"shortcut.leftRight" = "⌃⌥←/→  Spalte links/rechts, weiter zum nächsten Monitor";
-"shortcut.up" = "⌃⌥↑  Maximieren / obere Hälfte der Spalte";
-"shortcut.down" = "⌃⌥↓  Wiederherstellen / untere Hälfte / Minimieren";
+"shortcut.flyout" = "%@  Snap-Layouts, dann Ziffer für Layout und Zone";
+"shortcut.activeLayout" = "%@  Aktives Layout des Monitors wählen";
+"shortcut.workspace" = "%@  Arbeitsbereich wiederherstellen";
+"shortcut.leftRight" = "%@  Spalte links/rechts, weiter zum nächsten Monitor";
+"shortcut.up" = "%@  Maximieren / obere Hälfte der Spalte";
+"shortcut.down" = "%@  Wiederherstellen / untere Hälfte / Minimieren";
 "shortcut.zoneDrag" = "%@ + Ziehen  In Zonen des aktiven Layouts ablegen";
 "shortcut.zoneDragSwitch" = "   … Mausrad / 1–9 / Tab  Layout wechseln";
 "shortcut.zoneDragSpan" = "   … %@  mehrere Zonen verbinden · Esc  abbrechen";
@@ -103,7 +103,31 @@
 "editor.activeOnDisplay" = "✓ Aktiv auf diesem Monitor";
 "editor.makeActive" = "Als aktiv setzen";
 "editor.activeTag" = "aktiv";
-"editor.shortcutActivates" = "⌃⌥%d aktiviert dieses Layout.";
+"editor.shortcutActivates" = "%@ aktiviert dieses Layout.";
+
+/* Tastenkürzel-Recorder */
+"menu.warning.shortcut" = "⚠️ Tastenkürzel nicht verfügbar: %@ (%@, Fehler %d)…";
+"recorder.title" = "Tastenkürzel…";
+"recorder.left" = "Fenster nach links";
+"recorder.right" = "Fenster nach rechts";
+"recorder.up" = "Fenster nach oben";
+"recorder.down" = "Fenster nach unten";
+"recorder.flyout" = "Snap-Layouts-Flyout";
+"recorder.layouts" = "Aktives Layout 1…9";
+"recorder.workspaces" = "Arbeitsbereich 1…9";
+"recorder.disabled" = "Deaktiviert";
+"recorder.record" = "Aufnehmen";
+"recorder.cancel" = "Abbrechen";
+"recorder.reset" = "Zurücksetzen";
+"recorder.resetAll" = "Alle auf Standard zurücksetzen";
+"recorder.help" = "Änderungen gelten sofort und werden gespeichert. Aufgenommene Kürzel verwenden physische Tasten. Für die Gruppen 1…9 ändern sich nur die Modifier; Beschriftungen folgen dem Tastaturlayout.";
+"recorder.promptKey" = "Taste mit Control, Option, Shift oder Command drücken. Esc bricht ab. Snapline-Kürzel sind während der Aufnahme pausiert.";
+"recorder.promptModifiers" = "Gewünschte Modifier gemeinsam halten, dann loslassen (oder eine Taste drücken). Esc bricht ab. Snapline-Kürzel sind pausiert.";
+"recorder.errorModifiers" = "Ein Kürzel braucht mindestens einen Modifier: Control, Option, Shift oder Command.";
+"recorder.errorConflict" = "Dieses Kürzel wird bereits von „%@“ verwendet. Andere Kombination wählen.";
+"recorder.errorBinding" = "Diese Belegung ist für diese Aktion ungültig.";
+"recorder.saved" = "Gespeichert. Registrierungskonflikte mit anderen Apps werden im Statusmenü angezeigt.";
+"recorder.keyCode" = "Taste %d";
 "editor.hint.custom" = "Klick: Zone senkrecht teilen · ⇧-Klick: waagerecht teilen · Trennlinie ziehen: Größe (rastet bei ¼ ⅓ ½ ⅔ ¾ ein) · ⌥-Klick: Zone entfernen.";
 "editor.hint.builtIn" = "Vorlage – zum Bearbeiten „Duplizieren“.";
 "editor.template.empty" = "Leer (eine Zone)";

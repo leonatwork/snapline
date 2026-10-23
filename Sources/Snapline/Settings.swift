@@ -18,7 +18,25 @@ enum Settings {
         static let launchAppsForWorkspaces = "launchAppsForWorkspaces"
         static let zoneModifier = "zoneModifier"
         static let debugLog = "debugLog"
+        static let shortcuts = "shortcuts"
         static let excludedApps = "excludedApps"
+    }
+
+    static let shortcutsDidChange = Notification.Name("Snapline.shortcutsDidChange")
+
+    static var shortcuts: ShortcutSettings {
+        get {
+            guard let data = defaults.data(forKey: Key.shortcuts),
+                  let value = try? JSONDecoder().decode(ShortcutSettings.self, from: data) else {
+                return ShortcutSettings()
+            }
+            return value
+        }
+        set {
+            guard let data = try? JSONEncoder().encode(newValue) else { return }
+            defaults.set(data, forKey: Key.shortcuts)
+            NotificationCenter.default.post(name: shortcutsDidChange, object: nil)
+        }
     }
 
     static func registerDefaults() {

@@ -53,12 +53,12 @@
 "columns.quarters" = "Quartos";
 
 /* Keyboard shortcuts & gestures submenu */
-"shortcut.flyout" = "⌃⌥Z  Snap Layouts, depois um número para layout e zona";
-"shortcut.activeLayout" = "⌃⌥1…9  Escolher o layout ativo da tela";
-"shortcut.workspace" = "⌃⌥⇧1…9  Restaurar área de trabalho";
-"shortcut.leftRight" = "⌃⌥←/→  Coluna à esquerda/direita, depois a próxima tela";
-"shortcut.up" = "⌃⌥↑  Maximizar / metade superior da coluna";
-"shortcut.down" = "⌃⌥↓  Restaurar / metade inferior / minimizar";
+"shortcut.flyout" = "%@  Snap Layouts, depois um número para layout e zona";
+"shortcut.activeLayout" = "%@  Escolher o layout ativo da tela";
+"shortcut.workspace" = "%@  Restaurar área de trabalho";
+"shortcut.leftRight" = "%@  Coluna à esquerda/direita, depois a próxima tela";
+"shortcut.up" = "%@  Maximizar / metade superior da coluna";
+"shortcut.down" = "%@  Restaurar / metade inferior / minimizar";
 "shortcut.zoneDrag" = "%@ + arrastar  Soltar nas zonas do layout ativo";
 "shortcut.zoneDragSwitch" = "   … Roda do mouse / 1–9 / Tab  Trocar layout";
 "shortcut.zoneDragSpan" = "   … %@  Unir várias zonas · Esc  Cancelar";
@@ -103,7 +103,31 @@
 "editor.activeOnDisplay" = "✓ Ativo nesta tela";
 "editor.makeActive" = "Tornar ativo";
 "editor.activeTag" = "ativo";
-"editor.shortcutActivates" = "⌃⌥%d ativa este layout.";
+"editor.shortcutActivates" = "%@ ativa este layout.";
+
+/* Gravador de atalhos */
+"menu.warning.shortcut" = "⚠️ Atalho indisponível: %@ (%@, erro %d)…";
+"recorder.title" = "Atalhos de teclado…";
+"recorder.left" = "Janela à esquerda";
+"recorder.right" = "Janela à direita";
+"recorder.up" = "Janela para cima";
+"recorder.down" = "Janela para baixo";
+"recorder.flyout" = "Painel Snap Layouts";
+"recorder.layouts" = "Layout ativo 1…9";
+"recorder.workspaces" = "Área de trabalho 1…9";
+"recorder.disabled" = "Desativado";
+"recorder.record" = "Gravar";
+"recorder.cancel" = "Cancelar";
+"recorder.reset" = "Redefinir";
+"recorder.resetAll" = "Restaurar todos os padrões";
+"recorder.help" = "As alterações são imediatas e salvas. Os atalhos gravados usam teclas físicas. Nos grupos 1…9, apenas os modificadores mudam; os rótulos seguem o layout do teclado.";
+"recorder.promptKey" = "Pressione uma tecla com Control, Option, Shift ou Command. Esc cancela. Os atalhos do Snapline são pausados durante a gravação.";
+"recorder.promptModifiers" = "Segure juntos os modificadores desejados e solte-os (ou pressione uma tecla). Esc cancela. Os atalhos do Snapline estão pausados.";
+"recorder.errorModifiers" = "Um atalho precisa de pelo menos um modificador: Control, Option, Shift ou Command.";
+"recorder.errorConflict" = "Este atalho já é usado por “%@”. Escolha outra combinação.";
+"recorder.errorBinding" = "Esta combinação não é válida para esta ação.";
+"recorder.saved" = "Salvo. Conflitos com outros apps aparecem no menu de status.";
+"recorder.keyCode" = "Tecla %d";
 "editor.hint.custom" = "Clique: dividir a zona na vertical · ⇧-clique: dividir na horizontal · Arrastar um divisor: redimensionar (encaixa em ¼ ⅓ ½ ⅔ ¾) · ⌥-clique: remover zona.";
 "editor.hint.builtIn" = "Modelo – para editar, “Duplicar”.";
 "editor.template.empty" = "Vazio (uma zona)";

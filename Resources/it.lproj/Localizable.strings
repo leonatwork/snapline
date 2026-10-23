@@ -53,12 +53,12 @@
 "columns.quarters" = "Quarti";
 
 /* Keyboard shortcuts & gestures submenu */
-"shortcut.flyout" = "⌃⌥Z  Snap Layouts, poi una cifra per layout e zona";
-"shortcut.activeLayout" = "⌃⌥1…9  Scegli il layout attivo del monitor";
-"shortcut.workspace" = "⌃⌥⇧1…9  Ripristina area di lavoro";
-"shortcut.leftRight" = "⌃⌥←/→  Colonna a sinistra/destra, poi monitor successivo";
-"shortcut.up" = "⌃⌥↑  Massimizza / metà superiore della colonna";
-"shortcut.down" = "⌃⌥↓  Ripristina / metà inferiore / riduci a icona";
+"shortcut.flyout" = "%@  Snap Layouts, poi una cifra per layout e zona";
+"shortcut.activeLayout" = "%@  Scegli il layout attivo del monitor";
+"shortcut.workspace" = "%@  Ripristina area di lavoro";
+"shortcut.leftRight" = "%@  Colonna a sinistra/destra, poi monitor successivo";
+"shortcut.up" = "%@  Massimizza / metà superiore della colonna";
+"shortcut.down" = "%@  Ripristina / metà inferiore / riduci a icona";
 "shortcut.zoneDrag" = "%@ + trascina  Rilascia nelle zone del layout attivo";
 "shortcut.zoneDragSwitch" = "   … Rotella / 1–9 / Tab  Cambia layout";
 "shortcut.zoneDragSpan" = "   … %@  Unisci più zone · Esc  Annulla";
@@ -103,7 +103,31 @@
 "editor.activeOnDisplay" = "✓ Attivo su questo monitor";
 "editor.makeActive" = "Rendi attivo";
 "editor.activeTag" = "attivo";
-"editor.shortcutActivates" = "⌃⌥%d attiva questo layout.";
+"editor.shortcutActivates" = "%@ attiva questo layout.";
+
+/* Registratore di scorciatoie */
+"menu.warning.shortcut" = "⚠️ Scorciatoia non disponibile: %@ (%@, errore %d)…";
+"recorder.title" = "Scorciatoie da tastiera…";
+"recorder.left" = "Finestra a sinistra";
+"recorder.right" = "Finestra a destra";
+"recorder.up" = "Finestra in alto";
+"recorder.down" = "Finestra in basso";
+"recorder.flyout" = "Pannello Snap Layouts";
+"recorder.layouts" = "Layout attivo 1…9";
+"recorder.workspaces" = "Area di lavoro 1…9";
+"recorder.disabled" = "Disattivata";
+"recorder.record" = "Registra";
+"recorder.cancel" = "Annulla";
+"recorder.reset" = "Ripristina";
+"recorder.resetAll" = "Ripristina tutte le impostazioni predefinite";
+"recorder.help" = "Le modifiche sono immediate e salvate. Le scorciatoie registrate usano tasti fisici. Per i gruppi 1…9 cambiano solo i modificatori; le etichette seguono il layout della tastiera.";
+"recorder.promptKey" = "Premi un tasto con Control, Opzione, Maiusc o Comando. Esc annulla. Le scorciatoie Snapline sono sospese durante la registrazione.";
+"recorder.promptModifiers" = "Tieni premuti insieme i modificatori desiderati, poi rilasciali (o premi un tasto). Esc annulla. Le scorciatoie Snapline sono sospese.";
+"recorder.errorModifiers" = "Una scorciatoia richiede almeno un modificatore: Control, Opzione, Maiusc o Comando.";
+"recorder.errorConflict" = "Questa scorciatoia è già usata da «%@». Scegli un’altra combinazione.";
+"recorder.errorBinding" = "Questa combinazione non è valida per questa azione.";
+"recorder.saved" = "Salvato. I conflitti con altre app compaiono nel menu di stato.";
+"recorder.keyCode" = "Tasto %d";
 "editor.hint.custom" = "Clic: dividi la zona in verticale · ⇧-clic: dividi in orizzontale · Trascina un divisore: ridimensiona (si aggancia a ¼ ⅓ ½ ⅔ ¾) · ⌥-clic: rimuovi zona.";
 "editor.hint.builtIn" = "Modello – per modificarlo, «Duplica».";
 "editor.template.empty" = "Vuoto (una zona)";

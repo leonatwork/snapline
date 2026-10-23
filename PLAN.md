@@ -84,8 +84,17 @@ scripts/build-app.sh     baut Snapline.app (Release, signiert)
 - Live-Vorschau in Snap Assist (ScreenCaptureKit, aus Tappi)
 - Abstand 0 als Standard, App-Icon, stabile lokale Signatur
 
+## Konfigurierbare Tastenkürzel (Issue #3)
+
+- Codable-Modell in SnaplineCore, Standardbelegung ⌃⌥, deaktivierbare Aktionen und Persistenz in UserDefaults
+- Eigenes Recorder-Fenster ohne Abhängigkeiten: aufnehmen, löschen, einzeln oder vollständig zurücksetzen
+- Sofortige Carbon-Neuregistrierung bei Änderungen und Eingabequellenwechsel; Fehler im Statusmenü
+- Interne Konfliktprüfung einschließlich beider Zifferngruppen und Ablehnung ohne Modifier
+- Beschriftungen aus dem aktiven Layout; Standard-Flyout folgt Z auf QWERTZ/AZERTY, aufgenommene Kürzel bleiben physisch
+- Swift-Testing-Regressionstests und Texte in allen zehn Sprachen
+- macOS-Build, Tests und manuelle Abnahme noch erforderlich; Nachweise in [docs/issue-3-handover.md](docs/issue-3-handover.md)
+
 ## Später
 
 - Snap Groups (gemeinsam gesnappte Fenster als Gruppe wiederherstellen)
 - Gemeinsames Resize benachbarter Fenster (Trennlinie zwischen Fenstern ziehen)
-- Konfigurierbare Tastenkürzel
