@@ -10,6 +10,15 @@
 "mainMenu.selectAll" = "Tout sélectionner";
 
 /* Menu bar menu */
+"menu.warning.stageManager" = "⚠️ Stage Manager perturbe le placement – Bureau et Dock…";
+"menu.disableNativeTiling" = "Désactiver la mosaïque macOS maintenant…";
+"tiling.confirm.title" = "Désactiver la mosaïque macOS ?";
+"tiling.confirm.info" = "Snapline définira uniquement ces clés de com.apple.WindowManager sur false (désactivé) :\n\n%@\n\nStage Manager (GloballyEnabled) reste inchangé. Annuler ne modifie rien. Il peut être nécessaire de désactiver aussi les options de mosaïque dans Réglages Système → Bureau et Dock.";
+"tiling.confirm.disable" = "Désactiver";
+"tiling.result.title" = "Vérifier Bureau et Dock";
+"tiling.result.info" = "Les trois clés de mosaïque ont été enregistrées comme désactivées. Si macOS place encore les fenêtres en mosaïque, désactivez ces options dans Réglages Système → Bureau et Dock. Stage Manager n’a pas été modifié ; son avertissement reste affiché tant qu’il est actif. Désactivez-le vous-même si nécessaire.";
+"tiling.result.failure" = "Snapline n’a pas pu vérifier que les trois clés de mosaïque ont été enregistrées comme désactivées. Ouvrez Réglages Système → Bureau et Dock et désactivez ces options. Stage Manager n’a pas été modifié ; désactivez-le vous-même si nécessaire.";
+"tiling.result.openSettings" = "Ouvrir Bureau et Dock";
 "menu.quit" = "Quitter Snapline";
 "menu.disableForApp" = "Désactiver pour %@";
 "menu.enableForApp" = "Réactiver pour %@";

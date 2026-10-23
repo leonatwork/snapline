@@ -10,6 +10,15 @@
 "mainMenu.selectAll" = "Alles auswählen";
 
 /* Menu bar menu */
+"menu.warning.stageManager" = "⚠️ Stage Manager beeinflusst Snapping – Schreibtisch & Dock …";
+"menu.disableNativeTiling" = "macOS-Kacheln jetzt ausschalten …";
+"tiling.confirm.title" = "macOS-Kacheln ausschalten?";
+"tiling.confirm.info" = "Snapline setzt nur diese Schlüssel in com.apple.WindowManager auf false (aus):\n\n%@\n\nStage Manager (GloballyEnabled) bleibt unverändert. Abbrechen ändert nichts. Eventuell musst du die Kacheln-Optionen zusätzlich in Systemeinstellungen → Schreibtisch & Dock ausschalten.";
+"tiling.confirm.disable" = "Ausschalten";
+"tiling.result.title" = "Schreibtisch & Dock prüfen";
+"tiling.result.info" = "Die drei Kacheln-Schlüssel wurden als aus gespeichert. Falls macOS weiterhin Fenster kachelt, schalte die Kacheln-Optionen in Systemeinstellungen → Schreibtisch & Dock aus. Stage Manager wurde nicht geändert; seine Warnung bleibt, solange er aktiv ist. Schalte ihn dort bei Bedarf selbst aus.";
+"tiling.result.failure" = "Snapline konnte nicht prüfen, ob alle drei Kacheln-Schlüssel als aus gespeichert wurden. Öffne Systemeinstellungen → Schreibtisch & Dock und schalte dort die Kacheln-Optionen aus. Stage Manager wurde nicht geändert; schalte ihn dort bei Bedarf selbst aus.";
+"tiling.result.openSettings" = "Schreibtisch & Dock öffnen";
 "menu.quit" = "Snapline beenden";
 "menu.disableForApp" = "Für %@ deaktivieren";
 "menu.enableForApp" = "Für %@ wieder aktivieren";

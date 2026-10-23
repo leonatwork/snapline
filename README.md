@@ -111,6 +111,10 @@ Go to **System Settings → Desktop & Dock → Windows** and turn off:
 
 Also turn off "Hold ⌥ key while dragging windows to tile", otherwise it collides with ⌥ + drag.
 
+Alternatively, choose **Turn off macOS tiling now…** under the tiling warning in Snapline's menu. The confirmation lists the three keys in `com.apple.WindowManager` that will be set to `false`: `EnableTilingByEdgeDrag`, `EnableTopTilingByEdgeDrag` and `EnableTilingOptionAccelerator`. Cancel changes nothing. After confirming, check the result in Desktop & Dock and turn these options off there if macOS has not applied the change yet. No system processes are restarted.
+
+**Stage Manager:** Snapline also warns whenever Stage Manager is active, even with drag snapping disabled. Click the warning to open **System Settings → Desktop & Dock**. Stage Manager's groups and app strip can affect window placement and snapping; Snapline does not compensate for them yet. The tiling button never changes Stage Manager (`GloballyEnabled`), so its warning remains until you turn Stage Manager off yourself. Both warnings refresh every time you open the menu.
+
 ### Permissions
 
 - **Accessibility**: moving windows, event tap

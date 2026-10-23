@@ -10,6 +10,15 @@
 "mainMenu.selectAll" = "Seleziona tutto";
 
 /* Menu bar menu */
+"menu.warning.stageManager" = "⚠️ Stage Manager influisce sul posizionamento – Scrivania e Dock…";
+"menu.disableNativeTiling" = "Disattiva ora la disposizione a mosaico di macOS…";
+"tiling.confirm.title" = "Disattivare la disposizione a mosaico di macOS?";
+"tiling.confirm.info" = "Snapline imposterà solo queste chiavi in com.apple.WindowManager su false (disattivato):\n\n%@\n\nStage Manager (GloballyEnabled) rimane invariato. Annulla non modifica nulla. Potrebbe essere necessario disattivare anche le opzioni di disposizione a mosaico in Impostazioni di Sistema → Scrivania e Dock.";
+"tiling.confirm.disable" = "Disattiva";
+"tiling.result.title" = "Controlla Scrivania e Dock";
+"tiling.result.info" = "Le tre chiavi di disposizione a mosaico sono state salvate come disattivate. Se macOS continua a disporre le finestre a mosaico, disattiva le opzioni in Impostazioni di Sistema → Scrivania e Dock. Stage Manager non è stato modificato; l’avviso rimane finché è attivo. Disattivalo manualmente se necessario.";
+"tiling.result.failure" = "Snapline non ha potuto verificare che tutte e tre le chiavi siano state salvate come disattivate. Apri Impostazioni di Sistema → Scrivania e Dock e disattiva le opzioni di disposizione a mosaico. Stage Manager non è stato modificato; disattivalo manualmente se necessario.";
+"tiling.result.openSettings" = "Apri Scrivania e Dock";
 "menu.quit" = "Esci da Snapline";
 "menu.disableForApp" = "Disattiva per %@";
 "menu.enableForApp" = "Riattiva per %@";

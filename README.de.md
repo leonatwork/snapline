@@ -111,6 +111,10 @@ Seit macOS 15 kachelt macOS selbst, wenn man Fenster an den Rand zieht. Das koll
 
 Außerdem „Halte ⌥ beim Ziehen gedrückt, um zu kacheln“, sonst kollidiert es mit ⌥ + Ziehen.
 
+Alternativ im Snapline-Menü unter der Kacheln-Warnung **macOS-Kacheln jetzt ausschalten …** wählen. Die Bestätigung nennt die drei Schlüssel in `com.apple.WindowManager`, die auf `false` gesetzt werden: `EnableTilingByEdgeDrag`, `EnableTopTilingByEdgeDrag` und `EnableTilingOptionAccelerator`. Abbrechen ändert nichts. Nach der Bestätigung das Ergebnis in Schreibtisch & Dock prüfen und die Optionen dort ausschalten, falls macOS die Änderung noch nicht übernommen hat. Es werden keine Systemprozesse neu gestartet.
+
+**Stage Manager:** Snapline warnt zusätzlich bei aktivem Stage Manager, auch wenn Drag-Snap ausgeschaltet ist. Ein Klick öffnet **Systemeinstellungen → Schreibtisch & Dock**. Gruppen und App-Streifen von Stage Manager können Fensterplatzierung und Snapping beeinflussen; Snapline berücksichtigt sie noch nicht. Der Kacheln-Button ändert Stage Manager (`GloballyEnabled`) niemals; seine Warnung bleibt, bis du Stage Manager selbst ausschaltest. Beide Warnungen werden bei jedem Öffnen des Menüs aktualisiert.
+
 ### Berechtigungen
 
 - **Bedienungshilfen**: Fenster verschieben, Event Tap
