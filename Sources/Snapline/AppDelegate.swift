@@ -137,6 +137,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         menu.addItem(submenu(L10n.tr("menu.workspaces"), workspacesMenu()))
         menu.addItem(.separator())
 
+        // Capture the active app now: menu actions must not use the app that
+        // happens to be frontmost after the menu has taken focus.
+        if let app = NSWorkspace.shared.frontmostApplication,
+           app.processIdentifier != getpid(), let bundleID = app.bundleIdentifier {
+            let title = Settings.appExclusions.contains(bundleID: bundleID)
+                ? L10n.tr("menu.enableForApp", app.localizedName ?? bundleID)
+                : L10n.tr("menu.disableForApp", app.localizedName ?? bundleID)
+            let entry = item(title, #selector(toggleAppExclusion(_:)))
+            entry.representedObject = bundleID
+            menu.addItem(entry)
+        }
+        menu.addItem(submenu(L10n.tr("menu.excludedApps"), excludedAppsMenu()))
+        menu.addItem(.separator())
+
         // Behaviour.
         let behaviour = NSMenu()
         behaviour.addItem(toggle(L10n.tr("behavior.dragSnap"), Settings.dragSnap, #selector(toggleDragSnap)))
@@ -202,6 +216,34 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         menu.addItem(submenu(L10n.tr("menu.moreApps"), moreAppsMenu()))
         menu.addItem(.separator())
         menu.addItem(NSMenuItem(title: L10n.tr("menu.quit"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
+    }
+
+    private func excludedAppsMenu() -> NSMenu {
+        let menu = NSMenu()
+        for bundleID in Settings.appExclusions.bundleIDs {
+            let app = NSWorkspace.shared.runningApplications.first {
+                $0.bundleIdentifier?.lowercased() == bundleID.lowercased()
+            }
+            let url = app?.bundleURL ?? NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleID)
+            let bundle = url.flatMap { Bundle(url: $0) }
+            let name = app?.localizedName
+                ?? (bundle?.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String)
+                ?? (bundle?.object(forInfoDictionaryKey: "CFBundleName") as? String)
+                ?? bundleID
+            let entry = item(name, #selector(removeAppExclusion(_:)))
+            entry.representedObject = bundleID
+            entry.toolTip = bundleID
+            let icon = app?.icon ?? url.map { NSWorkspace.shared.icon(forFile: $0.path) }
+            entry.image = icon?.copy() as? NSImage
+            entry.image?.size = NSSize(width: 16, height: 16)
+            menu.addItem(entry)
+        }
+        if menu.items.isEmpty {
+            let empty = NSMenuItem(title: L10n.tr("menu.excludedApps.empty"), action: nil, keyEquivalent: "")
+            empty.isEnabled = false
+            menu.addItem(empty)
+        }
+        return menu
     }
 
     private func activeLayoutMenu(for screen: NSScreen) -> NSMenu {
@@ -303,6 +345,28 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     // MARK: Actions
+
+    @objc private func toggleAppExclusion(_ sender: NSMenuItem) {
+        guard let bundleID = sender.representedObject as? String else { return }
+        let exclusions = Settings.appExclusions
+        Settings.appExclusions = exclusions.contains(bundleID: bundleID)
+            ? exclusions.removing(bundleID: bundleID)
+            : exclusions.adding(bundleID: bundleID)
+        appExclusionsDidChange()
+    }
+
+    @objc private func removeAppExclusion(_ sender: NSMenuItem) {
+        guard let bundleID = sender.representedObject as? String else { return }
+        Settings.appExclusions = Settings.appExclusions.removing(bundleID: bundleID)
+        appExclusionsDidChange()
+    }
+
+    private func appExclusionsDidChange() {
+        drag.appExclusionsDidChange()
+        flyouts.hide()
+        assist.dismiss()
+        hover.appExclusionsDidChange()
+    }
 
     @objc private func showLayouts() {
         // Let the menu close and focus return to the previous app first.

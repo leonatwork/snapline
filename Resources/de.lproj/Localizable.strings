@@ -11,6 +11,10 @@
 
 /* Menu bar menu */
 "menu.quit" = "Snapline beenden";
+"menu.disableForApp" = "Für %@ deaktivieren";
+"menu.enableForApp" = "Für %@ wieder aktivieren";
+"menu.excludedApps" = "Ausgeschlossene Apps";
+"menu.excludedApps.empty" = "Keine ausgeschlossenen Apps";
 "menu.warning.accessibility" = "⚠️ Bedienungshilfen-Zugriff erteilen…";
 "menu.warning.eventTap" = "⚠️ Event Tap nicht aktiv – Snapline neu starten";
 "menu.warning.nativeTiling" = "⚠️ macOS-Kacheln ist noch aktiv – deaktivieren…";

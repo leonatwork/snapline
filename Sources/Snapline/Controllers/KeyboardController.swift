@@ -98,7 +98,7 @@ final class KeyboardController: NSObject {
     }
 
     func showFlyout() {
-        guard let window = AXWindow.focused(), window.isStandard, !window.isFullScreen,
+        guard let window = AXWindow.focused(), !window.isAppExcluded, window.isStandard, !window.isFullScreen,
               let frame = window.frame else { return NSSound.beep() }
         let anchor = window.zoomButton?.frame
             ?? CGRect(x: frame.minX + 60, y: frame.minY + 4, width: 16, height: 16)
@@ -106,7 +106,7 @@ final class KeyboardController: NSObject {
     }
 
     private func snap(_ direction: SnapDirection) {
-        guard let window = AXWindow.focused(), window.isStandard, !window.isFullScreen,
+        guard let window = AXWindow.focused(), !window.isAppExcluded, window.isStandard, !window.isFullScreen,
               let frame = window.frame, let screen = Screens.screen(for: frame) else { return NSSound.beep() }
         flyouts.hide()
         assist.dismiss()

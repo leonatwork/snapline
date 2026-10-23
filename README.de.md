@@ -70,6 +70,10 @@ Die Tabelle zeigt die Standardbelegung. Im Statusmenü unter **Tastenkürzel & G
 
 Snapline lehnt doppelte Belegungen und Kürzel ohne Modifier ab. Verhindert eine andere App wie Rectangle die Registrierung, nennt eine Warnung oben im Statusmenü Aktion und Kürzel; ein Klick öffnet den Recorder. Während der Aufnahme pausieren Snapline-Kürzel. Sie werden beim Abschluss, Abbruch oder Verlassen des Fensters wieder aktiviert. Menü, Editor und Recorder zeigen die Beschriftungen des aktiven Tastaturlayouts. Nur das Standard-Flyout folgt beim Eingabequellenwechsel dem Zeichen **Z**; aufgenommene Kürzel behalten ihre physische Taste.
 
+### Ausgeschlossene Apps
+
+Aktiviere die gewünschte App und wähle im Snapline-Menü **Für &lt;App&gt; deaktivieren**, damit Snapline ihre Fenster in Ruhe lässt. Der Ausschluss gilt sofort für Rand- und Zonen-Ziehen, Snap Bar, Hover- und Tastatur-Snapping sowie Snap Assist; das macOS-eigene Menü am grünen Knopf wird nicht mehr unterdrückt. Mit **Für &lt;App&gt; wieder aktivieren** oder einem Klick auf die App unter **Ausgeschlossene Apps** entfernst du die Ausnahme. Die Liste startet leer und bleibt nach Neustarts erhalten. Arbeitsbereiche erfassen und platzieren weiterhin auch ausgeschlossene Apps.
+
 ### Seitenverhältnisse
 
 Layouts und Spalten passen sich pro Monitor an:

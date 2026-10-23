@@ -19,6 +19,7 @@ enum Settings {
         static let zoneModifier = "zoneModifier"
         static let debugLog = "debugLog"
         static let shortcuts = "shortcuts"
+        static let excludedApps = "excludedApps"
     }
 
     static let shortcutsDidChange = Notification.Name("Snapline.shortcutsDidChange")
@@ -52,7 +53,20 @@ enum Settings {
             Key.launchAppsForWorkspaces: true,
             Key.zoneModifier: ZoneModifier.command.rawValue,
             Key.debugLog: false,
+            Key.excludedApps: [String](),
         ])
+    }
+
+    /// Persisted bundle IDs, with no default exclusions.
+    static var appExclusions: AppExclusions {
+        get { AppExclusions(bundleIDs: defaults.stringArray(forKey: Key.excludedApps) ?? []) }
+        set { defaults.set(newValue.bundleIDs, forKey: Key.excludedApps) }
+    }
+
+    static func isAppExcluded(pid: pid_t) -> Bool {
+        let exclusions = appExclusions
+        guard !exclusions.bundleIDs.isEmpty else { return false }
+        return exclusions.contains(bundleID: NSRunningApplication(processIdentifier: pid)?.bundleIdentifier)
     }
 
     /// Aero Snap: drag windows to screen edges.

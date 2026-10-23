@@ -11,6 +11,10 @@
 
 /* Menu bar menu */
 "menu.quit" = "Snapline 종료";
+"menu.disableForApp" = "%@에서 비활성화";
+"menu.enableForApp" = "%@에서 다시 활성화";
+"menu.excludedApps" = "제외된 앱";
+"menu.excludedApps.empty" = "제외된 앱 없음";
 "menu.warning.accessibility" = "⚠️ 손쉬운 사용 접근 허용…";
 "menu.warning.eventTap" = "⚠️ 이벤트 탭이 비활성 상태 – Snapline 재시작";
 "menu.warning.nativeTiling" = "⚠️ macOS 타일 정렬이 아직 켜져 있음 – 끄기…";

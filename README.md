@@ -70,6 +70,10 @@ The table shows the defaults. Open **Keyboard shortcuts & gestures → Keyboard 
 
 Snapline rejects duplicate bindings and shortcuts without modifiers. If another app such as Rectangle prevents registration, a warning at the top of the status menu names the action and shortcut; click it to open the recorder. Snapline shortcuts pause while recording and resume on completion, cancellation, or leaving the window. Menu, editor and recorder labels follow the active keyboard layout. Only the default flyout follows the character **Z** when the input source changes; recorded shortcuts keep their physical key.
 
+### Excluded apps
+
+To leave an app's windows alone, activate the app and choose **Disable for &lt;App&gt;** in Snapline's menu. This immediately excludes it from edge and zone dragging, the Snap Bar, hover and keyboard snapping, and Snap Assist; its native macOS green-button menu is no longer suppressed. Choose **Re-enable for &lt;App&gt;**, or click the app under **Excluded apps**, to remove the exception. The list starts empty and survives restarts. Saved workspaces still capture and restore excluded apps.
+
 ### Aspect ratios
 
 Layouts and columns adapt per display:

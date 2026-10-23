@@ -10,6 +10,10 @@
 "mainMenu.selectAll" = "Select All";
 
 /* Menu bar menu */
+"menu.disableForApp" = "Disable for %@";
+"menu.enableForApp" = "Re-enable for %@";
+"menu.excludedApps" = "Excluded apps";
+"menu.excludedApps.empty" = "No excluded apps";
 "menu.quit" = "Quit Snapline";
 "menu.warning.accessibility" = "⚠️ Grant Accessibility access…";
 "menu.warning.eventTap" = "⚠️ Event tap not active – restart Snapline";
