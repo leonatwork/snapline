@@ -10,6 +10,15 @@
 "mainMenu.selectAll" = "모두 선택";
 
 /* Menu bar menu */
+"menu.warning.stageManager" = "⚠️ 스테이지 매니저가 스냅에 영향을 줍니다 — 데스크탑 및 Dock…";
+"menu.disableNativeTiling" = "지금 macOS 윈도우 타일링 끄기…";
+"tiling.confirm.title" = "macOS 윈도우 타일링을 끄시겠습니까?";
+"tiling.confirm.info" = "Snapline은 com.apple.WindowManager의 다음 키만 false(끔)로 설정합니다:\n\n%@\n\n스테이지 매니저(GloballyEnabled)는 변경하지 않습니다. 취소하면 아무것도 변경하지 않습니다. 시스템 설정 → 데스크탑 및 Dock에서도 타일링 옵션을 꺼야 할 수 있습니다.";
+"tiling.confirm.disable" = "끄기";
+"tiling.result.title" = "데스크탑 및 Dock 확인";
+"tiling.result.info" = "세 가지 타일링 키가 끔으로 저장되었습니다. macOS가 계속 윈도우를 타일링하면 시스템 설정 → 데스크탑 및 Dock에서 해당 옵션을 끄세요. 스테이지 매니저는 변경되지 않았으며 활성화된 동안 경고가 표시됩니다. 필요한 경우 직접 끄세요.";
+"tiling.result.failure" = "세 가지 타일링 키가 모두 끔으로 저장되었는지 확인할 수 없습니다. 시스템 설정 → 데스크탑 및 Dock을 열고 해당 옵션을 끄세요. 스테이지 매니저는 변경되지 않았습니다. 필요한 경우 직접 끄세요.";
+"tiling.result.openSettings" = "데스크탑 및 Dock 열기";
 "menu.quit" = "Snapline 종료";
 "menu.disableForApp" = "%@에서 비활성화";
 "menu.enableForApp" = "%@에서 다시 활성화";

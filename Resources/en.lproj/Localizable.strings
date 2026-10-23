@@ -10,6 +10,15 @@
 "mainMenu.selectAll" = "Select All";
 
 /* Menu bar menu */
+"menu.warning.stageManager" = "⚠️ Stage Manager affects snapping – Desktop & Dock…";
+"menu.disableNativeTiling" = "Turn off macOS tiling now…";
+"tiling.confirm.title" = "Turn off macOS tiling?";
+"tiling.confirm.info" = "Snapline will set only these keys in com.apple.WindowManager to false (off):\n\n%@\n\nStage Manager (GloballyEnabled) stays unchanged. Cancel changes nothing. macOS may require you to turn off the tiling options in System Settings → Desktop & Dock as well.";
+"tiling.confirm.disable" = "Turn off";
+"tiling.result.title" = "Check Desktop & Dock";
+"tiling.result.info" = "The three tiling keys were saved as off. If macOS still tiles windows, turn off the tiling options in System Settings → Desktop & Dock. Stage Manager was not changed; its warning remains while it is active. Turn it off there yourself if needed.";
+"tiling.result.failure" = "Snapline could not verify that all three tiling keys were saved as off. Open System Settings → Desktop & Dock and turn off the tiling options there. Stage Manager was not changed; turn it off there yourself if needed.";
+"tiling.result.openSettings" = "Open Desktop & Dock";
 "menu.disableForApp" = "Disable for %@";
 "menu.enableForApp" = "Re-enable for %@";
 "menu.excludedApps" = "Excluded apps";

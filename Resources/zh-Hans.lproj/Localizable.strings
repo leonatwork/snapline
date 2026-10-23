@@ -10,6 +10,15 @@
 "mainMenu.selectAll" = "全选";
 
 /* Menu bar menu */
+"menu.warning.stageManager" = "⚠️ 台前调度会影响窗口吸附 — 桌面与程序坞…";
+"menu.disableNativeTiling" = "立即关闭 macOS 窗口平铺…";
+"tiling.confirm.title" = "关闭 macOS 窗口平铺？";
+"tiling.confirm.info" = "Snapline 仅将 com.apple.WindowManager 中的以下键设为 false（关闭）：\n\n%@\n\n台前调度（GloballyEnabled）保持不变。取消不会更改任何设置。你可能还需要在系统设置 → 桌面与程序坞中关闭窗口平铺选项。";
+"tiling.confirm.disable" = "关闭";
+"tiling.result.title" = "检查桌面与程序坞";
+"tiling.result.info" = "三个窗口平铺键已保存为关闭。如果 macOS 仍在平铺窗口，请在系统设置 → 桌面与程序坞中关闭相关选项。台前调度未更改；启用时仍会显示警告。如有需要，请在那里手动关闭台前调度。";
+"tiling.result.failure" = "Snapline 无法确认三个窗口平铺键均已保存为关闭。请打开系统设置 → 桌面与程序坞并关闭相关选项。台前调度未更改；如有需要，请在那里手动关闭台前调度。";
+"tiling.result.openSettings" = "打开桌面与程序坞";
 "menu.quit" = "退出 Snapline";
 "menu.disableForApp" = "对 %@ 停用";
 "menu.enableForApp" = "对 %@ 重新启用";

@@ -10,6 +10,15 @@
 "mainMenu.selectAll" = "Seleccionar todo";
 
 /* Menu bar menu */
+"menu.warning.stageManager" = "⚠️ Organizador visual afecta al ajuste – Escritorio y Dock…";
+"menu.disableNativeTiling" = "Desactivar los mosaicos de macOS ahora…";
+"tiling.confirm.title" = "¿Desactivar los mosaicos de macOS?";
+"tiling.confirm.info" = "Snapline solo establecerá estas claves de com.apple.WindowManager en false (desactivado):\n\n%@\n\nOrganizador visual (GloballyEnabled) no cambiará. Cancelar no modifica nada. Puede que también debas desactivar las opciones de mosaicos en Ajustes del Sistema → Escritorio y Dock.";
+"tiling.confirm.disable" = "Desactivar";
+"tiling.result.title" = "Revisar Escritorio y Dock";
+"tiling.result.info" = "Las tres claves de mosaicos se guardaron como desactivadas. Si macOS sigue organizando las ventanas en mosaicos, desactiva esas opciones en Ajustes del Sistema → Escritorio y Dock. Organizador visual no cambió; su aviso permanece mientras esté activo. Desactívalo manualmente allí si lo necesitas.";
+"tiling.result.failure" = "Snapline no pudo verificar que las tres claves de mosaicos se guardaran como desactivadas. Abre Ajustes del Sistema → Escritorio y Dock y desactiva esas opciones. Organizador visual no cambió; desactívalo manualmente allí si lo necesitas.";
+"tiling.result.openSettings" = "Abrir Escritorio y Dock";
 "menu.quit" = "Salir de Snapline";
 "menu.disableForApp" = "Desactivar para %@";
 "menu.enableForApp" = "Reactivar para %@";
