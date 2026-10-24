@@ -55,6 +55,7 @@ Die Bilder sind gerendert, keine Bildschirmfotos: Die Fenster sind erfundene Dem
 | Fenster an Rand/Ecke ziehen | linker/rechter Rand → äußere Spalte, Ecke → halbe Spalte, oberer Rand → maximieren, **unterer Rand → Spalte unter dem Cursor** |
 | Snap Assist | Nach dem Snappen per Layout werden die übrigen Fenster in den freien Zonen angeboten |
 | Win + ← / → | **⌃⌥← / →** wandert durch die Spalten und weiter auf den nächsten Monitor |
+| Win + ⇧ + Pfeil | **⌃⌥⇧ + ← / → / ↑ / ↓** verschiebt das Fenster auf den Nachbarmonitor in dieser Richtung |
 | Win + ↑ / ↓ | **⌃⌥↑** maximieren bzw. obere Hälfte · **⌃⌥↓** wiederherstellen, untere Hälfte, minimieren |
 | Gesnapptes Fenster wegziehen | bekommt seine ursprüngliche Größe zurück |
 | FancyZones: ⇧ + Ziehen | **⌘ + Ziehen** (Taste im Menü umstellbar: ⌘, ⌥ oder ⇧) legt das Fenster in die Zonen des aktiven Layouts. Dabei wechseln **Mausrad / 1–9 / Tab** das Layout, **⇧** verbindet mehrere Zonen, **Esc** bricht ab |
@@ -63,6 +64,10 @@ Die Bilder sind gerendert, keine Bildschirmfotos: Die Fenster sind erfundene Dem
 | – | **Arbeitsbereiche**: aktuelle Anordnung speichern, mit **⌃⌥⇧1…9** wiederherstellen, fehlende Apps werden gestartet |
 
 Das macOS-eigene Kachel-Menü am grünen Knopf wird unterdrückt. Snapline fängt die Hover-Events dort per Event Tap ab (wie Tappi), sodass nur noch das Snapline-Flyout erscheint. Snap Assist zeigt Live-Vorschauen der Fenster (ScreenCaptureKit, wie in Tappi).
+
+### Mehrere Monitore
+
+Gemeinsame Kanten zwischen Monitoren lösen weder Rand-Snapping noch die Snap-Leiste aus, auch bei übereinander stehenden Monitoren. Freiliegende Außenkanten funktionieren wie bisher. **⌃⌥⇧ + Pfeil** verschiebt das fokussierte Fenster auf einen angrenzenden Monitor in dieser Richtung und erhält Position und Größe relativ zum sichtbaren Bildschirmbereich. Ein von Snapline gesnapptes Fenster bleibt in derselben Zone, auch bei anderer Monitorgröße. Es gibt keinen Umlauf: Ohne Nachbarn bleibt das Fenster stehen und ein Systemton erklingt. Fenster werden im sichtbaren Zielbereich gehalten; passt die Mindestgröße einer App nicht hinein, liegt das Fenster bündig an der linken oberen Ecke.
 
 ### Ausgeschlossene Apps
 

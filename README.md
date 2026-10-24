@@ -55,6 +55,7 @@ The images are rendered, not screen captures: the windows are invented demo cont
 | Drag a window to an edge/corner | Left/right edge → outer column, corner → half column, top edge → maximize, **bottom edge → column under the cursor** |
 | Snap Assist | After snapping via a layout, the remaining windows are offered for the free zones |
 | Win + ← / → | **⌃⌥← / →** moves through the columns and on to the next display |
+| Win + ⇧ + Arrow | **⌃⌥⇧ + ← / → / ↑ / ↓** moves the window to the adjacent display in that direction |
 | Win + ↑ / ↓ | **⌃⌥↑** maximize or top half · **⌃⌥↓** restore, bottom half, minimize |
 | Drag a snapped window away | It gets its original size back |
 | FancyZones: ⇧ + drag | **⌘ + drag** (key configurable in the menu: ⌘, ⌥ or ⇧) drops the window into the zones of the active layout. While dragging, **scroll wheel / 1–9 / Tab** switch the layout, **⇧** joins several zones, **Esc** cancels |
@@ -63,6 +64,10 @@ The images are rendered, not screen captures: the windows are invented demo cont
 | – | **Workspaces**: save the current arrangement, restore it with **⌃⌥⇧1…9**; missing apps are launched |
 
 macOS's own tiling menu on the green button is suppressed. Snapline intercepts the hover events there with an event tap (like Tappi), so only the Snapline flyout appears. Snap Assist shows live previews of the windows (ScreenCaptureKit, like Tappi).
+
+### Multiple monitors
+
+Shared edges between displays do not trigger edge snapping or the Snap Bar, including vertically stacked displays. Exposed outer edges keep their usual behavior. **⌃⌥⇧ + Arrow** moves the focused window to a touching display in that direction, preserving its position and size relative to the visible screen area. A window snapped by Snapline keeps the same zone, even on a differently sized display. There is no wraparound: without a neighbour, the window stays put and a system sound plays. Windows are kept inside the target's visible area; if an app's minimum size cannot fit, the window is anchored at the top-left corner.
 
 ### Excluded apps
 

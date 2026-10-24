@@ -62,6 +62,7 @@
 "columns.quarters" = "Viertel";
 
 /* Keyboard shortcuts & gestures submenu */
+"shortcut.moveMonitor" = "⌃⌥⇧←/→/↑/↓  Fenster auf den Nachbarmonitor verschieben";
 "shortcut.flyout" = "⌃⌥Z  Snap-Layouts, dann Ziffer für Layout und Zone";
 "shortcut.activeLayout" = "⌃⌥1…9  Aktives Layout des Monitors wählen";
 "shortcut.workspace" = "⌃⌥⇧1…9  Arbeitsbereich wiederherstellen";

@@ -3,7 +3,8 @@ import Carbon.HIToolbox
 import SnaplineCore
 
 /// Win + Arrow equivalents on ⌃⌥ + Arrow, ⌃⌥Z for the layouts flyout (Win + Z),
-/// ⌃⌥1…9 to switch the monitor's active layout and ⌃⌥⇧1…9 for workspaces.
+/// ⌃⌥1…9 to switch the monitor's active layout, ⌃⌥⇧1…9 for workspaces,
+/// and ⌃⌥⇧ + Arrow to move the window to an adjacent monitor.
 @MainActor
 final class KeyboardController {
     static let modifiers = controlKey | optionKey
@@ -30,6 +31,10 @@ final class KeyboardController {
         hk.register(keyCode: kVK_RightArrow, modifiers: mods) { [weak self] in self?.snap(.right) }
         hk.register(keyCode: kVK_UpArrow, modifiers: mods) { [weak self] in self?.snap(.up) }
         hk.register(keyCode: kVK_DownArrow, modifiers: mods) { [weak self] in self?.snap(.down) }
+        hk.register(keyCode: kVK_LeftArrow, modifiers: mods | shiftKey) { [weak self] in self?.move(.left) }
+        hk.register(keyCode: kVK_RightArrow, modifiers: mods | shiftKey) { [weak self] in self?.move(.right) }
+        hk.register(keyCode: kVK_UpArrow, modifiers: mods | shiftKey) { [weak self] in self?.move(.up) }
+        hk.register(keyCode: kVK_DownArrow, modifiers: mods | shiftKey) { [weak self] in self?.move(.down) }
         hk.register(keyCode: kVK_ANSI_Z, modifiers: mods) { [weak self] in self?.showFlyout() }
         // ⌃⌥Y as well: on German keyboards Z and Y swap places.
         hk.register(keyCode: kVK_ANSI_Y, modifiers: mods) { [weak self] in self?.showFlyout() }
@@ -66,6 +71,15 @@ final class KeyboardController {
         let anchor = window.zoomButton?.frame
             ?? CGRect(x: frame.minX + 60, y: frame.minY + 4, width: 16, height: 16)
         flyouts.show(for: window, anchorAX: anchor, mode: .hotkey)
+    }
+
+    private func move(_ direction: SnapDirection) {
+        guard let window = AXWindow.focused(), !window.isAppExcluded, window.isStandard, !window.isFullScreen,
+              let frame = window.frame, let screen = Screens.screen(for: frame),
+              let next = Screens.neighbor(of: screen, direction: direction) else { return NSSound.beep() }
+        flyouts.hide()
+        assist.dismiss()
+        SnapEngine.shared.move(window, from: screen, to: next)
     }
 
     private func snap(_ direction: SnapDirection) {

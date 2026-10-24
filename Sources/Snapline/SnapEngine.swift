@@ -10,6 +10,7 @@ final class SnapEngine {
     struct Record {
         var restore: CGRect
         var snapped: CGRect
+        var zone: Zone
     }
 
     private var records: [WindowKey: Record] = [:]
@@ -19,11 +20,8 @@ final class SnapEngine {
     }
 
     func snap(_ window: AXWindow, to zone: Zone, on screen: NSScreen) {
-        snap(window, to: frame(for: zone, on: screen))
-    }
-
-    func snap(_ window: AXWindow, to target: CGRect) {
         guard let current = window.frame else { return }
+        let target = frame(for: zone, on: screen)
         let key = WindowKey(window)
 
         // Keep the original frame across consecutive snaps (thirds → half → …)
@@ -35,9 +33,25 @@ final class SnapEngine {
             restore = current
         }
 
-        window.setFrame(target)
-        records[key] = Record(restore: restore, snapped: window.frame ?? target)
+        window.setFrame(target, in: screen.axVisibleFrame)
+        records[key] = Record(restore: restore, snapped: window.frame ?? target, zone: zone)
         pruneIfNeeded()
+    }
+
+    /// Dedicated monitor move, separate from the existing column-walking action.
+    /// Only a live snap record preserves a zone; manually moved/resized windows
+    /// transfer their actual relative frame instead.
+    func move(_ window: AXWindow, from source: NSScreen, to target: NSScreen) {
+        guard let current = window.frame else { return }
+        let record = snappedRecord(for: window, currentFrame: current)
+        let frame = ScreenGeometry.transfer(current, from: source.axVisibleFrame, to: target.axVisibleFrame,
+                                            zone: record?.zone, gap: Settings.gap)
+        window.setFrame(frame, in: target.axVisibleFrame)
+        if let record {
+            records[WindowKey(window)] = Record(restore: record.restore, snapped: window.frame ?? frame, zone: record.zone)
+        } else {
+            forget(window)
+        }
     }
 
     /// Returns false if the window was not snapped by us.
