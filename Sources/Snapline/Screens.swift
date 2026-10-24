@@ -21,7 +21,9 @@ enum Screens {
     static var cursorAX: CGPoint { toAX(NSEvent.mouseLocation) }
 
     static func screen(containingAX point: CGPoint) -> NSScreen? {
-        NSScreen.screens.first { $0.axFrame.insetBy(dx: -1, dy: -1).contains(point) }
+        let screens = NSScreen.screens
+        guard let index = ScreenGeometry.screen(containing: point, in: screens.map(\.axFrame)) else { return nil }
+        return screens[index]
     }
 
     /// The screen showing most of the given AX rect.
@@ -31,16 +33,16 @@ enum Screens {
         }
     }
 
-    /// Nearest screen to the left/right whose vertical span overlaps ours.
+    /// Compatibility for the existing horizontal column-walking shortcuts.
     static func neighbor(of screen: NSScreen, side: HorizontalSide) -> NSScreen? {
-        let f = screen.axFrame
-        let others = NSScreen.screens.filter { $0 != screen }
-        let candidates = others.filter { o in
-            let of = o.axFrame
-            let overlaps = of.maxY > f.minY && of.minY < f.maxY
-            return overlaps && (side == .left ? of.midX < f.midX : of.midX > f.midX)
-        }
-        return candidates.min { a, b in abs(a.axFrame.midX - f.midX) < abs(b.axFrame.midX - f.midX) }
+        neighbor(of: screen, direction: side == .left ? .left : .right)
+    }
+
+    static func neighbor(of screen: NSScreen, direction: SnapDirection) -> NSScreen? {
+        let screens = NSScreen.screens
+        guard let index = ScreenGeometry.neighbor(of: screen.axFrame, direction: direction,
+                                                  in: screens.map(\.axFrame)) else { return nil }
+        return screens[index]
     }
 }
 

@@ -62,6 +62,7 @@
 "columns.quarters" = "Quarts";
 
 /* Keyboard shortcuts & gestures submenu */
+"shortcut.moveMonitor" = "⌃⌥⇧←/→/↑/↓  Déplacer la fenêtre vers l’écran voisin";
 "shortcut.flyout" = "⌃⌥Z  Snap Layouts, puis un chiffre pour la disposition et la zone";
 "shortcut.activeLayout" = "⌃⌥1…9  Choisir la disposition active de l’écran";
 "shortcut.workspace" = "⌃⌥⇧1…9  Restaurer l’espace de travail";

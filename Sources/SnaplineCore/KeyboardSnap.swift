@@ -1,6 +1,6 @@
 import CoreGraphics
 
-public enum SnapDirection: Sendable {
+public enum SnapDirection: Sendable, CaseIterable, Hashable {
     case left, right, up, down
 }
 

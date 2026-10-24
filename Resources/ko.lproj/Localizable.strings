@@ -62,6 +62,7 @@
 "columns.quarters" = "4분할";
 
 /* Keyboard shortcuts & gestures submenu */
+"shortcut.moveMonitor" = "⌃⌥⇧←/→/↑/↓  창을 인접한 디스플레이로 이동";
 "shortcut.flyout" = "⌃⌥Z  Snap Layouts, 이어서 숫자로 레이아웃과 영역 선택";
 "shortcut.activeLayout" = "⌃⌥1…9  디스플레이의 활성 레이아웃 선택";
 "shortcut.workspace" = "⌃⌥⇧1…9  작업 공간 복원";

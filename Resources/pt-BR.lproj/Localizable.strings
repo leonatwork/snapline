@@ -62,6 +62,7 @@
 "columns.quarters" = "Quartos";
 
 /* Keyboard shortcuts & gestures submenu */
+"shortcut.moveMonitor" = "⌃⌥⇧←/→/↑/↓  Mover janela para a tela adjacente";
 "shortcut.flyout" = "⌃⌥Z  Snap Layouts, depois um número para layout e zona";
 "shortcut.activeLayout" = "⌃⌥1…9  Escolher o layout ativo da tela";
 "shortcut.workspace" = "⌃⌥⇧1…9  Restaurar área de trabalho";

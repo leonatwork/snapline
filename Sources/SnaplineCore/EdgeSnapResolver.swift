@@ -27,12 +27,18 @@ public struct EdgeSnapResolver: Sendable {
     ///   - point: cursor position.
     ///   - screen: full frame of the screen under the cursor (including the menu bar).
     ///   - columns: column count for this screen (2 = halves, 3 = thirds …).
-    public func region(for point: CGPoint, in screen: CGRect, columns: Int) -> SnapRegion? {
+    ///   - screens: full AX frames, used to suppress shared edge segments.
+    public func region(for point: CGPoint, in screen: CGRect, columns: Int, screens: [CGRect] = []) -> SnapRegion? {
         let t = edgeThreshold
         let atLeft = point.x <= screen.minX + t
         let atRight = point.x >= screen.maxX - 1 - t
         let atTop = point.y <= screen.minY + t
         let atBottom = point.y >= screen.maxY - 1 - t
+        let inner = ScreenGeometry.innerEdges(of: screen, in: screens, at: point)
+        // Suppress the entire target at seam corners too: otherwise a shared top
+        // edge could still produce a column through the left/right corner rule.
+        if (atLeft && inner.contains(.left)) || (atRight && inner.contains(.right))
+            || (atTop && inner.contains(.up)) || (atBottom && inner.contains(.down)) { return nil }
         let nearTop = point.y <= screen.minY + cornerSize
         let nearBottom = point.y >= screen.maxY - cornerSize
         let nearLeft = point.x <= screen.minX + cornerSize

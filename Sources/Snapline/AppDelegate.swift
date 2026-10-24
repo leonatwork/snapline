@@ -197,6 +197,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             L10n.tr("shortcut.activeLayout"),
             L10n.tr("shortcut.workspace"),
             L10n.tr("shortcut.leftRight"),
+            L10n.tr("shortcut.moveMonitor"),
             L10n.tr("shortcut.up"),
             L10n.tr("shortcut.down"),
             L10n.tr("shortcut.zoneDrag", Settings.zoneModifier.symbol),
