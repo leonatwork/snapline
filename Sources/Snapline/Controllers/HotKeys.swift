@@ -13,8 +13,16 @@ final class HotKeyCenter {
 
     private static let signature: OSType = 0x534E_504C  // 'SNPL'
 
-    func register(keyCode: Int, modifiers: Int, handler: @escaping () -> Void) {
-        installHandlerIfNeeded()
+    func unregisterAll() {
+        for ref in refs { UnregisterEventHotKey(ref) }
+        refs.removeAll()
+        handlers.removeAll()
+    }
+
+    @discardableResult
+    func register(keyCode: Int, modifiers: Int, handler: @escaping () -> Void) -> OSStatus {
+        let installation = installHandlerIfNeeded()
+        guard installation == noErr else { return installation }
         let id = nextID
         nextID += 1
         var ref: EventHotKeyRef?
@@ -23,21 +31,21 @@ final class HotKeyCenter {
                                          GetApplicationEventTarget(), 0, &ref)
         guard status == noErr, let ref else {
             NSLog("Snapline: could not register hotkey \(keyCode) (\(status))")
-            return
+            return status == noErr ? OSStatus(eventInternalErr) : status
         }
         refs.append(ref)
         handlers[id] = handler
+        return noErr
     }
 
     fileprivate func fire(_ id: UInt32) {
         handlers[id]?()
     }
 
-    private func installHandlerIfNeeded() {
-        guard !installed else { return }
-        installed = true
+    private func installHandlerIfNeeded() -> OSStatus {
+        guard !installed else { return noErr }
         var spec = EventTypeSpec(eventClass: OSType(kEventClassKeyboard), eventKind: UInt32(kEventHotKeyPressed))
-        InstallEventHandler(GetApplicationEventTarget(), { _, event, _ in
+        let status = InstallEventHandler(GetApplicationEventTarget(), { _, event, _ in
             var hotKeyID = EventHotKeyID()
             let status = GetEventParameter(event, EventParamName(kEventParamDirectObject), EventParamType(typeEventHotKeyID),
                                            nil, MemoryLayout<EventHotKeyID>.size, nil, &hotKeyID)
@@ -45,5 +53,7 @@ final class HotKeyCenter {
             MainActor.assumeIsolated { HotKeyCenter.shared.fire(hotKeyID.id) }
             return noErr
         }, 1, &spec, nil, nil)
+        installed = status == noErr
+        return status
     }
 }

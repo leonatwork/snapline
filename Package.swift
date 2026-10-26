@@ -8,5 +8,6 @@ let package = Package(
         .target(name: "SnaplineCore"),
         .executableTarget(name: "Snapline", dependencies: ["SnaplineCore"]),
         .testTarget(name: "SnaplineCoreTests", dependencies: ["SnaplineCore"]),
+        .testTarget(name: "SnaplineTests", dependencies: ["Snapline"]),
     ]
 )

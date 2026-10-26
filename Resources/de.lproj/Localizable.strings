@@ -62,13 +62,13 @@
 "columns.quarters" = "Viertel";
 
 /* Keyboard shortcuts & gestures submenu */
-"shortcut.moveMonitor" = "⌃⌥⇧←/→/↑/↓  Fenster auf den Nachbarmonitor verschieben";
-"shortcut.flyout" = "⌃⌥Z  Snap-Layouts, dann Ziffer für Layout und Zone";
-"shortcut.activeLayout" = "⌃⌥1…9  Aktives Layout des Monitors wählen";
-"shortcut.workspace" = "⌃⌥⇧1…9  Arbeitsbereich wiederherstellen";
-"shortcut.leftRight" = "⌃⌥←/→  Spalte links/rechts, weiter zum nächsten Monitor";
-"shortcut.up" = "⌃⌥↑  Maximieren / obere Hälfte der Spalte";
-"shortcut.down" = "⌃⌥↓  Wiederherstellen / untere Hälfte / Minimieren";
+"shortcut.moveMonitor" = "%@  Fenster auf den Nachbarmonitor verschieben";
+"shortcut.flyout" = "%@  Snap-Layouts, dann Ziffer für Layout und Zone";
+"shortcut.activeLayout" = "%@  Aktives Layout des Monitors wählen";
+"shortcut.workspace" = "%@  Arbeitsbereich wiederherstellen";
+"shortcut.leftRight" = "%@  Spalte links/rechts, weiter zum nächsten Monitor";
+"shortcut.up" = "%@  Maximieren / obere Hälfte der Spalte";
+"shortcut.down" = "%@  Wiederherstellen / untere Hälfte / Minimieren";
 "shortcut.zoneDrag" = "%@ + Ziehen  In Zonen des aktiven Layouts ablegen";
 "shortcut.zoneDragSwitch" = "   … Mausrad / 1–9 / Tab  Layout wechseln";
 "shortcut.zoneDragSpan" = "   … %@  mehrere Zonen verbinden · Esc  abbrechen";
@@ -113,7 +113,30 @@
 "editor.activeOnDisplay" = "✓ Aktiv auf diesem Monitor";
 "editor.makeActive" = "Als aktiv setzen";
 "editor.activeTag" = "aktiv";
-"editor.shortcutActivates" = "⌃⌥%d aktiviert dieses Layout.";
+"editor.shortcutActivates" = "%@ aktiviert dieses Layout.";
+
+/* Tastenkürzel-Recorder */
+"menu.warning.shortcut" = "⚠️ %@ (%@) konnte nicht registriert werden – Tastenkürzel…";
+"recorder.title" = "Tastenkürzel…";
+"recorder.info" = "Physische Taste mit Modifiern aufnehmen. Layouts und Arbeitsbereiche behalten die physischen Zifferntasten 1–9; nur ihre Modifier ändern sich. Esc bricht die Aufnahme ab.";
+"recorder.left" = "Fenster nach links";
+"recorder.right" = "Fenster nach rechts";
+"recorder.up" = "Fenster nach oben";
+"recorder.down" = "Fenster nach unten";
+"recorder.flyout" = "Snap-Layouts-Flyout";
+"recorder.layouts" = "Aktives Layout 1–9";
+"recorder.workspaces" = "Arbeitsbereich 1–9";
+"recorder.monitor" = "Auf Nachbarmonitor verschieben";
+"recorder.disabled" = "Deaktiviert";
+"recorder.record" = "Aufnehmen";
+"recorder.reset" = "Zurücksetzen";
+"recorder.resetAll" = "Auf Standard zurücksetzen";
+"recorder.pressKey" = "Neues Kürzel drücken (Esc bricht ab).";
+"recorder.pressModifiers" = "Gewünschte Modifier halten und mit einer Taste bestätigen (Esc bricht ab).";
+"recorder.confirmModifiers" = "Modifier: %@ — mit einer Taste bestätigen.";
+"recorder.missingModifiers" = "Mindestens einen Modifier verwenden: Control, Option, Shift oder Command.";
+"recorder.conflict" = "Dieses Kürzel wird bereits von %@ verwendet. Wähle ein anderes Kürzel.";
+"recorder.saved" = "Gespeichert. Änderungen gelten sofort. Registrierungsfehler erscheinen im Statusmenü.";
 "editor.hint.custom" = "Klick: Zone senkrecht teilen · ⇧-Klick: waagerecht teilen · Trennlinie ziehen: Größe (rastet bei ¼ ⅓ ½ ⅔ ¾ ein) · ⌥-Klick: Zone entfernen.";
 "editor.hint.builtIn" = "Vorlage – zum Bearbeiten „Duplizieren“.";
 "editor.template.empty" = "Leer (eine Zone)";

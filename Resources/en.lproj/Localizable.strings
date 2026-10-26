@@ -62,13 +62,13 @@
 "columns.quarters" = "Quarters";
 
 /* Keyboard shortcuts & gestures submenu */
-"shortcut.moveMonitor" = "⌃⌥⇧←/→/↑/↓  Move window to the adjacent display";
-"shortcut.flyout" = "⌃⌥Z  Snap Layouts, then a digit for layout and zone";
-"shortcut.activeLayout" = "⌃⌥1…9  Choose the display’s active layout";
-"shortcut.workspace" = "⌃⌥⇧1…9  Restore workspace";
-"shortcut.leftRight" = "⌃⌥←/→  Column left/right, on to the next display";
-"shortcut.up" = "⌃⌥↑  Maximize / top half of the column";
-"shortcut.down" = "⌃⌥↓  Restore / bottom half / minimize";
+"shortcut.moveMonitor" = "%@  Move window to the adjacent display";
+"shortcut.flyout" = "%@  Snap Layouts, then a digit for layout and zone";
+"shortcut.activeLayout" = "%@  Choose the display’s active layout";
+"shortcut.workspace" = "%@  Restore workspace";
+"shortcut.leftRight" = "%@  Column left/right, on to the next display";
+"shortcut.up" = "%@  Maximize / top half of the column";
+"shortcut.down" = "%@  Restore / bottom half / minimize";
 "shortcut.zoneDrag" = "%@ + drag  Drop into zones of the active layout";
 "shortcut.zoneDragSwitch" = "   … Scroll wheel / 1–9 / Tab  Switch layout";
 "shortcut.zoneDragSpan" = "   … %@  Join several zones · Esc  Cancel";
@@ -113,7 +113,30 @@
 "editor.activeOnDisplay" = "✓ Active on this display";
 "editor.makeActive" = "Make active";
 "editor.activeTag" = "active";
-"editor.shortcutActivates" = "⌃⌥%d activates this layout.";
+"editor.shortcutActivates" = "%@ activates this layout.";
+
+/* Shortcut recorder */
+"menu.warning.shortcut" = "⚠️ %@ (%@) could not be registered – Keyboard shortcuts…";
+"recorder.title" = "Keyboard shortcuts…";
+"recorder.info" = "Record a physical key with modifiers. Layouts and workspaces keep the physical digit keys 1–9; only their modifiers change. Esc cancels recording.";
+"recorder.left" = "Window left";
+"recorder.right" = "Window right";
+"recorder.up" = "Window up";
+"recorder.down" = "Window down";
+"recorder.flyout" = "Snap Layouts flyout";
+"recorder.layouts" = "Active layout 1–9";
+"recorder.workspaces" = "Workspace 1–9";
+"recorder.monitor" = "Move to adjacent display";
+"recorder.disabled" = "Disabled";
+"recorder.record" = "Record";
+"recorder.reset" = "Reset";
+"recorder.resetAll" = "Reset to defaults";
+"recorder.pressKey" = "Press the new shortcut (Esc cancels).";
+"recorder.pressModifiers" = "Hold the desired modifiers and press a key to confirm (Esc cancels).";
+"recorder.confirmModifiers" = "Modifiers: %@ — press a key to confirm.";
+"recorder.missingModifiers" = "Use at least one modifier: Control, Option, Shift or Command.";
+"recorder.conflict" = "This shortcut is already used by %@. Choose another shortcut.";
+"recorder.saved" = "Saved. Changes take effect immediately. Registration failures appear in the status menu.";
 "editor.hint.custom" = "Click: split zone vertically · ⇧-click: split horizontally · Drag a divider: resize (snaps at ¼ ⅓ ½ ⅔ ¾) · ⌥-click: remove zone.";
 "editor.hint.builtIn" = "Template – to edit it, “Duplicate” it.";
 "editor.template.empty" = "Empty (one zone)";

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Checks the UI translations in Resources/<lang>.lproj/Localizable.strings:
-#   - every language exists and passes `plutil -lint`
+#   - every language exists and passes syntax lint (plutil on macOS, Python on Linux)
 #   - every language has exactly the keys of en.lproj (nothing missing, nothing extra)
 #   - format placeholders (%@, %d) match en.lproj, so String(format:) can't crash
 #   - every key used as L10n.tr("…") in Sources/ exists in en.lproj
@@ -17,13 +17,38 @@ failed=0
 entries() { sed -n 's/^"\([^"]*\)"[[:space:]]*=[[:space:]]*"\(.*\)";[[:space:]]*$/\1	\2/p' "$1"; }
 placeholders() { grep -o '%[0-9$]*[@dDiuxXfs]' <<<"$1" | sort | tr -d '\n' || true; }
 
+lint_strings() {
+    if command -v plutil >/dev/null 2>&1; then
+        plutil -lint -s "$1"
+    else
+        # The Linux agent has no Apple tools. Validate the quoted .strings syntax
+        # with the standard library; key/placeholder checks below remain identical.
+        python3 - "$1" <<'PY'
+import pathlib
+import re
+import sys
+
+text = pathlib.Path(sys.argv[1]).read_text(encoding="utf-8")
+quoted = r'"(?:[^"\\\r\n]|\\(?:["\\nrtbf]|U[0-9a-fA-F]{4}))*"'
+token = re.compile(r'\s+|/\*.*?\*/|' + quoted + r'\s*=\s*' + quoted + r'\s*;', re.S)
+position = 0
+while position < len(text):
+    match = token.match(text, position)
+    if not match:
+        line = text.count("\n", 0, position) + 1
+        sys.exit(f"{sys.argv[1]}:{line}: invalid .strings syntax")
+    position = match.end()
+PY
+    fi
+}
+
 for lang in "${LANGS[@]}"; do
     file="Resources/$lang.lproj/Localizable.strings"
     if [ ! -f "$file" ]; then
         echo "✗ $lang: $file is missing"; failed=1; continue
     fi
-    if ! plutil -lint -s "$file"; then
-        echo "✗ $lang: plutil -lint failed"; failed=1
+    if ! lint_strings "$file"; then
+        echo "✗ $lang: syntax lint failed"; failed=1
     fi
     entries "$file" | sort > "$WORK/$lang.tsv"
     # Every entry line must have been parsed (guards against odd formatting).

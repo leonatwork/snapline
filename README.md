@@ -51,7 +51,7 @@ The images are rendered, not screen captures: the windows are invented demo cont
 | Windows 11 | Snapline |
 |---|---|
 | Hover over Maximize → Snap Layouts | Hover over the **green button** → layout flyout, click a zone |
-| Win + Z | **⌃⌥Z** (on a German keyboard also ⌃⌥Y) |
+| Win + Z | **⌃⌥Z** by default, using the key labeled Z in the active keyboard layout |
 | Drag a window to the top center → Snap Bar | Same here: a bar with layouts appears, drag the window onto a zone |
 | Drag a window to an edge/corner | Left/right edge → outer column, corner → half column, top edge → maximize, **bottom edge → column under the cursor** |
 | Snap Assist | After snapping via a layout, the remaining windows are offered for the free zones |
@@ -65,6 +65,12 @@ The images are rendered, not screen captures: the windows are invented demo cont
 | – | **Workspaces**: save the current arrangement, restore it with **⌃⌥⇧1…9**; missing apps are launched |
 
 macOS's own tiling menu on the green button is suppressed. Snapline intercepts the hover events there with an event tap (like Tappi), so only the Snapline flyout appears. Snap Assist shows live previews of the windows (ScreenCaptureKit, like Tappi).
+
+### Keyboard shortcuts
+
+The table shows the defaults. Open **Keyboard shortcuts & gestures → Keyboard shortcuts…** in the status menu to record, delete or reset the four window shortcuts and the Snap Layouts flyout shortcut, or change the modifiers for layouts and workspaces 1–9. Changes apply immediately and survive restarts. At least one modifier is required; duplicate shortcuts within Snapline (including its fixed monitor-movement shortcuts) are rejected with an explanation. **Reset to defaults** restores ⌃⌥, with ⇧ added for workspaces.
+
+If another app such as Rectangle prevents registration, a warning at the top of the status menu names the action and shortcut; click it to open the recorder. Deleted shortcuts have no warning. The default flyout follows the key that produces Z when switching between QWERTY, QWERTZ or AZERTY (fallback: the US physical Z key). Recorded shortcuts keep their physical key. Menu, editor and recorder labels follow the current input source. The physical digit keys stay fixed; only their modifiers are configurable. Drag gestures and digit selection inside the flyout keep their existing controls.
 
 ### Multiple monitors
 

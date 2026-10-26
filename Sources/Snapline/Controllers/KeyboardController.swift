@@ -2,12 +2,12 @@ import AppKit
 import Carbon.HIToolbox
 import SnaplineCore
 
-/// Win + Arrow equivalents on ⌃⌥ + Arrow, ⌃⌥Z for the layouts flyout (Win + Z),
-/// ⌃⌥1…9 to switch the monitor's active layout, ⌃⌥⇧1…9 for workspaces,
-/// and ⌃⌥⇧ + Arrow to move the window to an adjacent monitor.
+/// Configurable global shortcuts; monitor movement retains its existing fixed keys.
 @MainActor
 final class KeyboardController {
-    static let modifiers = controlKey | optionKey
+    private(set) var failures: [(action: ShortcutAction, chord: ShortcutChord, status: OSStatus)] = []
+    private var observers: [NSObjectProtocol] = []
+    private var suspended = false
 
     private let flyouts: FlyoutController
     private let assist: SnapAssistController
@@ -21,27 +21,53 @@ final class KeyboardController {
         self.workspaces = workspaces
     }
 
-    private static let digitKeys = [kVK_ANSI_1, kVK_ANSI_2, kVK_ANSI_3, kVK_ANSI_4, kVK_ANSI_5,
-                                    kVK_ANSI_6, kVK_ANSI_7, kVK_ANSI_8, kVK_ANSI_9]
-
     func start() {
-        let hk = HotKeyCenter.shared
-        let mods = Self.modifiers
-        hk.register(keyCode: kVK_LeftArrow, modifiers: mods) { [weak self] in self?.snap(.left) }
-        hk.register(keyCode: kVK_RightArrow, modifiers: mods) { [weak self] in self?.snap(.right) }
-        hk.register(keyCode: kVK_UpArrow, modifiers: mods) { [weak self] in self?.snap(.up) }
-        hk.register(keyCode: kVK_DownArrow, modifiers: mods) { [weak self] in self?.snap(.down) }
-        hk.register(keyCode: kVK_LeftArrow, modifiers: mods | shiftKey) { [weak self] in self?.move(.left) }
-        hk.register(keyCode: kVK_RightArrow, modifiers: mods | shiftKey) { [weak self] in self?.move(.right) }
-        hk.register(keyCode: kVK_UpArrow, modifiers: mods | shiftKey) { [weak self] in self?.move(.up) }
-        hk.register(keyCode: kVK_DownArrow, modifiers: mods | shiftKey) { [weak self] in self?.move(.down) }
-        hk.register(keyCode: kVK_ANSI_Z, modifiers: mods) { [weak self] in self?.showFlyout() }
-        // ⌃⌥Y as well: on German keyboards Z and Y swap places.
-        hk.register(keyCode: kVK_ANSI_Y, modifiers: mods) { [weak self] in self?.showFlyout() }
+        guard observers.isEmpty else { return }
+        for name in [Settings.shortcutsDidChange, ShortcutLabels.didChange] {
+            observers.append(NotificationCenter.default.addObserver(forName: name, object: nil, queue: .main) { [weak self] _ in
+                MainActor.assumeIsolated { self?.registerShortcuts() }
+            })
+        }
+        ShortcutLabels.start()
+        registerShortcuts()
+    }
 
-        for (i, key) in Self.digitKeys.enumerated() {
-            hk.register(keyCode: key, modifiers: mods) { [weak self] in self?.activateLayout(i) }
-            hk.register(keyCode: key, modifiers: mods | shiftKey) { [weak self] in self?.restoreWorkspace(i) }
+    /// Temporarily release global keys so the recorder can receive existing shortcuts.
+    func suspend(_ value: Bool) {
+        suspended = value
+        registerShortcuts()
+    }
+
+    private func registerShortcuts() {
+        let center = HotKeyCenter.shared
+        center.unregisterAll()
+        guard !suspended else { return }
+        failures.removeAll()
+        let settings = Settings.shortcuts
+        let flyoutKey = ShortcutLabels.flyoutKey
+        for action in ShortcutAction.allCases {
+            for (index, chord) in settings.chords(for: action, flyoutKey: flyoutKey).enumerated() {
+                let status = center.register(keyCode: chord.keyCode, modifiers: chord.modifiers.rawValue) { [weak self] in
+                    self?.perform(action, index: index)
+                }
+                if status != noErr { failures.append((action, chord, status)) }
+            }
+        }
+    }
+
+    private func perform(_ action: ShortcutAction, index: Int) {
+        switch action {
+        case .left: snap(.left)
+        case .right: snap(.right)
+        case .up: snap(.up)
+        case .down: snap(.down)
+        case .flyout: showFlyout()
+        case .layouts: activateLayout(index)
+        case .workspaces: restoreWorkspace(index)
+        case .monitorLeft: move(.left)
+        case .monitorRight: move(.right)
+        case .monitorUp: move(.up)
+        case .monitorDown: move(.down)
         }
     }
 
