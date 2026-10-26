@@ -1,5 +1,6 @@
 # Snapline
 
+[![Release](https://img.shields.io/github/v/release/leonatwork/snapline?sort=semver)](https://github.com/leonatwork/snapline/releases/latest)
 [![Package: I love macOS, but I miss some Windows features](https://img.shields.io/badge/Package-I_love_macOS%2C_but_I_miss_some_Windows_features-0A84FF)](https://github.com/search?q=topic%3Ai-love-macos-but-i-miss-windows-features+user%3Aleonatwork&type=repositories)
 
 *🇩🇪 [Deutsche Version](README.de.md)*
@@ -88,11 +89,15 @@ Requires macOS 14 or later.
 
 ### Download
 
-1. Download `Snapline-<version>.zip` from the [latest release](https://github.com/leonatwork/snapline/releases/latest) and unzip it.
+1. Download `Snapline-<version>.zip` (the version is shown in the release badge above) from the [latest release](https://github.com/leonatwork/snapline/releases/latest) and unzip it.
 2. Drag `Snapline.app` into your **Applications** folder.
 3. On first launch: right-click ▸ **Open**. On macOS 15 and later, click **Open Anyway** under **System Settings → Privacy & Security** instead.
 
-Step 3 is needed because Snapline is not notarized by Apple.
+Step 3 is needed because Snapline is not notarized by Apple. If macOS claims the app is damaged, or as an alternative to step 3, remove the quarantine flag in Terminal:
+
+```bash
+xattr -dr com.apple.quarantine /Applications/Snapline.app
+```
 
 Release builds are signed with the stable certificate "leonatwork Code Signing", so granted permissions (Accessibility, Screen Recording) survive updates.
 
