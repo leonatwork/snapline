@@ -10,7 +10,20 @@
 "mainMenu.selectAll" = "Alles auswählen";
 
 /* Menu bar menu */
+"menu.warning.stageManager" = "⚠️ Stage Manager beeinflusst Snapping – Schreibtisch & Dock …";
+"menu.disableNativeTiling" = "macOS-Kacheln jetzt ausschalten …";
+"tiling.confirm.title" = "macOS-Kacheln ausschalten?";
+"tiling.confirm.info" = "Snapline setzt nur diese Schlüssel in com.apple.WindowManager auf false (aus):\n\n%@\n\nStage Manager (GloballyEnabled) bleibt unverändert. Abbrechen ändert nichts. Eventuell musst du die Kacheln-Optionen zusätzlich in Systemeinstellungen → Schreibtisch & Dock ausschalten.";
+"tiling.confirm.disable" = "Ausschalten";
+"tiling.result.title" = "Schreibtisch & Dock prüfen";
+"tiling.result.info" = "Die drei Kacheln-Schlüssel wurden als aus gespeichert. Falls macOS weiterhin Fenster kachelt, schalte die Kacheln-Optionen in Systemeinstellungen → Schreibtisch & Dock aus. Stage Manager wurde nicht geändert; seine Warnung bleibt, solange er aktiv ist. Schalte ihn dort bei Bedarf selbst aus.";
+"tiling.result.failure" = "Snapline konnte nicht prüfen, ob alle drei Kacheln-Schlüssel als aus gespeichert wurden. Öffne Systemeinstellungen → Schreibtisch & Dock und schalte dort die Kacheln-Optionen aus. Stage Manager wurde nicht geändert; schalte ihn dort bei Bedarf selbst aus.";
+"tiling.result.openSettings" = "Schreibtisch & Dock öffnen";
 "menu.quit" = "Snapline beenden";
+"menu.disableForApp" = "Für %@ deaktivieren";
+"menu.enableForApp" = "Für %@ wieder aktivieren";
+"menu.excludedApps" = "Ausgeschlossene Apps";
+"menu.excludedApps.empty" = "Keine ausgeschlossenen Apps";
 "menu.warning.accessibility" = "⚠️ Bedienungshilfen-Zugriff erteilen…";
 "menu.warning.eventTap" = "⚠️ Event Tap nicht aktiv – Snapline neu starten";
 "menu.warning.nativeTiling" = "⚠️ macOS-Kacheln ist noch aktiv – deaktivieren…";
@@ -49,6 +62,7 @@
 "columns.quarters" = "Viertel";
 
 /* Keyboard shortcuts & gestures submenu */
+"shortcut.moveMonitor" = "⌃⌥⇧←/→/↑/↓  Fenster auf den Nachbarmonitor verschieben";
 "shortcut.flyout" = "⌃⌥Z  Snap-Layouts, dann Ziffer für Layout und Zone";
 "shortcut.activeLayout" = "⌃⌥1…9  Aktives Layout des Monitors wählen";
 "shortcut.workspace" = "⌃⌥⇧1…9  Arbeitsbereich wiederherstellen";

@@ -10,7 +10,20 @@
 "mainMenu.selectAll" = "すべてを選択";
 
 /* Menu bar menu */
+"menu.warning.stageManager" = "⚠️ ステージマネージャがスナップに影響しています — デスクトップとDock…";
+"menu.disableNativeTiling" = "macOSのタイル表示を今すぐオフにする…";
+"tiling.confirm.title" = "macOSのタイル表示をオフにしますか？";
+"tiling.confirm.info" = "Snaplineはcom.apple.WindowManagerの次のキーだけをfalse（オフ）に設定します：\n\n%@\n\nステージマネージャ（GloballyEnabled）は変更しません。キャンセルすると何も変更しません。システム設定 → デスクトップとDockでもタイル表示のオプションをオフにする必要がある場合があります。";
+"tiling.confirm.disable" = "オフにする";
+"tiling.result.title" = "デスクトップとDockを確認";
+"tiling.result.info" = "3つのタイル表示キーをオフとして保存しました。macOSが引き続きウインドウをタイル表示する場合は、システム設定 → デスクトップとDockで該当するオプションをオフにしてください。ステージマネージャは変更していません。有効な間は警告が表示されます。必要に応じて手動でオフにしてください。";
+"tiling.result.failure" = "3つすべてのタイル表示キーがオフとして保存されたことを確認できませんでした。システム設定 → デスクトップとDockを開き、該当するオプションをオフにしてください。ステージマネージャは変更していません。必要に応じて手動でオフにしてください。";
+"tiling.result.openSettings" = "デスクトップとDockを開く";
 "menu.quit" = "Snapline を終了";
+"menu.disableForApp" = "%@ で無効にする";
+"menu.enableForApp" = "%@ で再び有効にする";
+"menu.excludedApps" = "除外したアプリ";
+"menu.excludedApps.empty" = "除外したアプリはありません";
 "menu.warning.accessibility" = "⚠️ アクセシビリティへのアクセスを許可…";
 "menu.warning.eventTap" = "⚠️ イベントタップが無効です – Snapline を再起動";
 "menu.warning.nativeTiling" = "⚠️ macOS のタイル表示がオンのままです – オフにする…";
@@ -49,6 +62,7 @@
 "columns.quarters" = "4 分割";
 
 /* Keyboard shortcuts & gestures submenu */
+"shortcut.moveMonitor" = "⌃⌥⇧←/→/↑/↓  ウインドウを隣のディスプレイへ移動";
 "shortcut.flyout" = "⌃⌥Z  Snap Layouts、続けて数字でレイアウトとゾーン";
 "shortcut.activeLayout" = "⌃⌥1…9  ディスプレイのアクティブなレイアウトを選択";
 "shortcut.workspace" = "⌃⌥⇧1…9  ワークスペースを復元";

@@ -51,7 +51,11 @@ final class GreenButtonIndex {
             seen.insert(number)
 
             let button: CGRect?
-            if let cached = cache[number], cached.bounds == bounds {
+            // Keep excluded windows as occluders, without a hover target. Do not
+            // cache this nil: re-enabling must restore the button immediately.
+            if Settings.isAppExcluded(pid: pid) {
+                button = nil
+            } else if let cached = cache[number], cached.bounds == bounds {
                 button = cached.button
             } else {
                 button = Self.lookUpButton(pid: pid, bounds: bounds)
@@ -67,7 +71,8 @@ final class GreenButtonIndex {
     /// frontmost one there, so a button hidden behind another window never counts.
     func hit(_ point: CGPoint) -> Entry? {
         guard let front = entries.first(where: { $0.bounds.contains(point) }),
-              let button = front.button, button.insetBy(dx: -1, dy: -1).contains(point) else { return nil }
+              let button = front.button, button.insetBy(dx: -1, dy: -1).contains(point),
+              !Settings.isAppExcluded(pid: front.pid) else { return nil }
         return front
     }
 
@@ -112,6 +117,16 @@ final class HoverController {
         tap.onMouseMoved = { [weak self] point in self?.mouseMoved(to: point) ?? false }
     }
 
+    func appExclusionsDidChange() {
+        dwellTimer?.invalidate()
+        hideTimer?.invalidate()
+        dwellTimer = nil
+        hideTimer = nil
+        hovered = nil
+        buttonFrameAX = nil
+        index.refresh()
+    }
+
     /// Called from the event tap for every mouse move. Returns true to swallow it.
     private func mouseMoved(to point: CGPoint) -> Bool {
         index.refreshSoon()
@@ -137,7 +152,7 @@ final class HoverController {
 
     private func open(_ entry: GreenButtonIndex.Entry) {
         guard hovered == entry.windowNumber, !flyouts.isVisible, NSEvent.pressedMouseButtons == 0,
-              let button = entry.button, let window = index.window(for: entry), !window.isFullScreen
+              let button = entry.button, let window = index.window(for: entry), !window.isAppExcluded, !window.isFullScreen
         else { return }
         buttonFrameAX = button
         flyouts.show(for: window, anchorAX: button, mode: .hover)

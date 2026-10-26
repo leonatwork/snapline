@@ -10,7 +10,20 @@
 "mainMenu.selectAll" = "Selecionar Tudo";
 
 /* Menu bar menu */
+"menu.warning.stageManager" = "⚠️ Organizador Visual afeta o encaixe – Mesa e Dock…";
+"menu.disableNativeTiling" = "Desativar os mosaicos do macOS agora…";
+"tiling.confirm.title" = "Desativar os mosaicos do macOS?";
+"tiling.confirm.info" = "O Snapline definirá apenas estas chaves de com.apple.WindowManager como false (desativado):\n\n%@\n\nO Organizador Visual (GloballyEnabled) não será alterado. Cancelar não altera nada. Talvez também seja necessário desativar as opções de mosaicos em Ajustes do Sistema → Mesa e Dock.";
+"tiling.confirm.disable" = "Desativar";
+"tiling.result.title" = "Verificar Mesa e Dock";
+"tiling.result.info" = "As três chaves de mosaicos foram salvas como desativadas. Se o macOS ainda organizar janelas em mosaicos, desative essas opções em Ajustes do Sistema → Mesa e Dock. O Organizador Visual não foi alterado; o aviso permanece enquanto ele estiver ativo. Desative-o manualmente se necessário.";
+"tiling.result.failure" = "O Snapline não conseguiu verificar se as três chaves de mosaicos foram salvas como desativadas. Abra Ajustes do Sistema → Mesa e Dock e desative essas opções. O Organizador Visual não foi alterado; desative-o manualmente se necessário.";
+"tiling.result.openSettings" = "Abrir Mesa e Dock";
 "menu.quit" = "Encerrar Snapline";
+"menu.disableForApp" = "Desativar para %@";
+"menu.enableForApp" = "Reativar para %@";
+"menu.excludedApps" = "Apps excluídos";
+"menu.excludedApps.empty" = "Nenhum app excluído";
 "menu.warning.accessibility" = "⚠️ Conceder acesso à Acessibilidade…";
 "menu.warning.eventTap" = "⚠️ Event tap inativo – reiniciar o Snapline";
 "menu.warning.nativeTiling" = "⚠️ A organização lado a lado do macOS está ativa – desativar…";
@@ -49,6 +62,7 @@
 "columns.quarters" = "Quartos";
 
 /* Keyboard shortcuts & gestures submenu */
+"shortcut.moveMonitor" = "⌃⌥⇧←/→/↑/↓  Mover janela para a tela adjacente";
 "shortcut.flyout" = "⌃⌥Z  Snap Layouts, depois um número para layout e zona";
 "shortcut.activeLayout" = "⌃⌥1…9  Escolher o layout ativo da tela";
 "shortcut.workspace" = "⌃⌥⇧1…9  Restaurar área de trabalho";

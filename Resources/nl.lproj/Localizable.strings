@@ -10,7 +10,20 @@
 "mainMenu.selectAll" = "Selecteer alles";
 
 /* Menu bar menu */
+"menu.warning.stageManager" = "⚠️ Stage Manager beïnvloedt vastzetten – Bureaublad en Dock…";
+"menu.disableNativeTiling" = "macOS-tegels nu uitschakelen…";
+"tiling.confirm.title" = "macOS-tegels uitschakelen?";
+"tiling.confirm.info" = "Snapline zet alleen deze sleutels in com.apple.WindowManager op false (uit):\n\n%@\n\nStage Manager (GloballyEnabled) blijft ongewijzigd. Annuleren wijzigt niets. Mogelijk moet je de tegelopties ook uitschakelen in Systeeminstellingen → Bureaublad en Dock.";
+"tiling.confirm.disable" = "Uitschakelen";
+"tiling.result.title" = "Controleer Bureaublad en Dock";
+"tiling.result.info" = "De drie tegelsleutels zijn opgeslagen als uit. Als macOS nog steeds vensters in tegels plaatst, schakel die opties uit in Systeeminstellingen → Bureaublad en Dock. Stage Manager is niet gewijzigd; de waarschuwing blijft zolang het actief is. Schakel het daar zo nodig zelf uit.";
+"tiling.result.failure" = "Snapline kon niet controleren of alle drie de tegelsleutels als uit zijn opgeslagen. Open Systeeminstellingen → Bureaublad en Dock en schakel de tegelopties daar uit. Stage Manager is niet gewijzigd; schakel het daar zo nodig zelf uit.";
+"tiling.result.openSettings" = "Open Bureaublad en Dock";
 "menu.quit" = "Stop Snapline";
+"menu.disableForApp" = "Uitschakelen voor %@";
+"menu.enableForApp" = "Opnieuw inschakelen voor %@";
+"menu.excludedApps" = "Uitgesloten apps";
+"menu.excludedApps.empty" = "Geen uitgesloten apps";
 "menu.warning.accessibility" = "⚠️ Toegang tot Toegankelijkheid verlenen…";
 "menu.warning.eventTap" = "⚠️ Event tap niet actief – Snapline opnieuw starten";
 "menu.warning.nativeTiling" = "⚠️ Tegelen van macOS staat nog aan – uitschakelen…";
@@ -49,6 +62,7 @@
 "columns.quarters" = "Kwarten";
 
 /* Keyboard shortcuts & gestures submenu */
+"shortcut.moveMonitor" = "⌃⌥⇧←/→/↑/↓  Venster naar het aangrenzende scherm verplaatsen";
 "shortcut.flyout" = "⌃⌥Z  Snap Layouts, dan een cijfer voor indeling en zone";
 "shortcut.activeLayout" = "⌃⌥1…9  Actieve indeling van het scherm kiezen";
 "shortcut.workspace" = "⌃⌥⇧1…9  Werkruimte herstellen";

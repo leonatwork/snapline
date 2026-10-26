@@ -55,6 +55,7 @@ Die Bilder sind gerendert, keine Bildschirmfotos: Die Fenster sind erfundene Dem
 | Fenster an Rand/Ecke ziehen | linker/rechter Rand → äußere Spalte, Ecke → halbe Spalte, oberer Rand → maximieren, **unterer Rand → Spalte unter dem Cursor** |
 | Snap Assist | Nach dem Snappen per Layout werden die übrigen Fenster in den freien Zonen angeboten |
 | Win + ← / → | **⌃⌥← / →** wandert durch die Spalten und weiter auf den nächsten Monitor |
+| Win + ⇧ + Pfeil | **⌃⌥⇧ + ← / → / ↑ / ↓** verschiebt das Fenster auf den Nachbarmonitor in dieser Richtung |
 | Win + ↑ / ↓ | **⌃⌥↑** maximieren bzw. obere Hälfte · **⌃⌥↓** wiederherstellen, untere Hälfte, minimieren |
 | Gesnapptes Fenster wegziehen | bekommt seine ursprüngliche Größe zurück |
 | FancyZones: ⇧ + Ziehen | **⌘ + Ziehen** (Taste im Menü umstellbar: ⌘, ⌥ oder ⇧) legt das Fenster in die Zonen des aktiven Layouts. Dabei wechseln **Mausrad / 1–9 / Tab** das Layout, **⇧** verbindet mehrere Zonen, **Esc** bricht ab |
@@ -63,6 +64,14 @@ Die Bilder sind gerendert, keine Bildschirmfotos: Die Fenster sind erfundene Dem
 | – | **Arbeitsbereiche**: aktuelle Anordnung speichern, mit **⌃⌥⇧1…9** wiederherstellen, fehlende Apps werden gestartet |
 
 Das macOS-eigene Kachel-Menü am grünen Knopf wird unterdrückt. Snapline fängt die Hover-Events dort per Event Tap ab (wie Tappi), sodass nur noch das Snapline-Flyout erscheint. Snap Assist zeigt Live-Vorschauen der Fenster (ScreenCaptureKit, wie in Tappi).
+
+### Mehrere Monitore
+
+Gemeinsame Kanten zwischen Monitoren lösen weder Rand-Snapping noch die Snap-Leiste aus, auch bei übereinander stehenden Monitoren. Freiliegende Außenkanten funktionieren wie bisher. **⌃⌥⇧ + Pfeil** verschiebt das fokussierte Fenster auf einen angrenzenden Monitor in dieser Richtung und erhält Position und Größe relativ zum sichtbaren Bildschirmbereich. Ein von Snapline gesnapptes Fenster bleibt in derselben Zone, auch bei anderer Monitorgröße. Es gibt keinen Umlauf: Ohne Nachbarn bleibt das Fenster stehen und ein Systemton erklingt. Fenster werden im sichtbaren Zielbereich gehalten; passt die Mindestgröße einer App nicht hinein, liegt das Fenster bündig an der linken oberen Ecke.
+
+### Ausgeschlossene Apps
+
+Aktiviere die gewünschte App und wähle im Snapline-Menü **Für &lt;App&gt; deaktivieren**, damit Snapline ihre Fenster in Ruhe lässt. Der Ausschluss gilt sofort für Rand- und Zonen-Ziehen, Snap Bar, Hover- und Tastatur-Snapping sowie Snap Assist; das macOS-eigene Menü am grünen Knopf wird nicht mehr unterdrückt. Mit **Für &lt;App&gt; wieder aktivieren** oder einem Klick auf die App unter **Ausgeschlossene Apps** entfernst du die Ausnahme. Die Liste startet leer und bleibt nach Neustarts erhalten. Arbeitsbereiche erfassen und platzieren weiterhin auch ausgeschlossene Apps.
 
 ### Seitenverhältnisse
 
@@ -106,6 +115,10 @@ Seit macOS 15 kachelt macOS selbst, wenn man Fenster an den Rand zieht. Das koll
 - „Fenster in die Menüleiste ziehen, um den Bildschirm zu füllen“
 
 Außerdem „Halte ⌥ beim Ziehen gedrückt, um zu kacheln“, sonst kollidiert es mit ⌥ + Ziehen.
+
+Alternativ im Snapline-Menü unter der Kacheln-Warnung **macOS-Kacheln jetzt ausschalten …** wählen. Die Bestätigung nennt die drei Schlüssel in `com.apple.WindowManager`, die auf `false` gesetzt werden: `EnableTilingByEdgeDrag`, `EnableTopTilingByEdgeDrag` und `EnableTilingOptionAccelerator`. Abbrechen ändert nichts. Nach der Bestätigung das Ergebnis in Schreibtisch & Dock prüfen und die Optionen dort ausschalten, falls macOS die Änderung noch nicht übernommen hat. Es werden keine Systemprozesse neu gestartet.
+
+**Stage Manager:** Snapline warnt zusätzlich bei aktivem Stage Manager, auch wenn Drag-Snap ausgeschaltet ist. Ein Klick öffnet **Systemeinstellungen → Schreibtisch & Dock**. Gruppen und App-Streifen von Stage Manager können Fensterplatzierung und Snapping beeinflussen; Snapline berücksichtigt sie noch nicht. Der Kacheln-Button ändert Stage Manager (`GloballyEnabled`) niemals; seine Warnung bleibt, bis du Stage Manager selbst ausschaltest. Beide Warnungen werden bei jedem Öffnen des Menüs aktualisiert.
 
 ### Berechtigungen
 

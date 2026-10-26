@@ -15,9 +15,9 @@ final class SnapAssistController {
 
     func show(layout: Layout, filled zoneIndex: Int, on screen: NSScreen, placed window: AXWindow) {
         dismiss()
-        guard layout.zones.count > 1 else { return }
+        guard !window.isAppExcluded, layout.zones.count > 1 else { return }
 
-        candidates = WindowList.visibleWindows(excluding: [WindowKey(window)])
+        candidates = WindowList.visibleWindows(excluding: [WindowKey(window)], appExclusions: Settings.appExclusions)
         guard !candidates.isEmpty else { return }
 
         self.layout = layout
@@ -58,6 +58,7 @@ final class SnapAssistController {
     }
 
     private func fill(zoneIndex: Int, with candidate: WindowCandidate) {
+        guard !candidate.window.isAppExcluded else { dismiss(); return }
         guard let layout, let screen else { return }
         SnapEngine.shared.snap(candidate.window, to: layout.zones[zoneIndex], on: screen)
         candidate.window.focus()

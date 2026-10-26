@@ -12,7 +12,6 @@ final class DragController {
     private enum Target: Equatable {
         case zone(Zone, NSScreen)
         case layout(LayoutPick, NSScreen)
-        case rect(CGRect)
     }
 
     private let flyouts: FlyoutController
@@ -97,7 +96,7 @@ final class DragController {
         guard let window = AXWindow.window(at: cursor) else {
             return debugLog("mouseDown: no window under cursor")
         }
-        guard !window.isOwnWindow, window.isStandard, !window.isFullScreen, let frame = window.frame else {
+        guard !window.isOwnWindow, !window.isAppExcluded, window.isStandard, !window.isFullScreen, let frame = window.frame else {
             return debugLog("mouseDown: ignored window (subrole \(window.subrole ?? "nil"), own \(window.isOwnWindow), fullscreen \(window.isFullScreen), frame \(String(describing: window.frame)))")
         }
         // Only clicks in the top band can be title bar drags – skips the AX
@@ -138,6 +137,7 @@ final class DragController {
 
     private func mouseDragged() {
         guard let window else { return }
+        guard !window.isAppExcluded else { reset(); return }
         let cursor = Screens.cursorAX
 
         if !moving {
@@ -187,6 +187,7 @@ final class DragController {
     private var zoneKeyHeld: Bool { flags.contains(Settings.zoneModifier.flag) }
 
     private func update(cursor: CGPoint) {
+        guard let window, !window.isAppExcluded else { reset(); return }
         guard !cancelled else { return }
         if Settings.optionDragZones && zoneKeyHeld {
             updateZones(cursor: cursor)
@@ -204,6 +205,7 @@ final class DragController {
         // Let the window server finish the drag before we move the window.
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.03) { [assist] in
             MainActor.assumeIsolated {
+                guard !window.isAppExcluded else { return }
                 switch target {
                 case .zone(let zone, let screen):
                     SnapEngine.shared.snap(window, to: zone, on: screen)
@@ -212,8 +214,6 @@ final class DragController {
                     if Settings.snapAssist {
                         assist.show(layout: pick.layout, filled: pick.zoneIndex, on: screen, placed: window)
                     }
-                case .rect(let rect):
-                    SnapEngine.shared.snap(window, to: rect)
                 }
             }
         }
@@ -222,8 +222,22 @@ final class DragController {
     // MARK: Edges and snap bar
 
     private func updateEdges(cursor: CGPoint) {
-        guard let screen = Screens.screen(containingAX: cursor) else { return clearTarget() }
+        guard let screen = Screens.screen(containingAX: cursor) else {
+            if flyouts.mode == .drag { flyouts.hide() }
+            return clearTarget()
+        }
         let cocoaCursor = Screens.toCocoa(cursor)
+        let region = resolver.region(for: cursor, in: screen.axFrame, columns: screen.snapColumns,
+                                     screens: NSScreen.screens.map(\.axFrame))
+        // A bar opened on an outer edge must not keep targeting zones after the
+        // cursor crosses onto a shared edge or another display.
+        let inner = ScreenGeometry.innerEdges(of: screen.axFrame, in: NSScreen.screens.map(\.axFrame), at: cursor)
+        let t = resolver.edgeThreshold
+        let atInner = (inner.contains(.left) && cursor.x <= screen.axFrame.minX + t)
+            || (inner.contains(.right) && cursor.x >= screen.axFrame.maxX - 1 - t)
+            || (inner.contains(.up) && cursor.y <= screen.axFrame.minY + t)
+            || (inner.contains(.down) && cursor.y >= screen.axFrame.maxY - 1 - t)
+        if flyouts.mode == .drag, atInner || flyouts.dragScreen != screen { flyouts.hide() }
 
         // While the snap bar is open, the cursor targets its zones.
         if flyouts.mode == .drag, flyouts.isVisible, flyouts.frame.insetBy(dx: -40, dy: -40).contains(cocoaCursor) {
@@ -235,7 +249,6 @@ final class DragController {
             return
         }
 
-        let region = resolver.region(for: cursor, in: screen.axFrame, columns: screen.snapColumns)
         if region != .snapBar, flyouts.mode == .drag { flyouts.hide() }
 
         switch region {
@@ -258,8 +271,6 @@ final class DragController {
             preview.show(axRect: SnapEngine.shared.frame(for: zone, on: screen))
         case .layout(let pick, let screen):
             preview.show(axRect: SnapEngine.shared.frame(for: pick.zone, on: screen))
-        case .rect(let rect):
-            preview.show(axRect: rect)
         }
     }
 
@@ -303,7 +314,15 @@ final class DragController {
             spanAnchor = nil
         }
 
-        target = .rect(rect)
+        // Remember the normalized zone (including spans), not just its pixel
+        // frame, so a monitor move preserves the zone and recalculates the gap.
+        let zone = selected.reduce(layout.zones[hit]) { bounds, index in
+            let next = layout.zones[index]
+            let x = min(bounds.x, next.x)
+            let y = min(bounds.y, next.y)
+            return Zone(x, y, max(bounds.maxX, next.maxX) - x, max(bounds.maxY, next.maxY) - y)
+        }
+        target = .zone(zone, screen)
         zoneOverlay.show(layout: layout, number: zoneLayoutIndex + 1, count: layouts.count, on: screen,
                          highlighted: selected,
                          hint: L10n.tr("zones.hint", modifier.spanSymbol))
@@ -360,6 +379,10 @@ final class DragController {
             lastScrollStep = now
         }
         return true
+    }
+
+    func appExclusionsDidChange() {
+        if window?.isAppExcluded == true { reset() }
     }
 
     private func reset() {

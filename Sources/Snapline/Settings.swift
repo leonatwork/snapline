@@ -1,5 +1,6 @@
 import AppKit
 import ServiceManagement
+import SnaplineCore
 
 enum Settings {
     private static let defaults = UserDefaults.standard
@@ -17,6 +18,7 @@ enum Settings {
         static let launchAppsForWorkspaces = "launchAppsForWorkspaces"
         static let zoneModifier = "zoneModifier"
         static let debugLog = "debugLog"
+        static let excludedApps = "excludedApps"
     }
 
     static func registerDefaults() {
@@ -33,7 +35,20 @@ enum Settings {
             Key.launchAppsForWorkspaces: true,
             Key.zoneModifier: ZoneModifier.command.rawValue,
             Key.debugLog: false,
+            Key.excludedApps: [String](),
         ])
+    }
+
+    /// Persisted bundle IDs, with no default exclusions.
+    static var appExclusions: AppExclusions {
+        get { AppExclusions(bundleIDs: defaults.stringArray(forKey: Key.excludedApps) ?? []) }
+        set { defaults.set(newValue.bundleIDs, forKey: Key.excludedApps) }
+    }
+
+    static func isAppExcluded(pid: pid_t) -> Bool {
+        let exclusions = appExclusions
+        guard !exclusions.bundleIDs.isEmpty else { return false }
+        return exclusions.contains(bundleID: NSRunningApplication(processIdentifier: pid)?.bundleIdentifier)
     }
 
     /// Aero Snap: drag windows to screen edges.
@@ -160,27 +175,38 @@ func debugLog(_ message: @autoclosure () -> String) {
     }
 }
 
-/// The built-in macOS tiling (Sequoia and later) fights with our drag snapping.
+/// Stage Manager and built-in macOS tiling can interfere with snapping.
 enum NativeTiling {
-    private static var domain: UserDefaults? { UserDefaults(suiteName: "com.apple.WindowManager") }
+    private static let domain = "com.apple.WindowManager" as CFString
 
-    /// "Drag windows to screen edges to tile" – on unless explicitly disabled.
-    static var edgeDragEnabled: Bool {
-        (domain?.object(forKey: "EnableTilingByEdgeDrag") as? Bool) ?? true
+    private static func read(_ key: String) -> Bool? {
+        CFPreferencesCopyValue(key as CFString, domain,
+                               kCFPreferencesCurrentUser, kCFPreferencesAnyHost) as? Bool
     }
 
-    /// "Drag windows to menu bar to fill screen".
-    static var topEdgeDragEnabled: Bool {
-        (domain?.object(forKey: "EnableTopTilingByEdgeDrag") as? Bool) ?? true
+    /// Refresh the external domain each time the menu opens, including changes
+    /// made in Control Center/System Settings while Snapline is running.
+    static var snapshot: WindowManagerSettings {
+        _ = CFPreferencesSynchronize(domain, kCFPreferencesCurrentUser, kCFPreferencesAnyHost)
+        return WindowManagerSettings(
+            stageManagerEnabled: read("GloballyEnabled"),
+            edgeDragEnabled: read("EnableTilingByEdgeDrag"),
+            topEdgeDragEnabled: read("EnableTopTilingByEdgeDrag"),
+            optionDragEnabled: read("EnableTilingOptionAccelerator"))
     }
 
-    /// "Hold ⌥ while dragging windows to tile" – collides with ⌥-drag into zones.
-    static var optionDragEnabled: Bool {
-        (domain?.object(forKey: "EnableTilingOptionAccelerator") as? Bool) ?? true
-    }
+    static var stageManagerEnabled: Bool { snapshot.stageManagerEnabled }
 
-    static var conflicts: Bool {
-        edgeDragEnabled || topEdgeDragEnabled || (optionDragEnabled && Settings.zoneModifier == .option)
+    /// Write individual allowlisted keys, never replace the foreign domain.
+    /// A successful read-back does not guarantee WindowManager applied them yet.
+    static func disableTiling(confirmed: Bool) -> Bool {
+        guard confirmed else { return false }
+        WindowManagerSettings.disableTiling(confirmed: confirmed) { key, value in
+            CFPreferencesSetValue(key as CFString, value ? kCFBooleanTrue : kCFBooleanFalse, domain,
+                                  kCFPreferencesCurrentUser, kCFPreferencesAnyHost)
+        }
+        let saved = CFPreferencesSynchronize(domain, kCFPreferencesCurrentUser, kCFPreferencesAnyHost)
+        return saved && WindowManagerSettings.tilingKeys.allSatisfy { read($0) == false }
     }
 
     static func openSettings() {

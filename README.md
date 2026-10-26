@@ -55,6 +55,7 @@ The images are rendered, not screen captures: the windows are invented demo cont
 | Drag a window to an edge/corner | Left/right edge → outer column, corner → half column, top edge → maximize, **bottom edge → column under the cursor** |
 | Snap Assist | After snapping via a layout, the remaining windows are offered for the free zones |
 | Win + ← / → | **⌃⌥← / →** moves through the columns and on to the next display |
+| Win + ⇧ + Arrow | **⌃⌥⇧ + ← / → / ↑ / ↓** moves the window to the adjacent display in that direction |
 | Win + ↑ / ↓ | **⌃⌥↑** maximize or top half · **⌃⌥↓** restore, bottom half, minimize |
 | Drag a snapped window away | It gets its original size back |
 | FancyZones: ⇧ + drag | **⌘ + drag** (key configurable in the menu: ⌘, ⌥ or ⇧) drops the window into the zones of the active layout. While dragging, **scroll wheel / 1–9 / Tab** switch the layout, **⇧** joins several zones, **Esc** cancels |
@@ -63,6 +64,14 @@ The images are rendered, not screen captures: the windows are invented demo cont
 | – | **Workspaces**: save the current arrangement, restore it with **⌃⌥⇧1…9**; missing apps are launched |
 
 macOS's own tiling menu on the green button is suppressed. Snapline intercepts the hover events there with an event tap (like Tappi), so only the Snapline flyout appears. Snap Assist shows live previews of the windows (ScreenCaptureKit, like Tappi).
+
+### Multiple monitors
+
+Shared edges between displays do not trigger edge snapping or the Snap Bar, including vertically stacked displays. Exposed outer edges keep their usual behavior. **⌃⌥⇧ + Arrow** moves the focused window to a touching display in that direction, preserving its position and size relative to the visible screen area. A window snapped by Snapline keeps the same zone, even on a differently sized display. There is no wraparound: without a neighbour, the window stays put and a system sound plays. Windows are kept inside the target's visible area; if an app's minimum size cannot fit, the window is anchored at the top-left corner.
+
+### Excluded apps
+
+To leave an app's windows alone, activate the app and choose **Disable for &lt;App&gt;** in Snapline's menu. This immediately excludes it from edge and zone dragging, the Snap Bar, hover and keyboard snapping, and Snap Assist; its native macOS green-button menu is no longer suppressed. Choose **Re-enable for &lt;App&gt;**, or click the app under **Excluded apps**, to remove the exception. The list starts empty and survives restarts. Saved workspaces still capture and restore excluded apps.
 
 ### Aspect ratios
 
@@ -106,6 +115,10 @@ Go to **System Settings → Desktop & Dock → Windows** and turn off:
 - "Drag windows to menu bar to fill screen"
 
 Also turn off "Hold ⌥ key while dragging windows to tile", otherwise it collides with ⌥ + drag.
+
+Alternatively, choose **Turn off macOS tiling now…** under the tiling warning in Snapline's menu. The confirmation lists the three keys in `com.apple.WindowManager` that will be set to `false`: `EnableTilingByEdgeDrag`, `EnableTopTilingByEdgeDrag` and `EnableTilingOptionAccelerator`. Cancel changes nothing. After confirming, check the result in Desktop & Dock and turn these options off there if macOS has not applied the change yet. No system processes are restarted.
+
+**Stage Manager:** Snapline also warns whenever Stage Manager is active, even with drag snapping disabled. Click the warning to open **System Settings → Desktop & Dock**. Stage Manager's groups and app strip can affect window placement and snapping; Snapline does not compensate for them yet. The tiling button never changes Stage Manager (`GloballyEnabled`), so its warning remains until you turn Stage Manager off yourself. Both warnings refresh every time you open the menu.
 
 ### Permissions
 

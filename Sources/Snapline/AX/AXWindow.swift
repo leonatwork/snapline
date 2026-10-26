@@ -1,5 +1,6 @@
 import AppKit
 import ApplicationServices
+import SnaplineCore
 
 /// Thin wrapper around an accessibility window element. All geometry uses the AX
 /// coordinate space: origin at the top-left of the primary display, y pointing down.
@@ -72,6 +73,7 @@ final class AXWindow {
     var isMinimized: Bool { element.attribute(kAXMinimizedAttribute) ?? false }
     var isFullScreen: Bool { element.attribute("AXFullScreen") ?? false }
     var isOwnWindow: Bool { pid == getpid() }
+    var isAppExcluded: Bool { Settings.isAppExcluded(pid: pid) }
 
     var zoomButton: AXUIElement? {
         element.attribute(kAXFullScreenButtonAttribute) ?? element.attribute(kAXZoomButtonAttribute)
@@ -87,7 +89,11 @@ final class AXWindow {
 
     // MARK: Actions
 
-    func setFrame(_ frame: CGRect) {
+    func setFrame(_ requested: CGRect, in visibleFrame: CGRect? = nil) {
+        // Explicit target bounds are essential for transfers to smaller displays.
+        // Other callers use the screen containing most of the requested frame.
+        let area = visibleFrame ?? Screens.screen(for: requested)?.axVisibleFrame
+        let frame = area.map { ScreenGeometry.clamp(requested, to: $0) } ?? requested
         let appEl = AXUIElementCreateApplication(pid)
         // Chromium/Electron animate every AX resize while this is on, which makes
         // snapping feel laggy. Turn it off for the duration of the change.
@@ -104,6 +110,13 @@ final class AXWindow {
         setPosition(frame.origin)
         if let s = size, abs(s.width - frame.width) > 1 || abs(s.height - frame.height) > 1 {
             setSize(frame.size)
+        }
+        // Apps can enforce minimum sizes or adjust the origin during resizing.
+        // Read back AFTER the last size write and reposition without asking for
+        // another impossible resize. Oversized windows are anchored top-left.
+        if let area, let actual = self.frame {
+            let bounded = ScreenGeometry.clamp(actual, to: area, resize: false)
+            if bounded.origin != actual.origin { setPosition(bounded.origin) }
         }
     }
 

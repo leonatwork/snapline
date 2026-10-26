@@ -104,8 +104,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         } else if !tap.isInstalled {
             menu.addItem(item(L10n.tr("menu.warning.eventTap"), #selector(relaunch)))
         }
-        if NativeTiling.conflicts && (Settings.dragSnap || Settings.optionDragZones) {
+        let windowManagerWarnings = NativeTiling.snapshot.warnings(
+            dragSnapEnabled: Settings.dragSnap, zoneDragEnabled: Settings.optionDragZones,
+            zoneModifierIsOption: Settings.zoneModifier == .option)
+        if windowManagerWarnings.stageManager {
+            menu.addItem(item(L10n.tr("menu.warning.stageManager"), #selector(openTilingSettings)))
+        }
+        if windowManagerWarnings.nativeTiling {
             menu.addItem(item(L10n.tr("menu.warning.nativeTiling"), #selector(openTilingSettings)))
+            menu.addItem(item(L10n.tr("menu.disableNativeTiling"), #selector(disableNativeTiling)))
         }
         let thumbs = ThumbnailProvider.shared
         if Settings.livePreviews && !thumbs.isGranted {
@@ -131,6 +138,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         // Workspaces.
         menu.addItem(submenu(L10n.tr("menu.workspaces"), workspacesMenu()))
+        menu.addItem(.separator())
+
+        // Capture the active app now: menu actions must not use the app that
+        // happens to be frontmost after the menu has taken focus.
+        if let app = NSWorkspace.shared.frontmostApplication,
+           app.processIdentifier != getpid(), let bundleID = app.bundleIdentifier {
+            let title = Settings.appExclusions.contains(bundleID: bundleID)
+                ? L10n.tr("menu.enableForApp", app.localizedName ?? bundleID)
+                : L10n.tr("menu.disableForApp", app.localizedName ?? bundleID)
+            let entry = item(title, #selector(toggleAppExclusion(_:)))
+            entry.representedObject = bundleID
+            menu.addItem(entry)
+        }
+        menu.addItem(submenu(L10n.tr("menu.excludedApps"), excludedAppsMenu()))
         menu.addItem(.separator())
 
         // Behaviour.
@@ -176,6 +197,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             L10n.tr("shortcut.activeLayout"),
             L10n.tr("shortcut.workspace"),
             L10n.tr("shortcut.leftRight"),
+            L10n.tr("shortcut.moveMonitor"),
             L10n.tr("shortcut.up"),
             L10n.tr("shortcut.down"),
             L10n.tr("shortcut.zoneDrag", Settings.zoneModifier.symbol),
@@ -195,6 +217,34 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         menu.addItem(submenu(L10n.tr("menu.moreApps"), moreAppsMenu()))
         menu.addItem(.separator())
         menu.addItem(NSMenuItem(title: L10n.tr("menu.quit"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
+    }
+
+    private func excludedAppsMenu() -> NSMenu {
+        let menu = NSMenu()
+        for bundleID in Settings.appExclusions.bundleIDs {
+            let app = NSWorkspace.shared.runningApplications.first {
+                $0.bundleIdentifier?.lowercased() == bundleID.lowercased()
+            }
+            let url = app?.bundleURL ?? NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleID)
+            let bundle = url.flatMap { Bundle(url: $0) }
+            let name = app?.localizedName
+                ?? (bundle?.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String)
+                ?? (bundle?.object(forInfoDictionaryKey: "CFBundleName") as? String)
+                ?? bundleID
+            let entry = item(name, #selector(removeAppExclusion(_:)))
+            entry.representedObject = bundleID
+            entry.toolTip = bundleID
+            let icon = app?.icon ?? url.map { NSWorkspace.shared.icon(forFile: $0.path) }
+            entry.image = icon?.copy() as? NSImage
+            entry.image?.size = NSSize(width: 16, height: 16)
+            menu.addItem(entry)
+        }
+        if menu.items.isEmpty {
+            let empty = NSMenuItem(title: L10n.tr("menu.excludedApps.empty"), action: nil, keyEquivalent: "")
+            empty.isEnabled = false
+            menu.addItem(empty)
+        }
+        return menu
     }
 
     private func activeLayoutMenu(for screen: NSScreen) -> NSMenu {
@@ -292,6 +342,28 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     // MARK: Actions
 
+    @objc private func toggleAppExclusion(_ sender: NSMenuItem) {
+        guard let bundleID = sender.representedObject as? String else { return }
+        let exclusions = Settings.appExclusions
+        Settings.appExclusions = exclusions.contains(bundleID: bundleID)
+            ? exclusions.removing(bundleID: bundleID)
+            : exclusions.adding(bundleID: bundleID)
+        appExclusionsDidChange()
+    }
+
+    @objc private func removeAppExclusion(_ sender: NSMenuItem) {
+        guard let bundleID = sender.representedObject as? String else { return }
+        Settings.appExclusions = Settings.appExclusions.removing(bundleID: bundleID)
+        appExclusionsDidChange()
+    }
+
+    private func appExclusionsDidChange() {
+        drag.appExclusionsDidChange()
+        flyouts.hide()
+        assist.dismiss()
+        hover.appExclusionsDidChange()
+    }
+
     @objc private func showLayouts() {
         // Let the menu close and focus return to the previous app first.
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in
@@ -361,6 +433,28 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @objc private func setGap(_ sender: NSMenuItem) { Settings.gap = CGFloat(sender.tag) }
     @objc private func setColumns(_ sender: NSMenuItem) { Settings.superWideColumns = sender.tag }
     @objc private func openTilingSettings() { NativeTiling.openSettings() }
+
+    @objc private func disableNativeTiling() {
+        NSApp.activate(ignoringOtherApps: true)
+        let alert = NSAlert()
+        alert.alertStyle = .warning
+        alert.messageText = L10n.tr("tiling.confirm.title")
+        let keys = WindowManagerSettings.tilingKeys.map { "• \($0) = false" }.joined(separator: "\n")
+        alert.informativeText = L10n.tr("tiling.confirm.info", keys)
+        // Cancel is the default; only the explicit second button allows writes.
+        alert.addButton(withTitle: L10n.tr("common.cancel"))
+        alert.addButton(withTitle: L10n.tr("tiling.confirm.disable"))
+        guard alert.runModal() == .alertSecondButtonReturn else { return }
+
+        let saved = NativeTiling.disableTiling(confirmed: true)
+        let result = NSAlert()
+        result.alertStyle = saved ? .informational : .warning
+        result.messageText = L10n.tr("tiling.result.title")
+        result.informativeText = saved ? L10n.tr("tiling.result.info") : L10n.tr("tiling.result.failure")
+        result.addButton(withTitle: L10n.tr("tiling.result.openSettings"))
+        result.runModal()
+        NativeTiling.openSettings()
+    }
 
     @objc private func openLink(_ sender: NSMenuItem) {
         if let url = sender.representedObject as? URL { NSWorkspace.shared.open(url) }
