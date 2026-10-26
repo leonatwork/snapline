@@ -148,8 +148,12 @@ import Testing
         let result = LayoutCatalog.visibleLayouts(for: .standard, displayID: displayA, custom: custom,
                                                   hiddenBuiltInIDs: ["cols-1-1"],
                                                   order: ["other", "cols-1-1", "deleted", "cols-1-1-1"])
-        #expect(result.map(\.id) == ["cols-1-1-1"]
-            + builtIn.map(\.id).filter { $0 != "cols-1-1" && $0 != "cols-1-1-1" })
+        // In Teilausdrücke zerlegt: ein einziger #expect-Ausdruck ist dem Typprüfer zu aufwendig.
+        let builtInIDs: [String] = builtIn.map(\.id)
+        let remaining: [String] = builtInIDs.filter { $0 != "cols-1-1" && $0 != "cols-1-1-1" }
+        let expected: [String] = ["cols-1-1-1"] + remaining
+        let resultIDs: [String] = result.map(\.id)
+        #expect(resultIDs == expected)
     }
 
     @Test(arguments: ScreenClass.allCases)
