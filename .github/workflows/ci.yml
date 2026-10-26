@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    runs-on: macos-15
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Swift build
+        run: swift build
+
+      - name: Test
+        run: swift test
+
+      - name: Check localizations
+        run: scripts/check-localizations.sh
+
+      - name: Build app
+        env:
+          SIGN_IDENTITY: '-'
+        run: scripts/build-app.sh
+
+      - name: Verify ad-hoc signature
+        run: |
+          codesign --verify --strict "dist/Snapline.app"
+          codesign -dv "dist/Snapline.app" 2>&1 | grep -Fx 'Signature=adhoc'

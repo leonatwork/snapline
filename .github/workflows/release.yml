@@ -14,6 +14,16 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      - name: Check version
+        if: github.event_name == 'push' && github.ref_type == 'tag'
+        run: |
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          APP_VERSION="$(plutil -extract CFBundleShortVersionString raw -o - Resources/Info.plist)"
+          if [ "$TAG_VERSION" != "$APP_VERSION" ]; then
+            echo "::error::Release tag $GITHUB_REF_NAME does not match CFBundleShortVersionString $APP_VERSION in Resources/Info.plist."
+            exit 1
+          fi
+
       - name: Import signing certificate
         id: signing
         env:
@@ -85,7 +95,7 @@ jobs:
 
           Snapline asks for **Accessibility** (required, to move windows) and **Screen Recording** (optional, for live previews in Snap Assist). Turn off the built-in macOS tiling under **System Settings ▸ Desktop & Dock ▸ Windows**, see the README.
 
-          > **Note:** this build is signed with a stable certificate. Permissions granted once survive later updates that are signed the same way. Coming from 0.2.0, which was ad-hoc signed, grant them once more.
+          > **Note:** this build is signed with a stable certificate. Permissions granted once survive later updates that are signed the same way.
           EOF
           )
           NOTES="${NOTES//__VERSION__/$VERSION}"
