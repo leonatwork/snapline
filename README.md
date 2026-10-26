@@ -160,6 +160,12 @@ The README screenshots in `docs/screenshots/` are regenerated with `scripts/scre
 
 Details and the roadmap are in [PLAN.md](PLAN.md).
 
+### CI
+
+The **CI** workflow runs on every Push and Pull Request on macOS 15. It runs `swift build`, `swift test`, `scripts/check-localizations.sh` (all 10 languages) and `scripts/build-app.sh`, then verifies the app's ad-hoc signature. It needs no secrets and has read-only repository permissions.
+
+For tag releases, the tag version (without `v`) must match `CFBundleShortVersionString` in `Resources/Info.plist`; a mismatch stops the release before signing or building. Manual workflow runs skip this check.
+
 ## License
 
 [MIT](LICENSE) — free to use, modify and redistribute, without warranty.
