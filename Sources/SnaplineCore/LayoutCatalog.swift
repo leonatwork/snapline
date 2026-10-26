@@ -1,7 +1,7 @@
 import CoreGraphics
 
 /// The built-in layouts, tailored per screen shape – like Windows 11, which shows
-/// more options on wider displays. User layouts are listed in front of these.
+/// more options on wider displays. User layouts lead the default order.
 public enum LayoutCatalog {
     public static func builtIn(for screenClass: ScreenClass) -> [Layout] {
         switch screenClass {
@@ -48,6 +48,37 @@ public enum LayoutCatalog {
     /// This order is also what ⌃⌥1…9 selects from.
     public static func layouts(for screenClass: ScreenClass, custom: [Layout] = []) -> [Layout] {
         custom + builtIn(for: screenClass)
+    }
+
+    /// Computes a display's visible layouts without reading or changing stored preferences.
+    /// `displayID` is its stable UUID string (the app's displayKey).
+    /// Assignments match by UUID OR screen class; both nil/empty means all displays.
+    /// Only built-ins can be hidden. Without an order, matching custom layouts come first.
+    /// With an order, known visible IDs come first; unknown/repeated IDs are ignored and
+    /// missing layouts follow in default order. Pass all previous visible IDs to keep their
+    /// positions stable when adding custom layouts: new layouts then appear at the end.
+    /// If nothing remains, restores the first built-in of the class, even if hidden.
+    public static func visibleLayouts(for screenClass: ScreenClass, displayID: String,
+                                      custom: [CustomLayout] = [],
+                                      hiddenBuiltInIDs: Set<String> = [], order: [String] = []) -> [Layout] {
+        let matching = custom.filter { layout in
+            let unassigned = (layout.displayIDs?.isEmpty ?? true) && (layout.screenClasses?.isEmpty ?? true)
+            return unassigned || (layout.displayIDs?.contains(displayID) ?? false)
+                || (layout.screenClasses?.contains(screenClass) ?? false)
+        }.map(\.layout)
+        let templates = builtIn(for: screenClass)
+        let available = matching + templates.filter { !hiddenBuiltInIDs.contains($0.id) }
+        // Every screen class has built-ins. Never bring back an unassigned custom layout.
+        guard !available.isEmpty else { return [templates[0]] }
+
+        var result: [Layout] = []
+        var placed: Set<String> = []
+        for id in order {
+            guard !placed.contains(id), let layout = available.first(where: { $0.id == id }) else { continue }
+            result.append(layout)
+            placed.insert(id)
+        }
+        return result + available.filter { !placed.contains($0.id) }
     }
 
     /// Left half, right half split into two rows.

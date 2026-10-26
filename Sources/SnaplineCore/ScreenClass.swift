@@ -2,7 +2,7 @@ import CoreGraphics
 
 /// Display shape, derived from the aspect ratio. Drives which layouts and how many
 /// snap columns a screen gets.
-public enum ScreenClass: String, Sendable, CaseIterable {
+public enum ScreenClass: String, Codable, Sendable, CaseIterable {
     /// Taller than wide.
     case portrait
     /// 16:9, 16:10, 3:2 …

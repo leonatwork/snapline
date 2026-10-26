@@ -153,11 +153,18 @@ public struct CustomLayout: Codable, Equatable, Identifiable, Sendable {
     public var id: String
     public var name: String
     public var root: ZoneNode
+    /// Stable display UUID strings (the app's displayKey), not numeric display IDs.
+    public var displayIDs: [String]?
+    /// Combined with displayIDs using OR. Both nil/empty means every display.
+    public var screenClasses: [ScreenClass]?
 
-    public init(id: String, name: String, root: ZoneNode) {
+    public init(id: String, name: String, root: ZoneNode,
+                displayIDs: [String]? = nil, screenClasses: [ScreenClass]? = nil) {
         self.id = id
         self.name = name
         self.root = root
+        self.displayIDs = displayIDs
+        self.screenClasses = screenClasses
     }
 
     public var layout: Layout {
