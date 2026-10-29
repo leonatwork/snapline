@@ -62,13 +62,13 @@
 "columns.quarters" = "4분할";
 
 /* Keyboard shortcuts & gestures submenu */
-"shortcut.moveMonitor" = "⌃⌥⇧←/→/↑/↓  창을 인접한 디스플레이로 이동";
-"shortcut.flyout" = "⌃⌥Z  Snap Layouts, 이어서 숫자로 레이아웃과 영역 선택";
-"shortcut.activeLayout" = "⌃⌥1…9  디스플레이의 활성 레이아웃 선택";
-"shortcut.workspace" = "⌃⌥⇧1…9  작업 공간 복원";
-"shortcut.leftRight" = "⌃⌥←/→  왼쪽/오른쪽 열, 다음 디스플레이로 이동";
-"shortcut.up" = "⌃⌥↑  최대화 / 열의 위쪽 절반";
-"shortcut.down" = "⌃⌥↓  복원 / 아래쪽 절반 / 최소화";
+"shortcut.moveMonitor" = "%@  창을 인접한 디스플레이로 이동";
+"shortcut.flyout" = "%@  Snap Layouts, 이어서 숫자로 레이아웃과 영역 선택";
+"shortcut.activeLayout" = "%@  디스플레이의 활성 레이아웃 선택";
+"shortcut.workspace" = "%@  작업 공간 복원";
+"shortcut.leftRight" = "%@  왼쪽/오른쪽 열, 다음 디스플레이로 이동";
+"shortcut.up" = "%@  최대화 / 열의 위쪽 절반";
+"shortcut.down" = "%@  복원 / 아래쪽 절반 / 최소화";
 "shortcut.zoneDrag" = "%@ + 드래그  활성 레이아웃의 영역에 놓기";
 "shortcut.zoneDragSwitch" = "   … 스크롤 휠 / 1–9 / Tab  레이아웃 전환";
 "shortcut.zoneDragSpan" = "   … %@  여러 영역 합치기 · Esc  취소";
@@ -113,7 +113,30 @@
 "editor.activeOnDisplay" = "✓ 이 디스플레이에서 활성";
 "editor.makeActive" = "활성화";
 "editor.activeTag" = "활성";
-"editor.shortcutActivates" = "⌃⌥%d 키로 이 레이아웃을 활성화합니다.";
+"editor.shortcutActivates" = "%@ 키로 이 레이아웃을 활성화합니다.";
+
+/* 단축키 녹화 */
+"menu.warning.shortcut" = "⚠️ %@ (%@) 등록 실패 — 키보드 단축키…";
+"recorder.title" = "키보드 단축키…";
+"recorder.info" = "보조 키와 물리 키를 녹화합니다. 레이아웃과 작업 공간의 물리 숫자 키 1–9는 고정되며 보조 키만 변경됩니다. Esc로 녹화를 취소합니다.";
+"recorder.left" = "창을 왼쪽으로";
+"recorder.right" = "창을 오른쪽으로";
+"recorder.up" = "창을 위로";
+"recorder.down" = "창을 아래로";
+"recorder.flyout" = "Snap Layouts 패널";
+"recorder.layouts" = "활성 레이아웃 1–9";
+"recorder.workspaces" = "작업 공간 1–9";
+"recorder.monitor" = "인접 디스플레이로 이동";
+"recorder.disabled" = "비활성화됨";
+"recorder.record" = "녹화";
+"recorder.reset" = "재설정";
+"recorder.resetAll" = "기본값으로 재설정";
+"recorder.pressKey" = "새 단축키를 누르세요 (Esc로 취소).";
+"recorder.pressModifiers" = "원하는 보조 키를 누른 채 다른 키를 눌러 확인하세요 (Esc로 취소).";
+"recorder.confirmModifiers" = "보조 키: %@ — 키를 눌러 확인하세요.";
+"recorder.missingModifiers" = "Control, Option, Shift, Command 중 하나 이상의 보조 키를 사용하세요.";
+"recorder.conflict" = "%@에서 이미 사용 중인 단축키입니다. 다른 단축키를 선택하세요.";
+"recorder.saved" = "저장되었습니다. 변경 사항이 즉시 적용됩니다. 등록 오류는 상태 메뉴에 표시됩니다.";
 "editor.hint.custom" = "클릭: 영역을 세로로 분할 · ⇧-클릭: 가로로 분할 · 구분선 드래그: 크기 조절 (¼ ⅓ ½ ⅔ ¾에 맞춰짐) · ⌥-클릭: 영역 제거.";
 "editor.hint.builtIn" = "템플릿 – 편집하려면 ‘복제’하십시오.";
 "editor.template.empty" = "비어 있음 (영역 1개)";

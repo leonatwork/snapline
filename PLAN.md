@@ -59,6 +59,7 @@ scripts/build-app.sh     baut Snapline.app (Release, signiert)
 - **Hover über den grünen Knopf**: entprellte AX-Abfrage des Elements unter dem Cursor (`AXFullScreenButton` / `AXZoomButton`).
 - **Snap Assist** listet Fenster über AX plus `CGWindowList` (nur Bounds und PID, daher keine Bildschirmaufnahme-Berechtigung nötig). Es gibt Icons und Titel statt Live-Thumbnails.
 - **Hotkeys** über Carbon `RegisterEventHotKey`, dafür ist keine Berechtigung nötig.
+- **Konfigurierbare Tastenkürzel**: Codable-Modell in `Shortcuts.swift`, UserDefaults, eigener AppKit-Recorder mit Konfliktprüfung. Carbon-Kürzel werden bei Änderungen abgemeldet und neu registriert; Fehler stehen oben im Statusmenü. Beschriftungen und Standard-Flyout-Z folgen der aktiven Eingabequelle (`TIS`/`UCKeyTranslate`). Standards bleiben ⌃⌥, für Arbeitsbereiche zusätzlich ⇧. Monitorwechsel-Kürzel bleiben fest reserviert.
 - **Chrome/Electron**: `AXEnhancedUserInterface` wird während des Resize kurz deaktiviert, sonst animieren diese Apps träge.
 - **Konflikt mit macOS-Kacheln**: Die App erkennt, ob „Fenster an Bildschirmränder ziehen, um sie zu kacheln“ aktiv ist, und weist im Menü darauf hin.
 
@@ -88,4 +89,3 @@ scripts/build-app.sh     baut Snapline.app (Release, signiert)
 
 - Snap Groups (gemeinsam gesnappte Fenster als Gruppe wiederherstellen)
 - Gemeinsames Resize benachbarter Fenster (Trennlinie zwischen Fenstern ziehen)
-- Konfigurierbare Tastenkürzel

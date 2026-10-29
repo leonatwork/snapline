@@ -19,6 +19,7 @@ enum Settings {
         static let zoneModifier = "zoneModifier"
         static let debugLog = "debugLog"
         static let excludedApps = "excludedApps"
+        static let shortcuts = "shortcuts"
     }
 
     static func registerDefaults() {
@@ -37,6 +38,23 @@ enum Settings {
             Key.debugLog: false,
             Key.excludedApps: [String](),
         ])
+    }
+
+    static let shortcutsDidChange = Notification.Name("Snapline.shortcutsDidChange")
+
+    static var shortcuts: ShortcutSettings {
+        get {
+            guard let data = defaults.data(forKey: Key.shortcuts),
+                  let value = try? JSONDecoder().decode(ShortcutSettings.self, from: data) else {
+                return ShortcutSettings()
+            }
+            return value
+        }
+        set {
+            guard let data = try? JSONEncoder().encode(newValue) else { return }
+            defaults.set(data, forKey: Key.shortcuts)
+            NotificationCenter.default.post(name: shortcutsDidChange, object: nil)
+        }
     }
 
     /// Persisted bundle IDs, with no default exclusions.

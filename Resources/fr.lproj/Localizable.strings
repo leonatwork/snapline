@@ -62,13 +62,13 @@
 "columns.quarters" = "Quarts";
 
 /* Keyboard shortcuts & gestures submenu */
-"shortcut.moveMonitor" = "⌃⌥⇧←/→/↑/↓  Déplacer la fenêtre vers l’écran voisin";
-"shortcut.flyout" = "⌃⌥Z  Snap Layouts, puis un chiffre pour la disposition et la zone";
-"shortcut.activeLayout" = "⌃⌥1…9  Choisir la disposition active de l’écran";
-"shortcut.workspace" = "⌃⌥⇧1…9  Restaurer l’espace de travail";
-"shortcut.leftRight" = "⌃⌥←/→  Colonne à gauche/droite, puis écran suivant";
-"shortcut.up" = "⌃⌥↑  Agrandir / moitié supérieure de la colonne";
-"shortcut.down" = "⌃⌥↓  Restaurer / moitié inférieure / placer dans le Dock";
+"shortcut.moveMonitor" = "%@  Déplacer la fenêtre vers l’écran voisin";
+"shortcut.flyout" = "%@  Snap Layouts, puis un chiffre pour la disposition et la zone";
+"shortcut.activeLayout" = "%@  Choisir la disposition active de l’écran";
+"shortcut.workspace" = "%@  Restaurer l’espace de travail";
+"shortcut.leftRight" = "%@  Colonne à gauche/droite, puis écran suivant";
+"shortcut.up" = "%@  Agrandir / moitié supérieure de la colonne";
+"shortcut.down" = "%@  Restaurer / moitié inférieure / placer dans le Dock";
 "shortcut.zoneDrag" = "%@ + glisser  Déposer dans les zones de la disposition active";
 "shortcut.zoneDragSwitch" = "   … Molette / 1–9 / Tab  Changer de disposition";
 "shortcut.zoneDragSpan" = "   … %@  Réunir plusieurs zones · Esc  Annuler";
@@ -113,7 +113,30 @@
 "editor.activeOnDisplay" = "✓ Active sur cet écran";
 "editor.makeActive" = "Rendre active";
 "editor.activeTag" = "active";
-"editor.shortcutActivates" = "⌃⌥%d active cette disposition.";
+"editor.shortcutActivates" = "%@ active cette disposition.";
+
+/* Enregistrement des raccourcis */
+"menu.warning.shortcut" = "⚠️ %@ (%@) n’a pas pu être enregistré – Raccourcis clavier…";
+"recorder.title" = "Raccourcis clavier…";
+"recorder.info" = "Enregistrez une touche physique avec des modificateurs. Les dispositions et espaces de travail conservent les touches physiques 1–9 ; seuls leurs modificateurs changent. Échap annule l’enregistrement.";
+"recorder.left" = "Fenêtre à gauche";
+"recorder.right" = "Fenêtre à droite";
+"recorder.up" = "Fenêtre vers le haut";
+"recorder.down" = "Fenêtre vers le bas";
+"recorder.flyout" = "Panneau Snap Layouts";
+"recorder.layouts" = "Disposition active 1–9";
+"recorder.workspaces" = "Espace de travail 1–9";
+"recorder.monitor" = "Déplacer vers l’écran voisin";
+"recorder.disabled" = "Désactivé";
+"recorder.record" = "Enregistrer";
+"recorder.reset" = "Réinitialiser";
+"recorder.resetAll" = "Rétablir les valeurs par défaut";
+"recorder.pressKey" = "Appuyez sur le nouveau raccourci (Échap pour annuler).";
+"recorder.pressModifiers" = "Maintenez les modificateurs souhaités et appuyez sur une touche pour confirmer (Échap pour annuler).";
+"recorder.confirmModifiers" = "Modificateurs : %@ — appuyez sur une touche pour confirmer.";
+"recorder.missingModifiers" = "Utilisez au moins un modificateur : Contrôle, Option, Majuscule ou Commande.";
+"recorder.conflict" = "Ce raccourci est déjà utilisé par %@. Choisissez-en un autre.";
+"recorder.saved" = "Enregistré. Les modifications sont immédiates. Les échecs d’enregistrement apparaissent dans le menu de la barre d’état.";
 "editor.hint.custom" = "Clic : diviser la zone verticalement · ⇧-clic : diviser horizontalement · Glisser un séparateur : redimensionner (s’aimante à ¼ ⅓ ½ ⅔ ¾) · ⌥-clic : supprimer la zone.";
 "editor.hint.builtIn" = "Modèle – pour le modifier, « Dupliquer ».";
 "editor.template.empty" = "Vide (une zone)";

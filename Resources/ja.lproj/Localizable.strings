@@ -62,13 +62,13 @@
 "columns.quarters" = "4 分割";
 
 /* Keyboard shortcuts & gestures submenu */
-"shortcut.moveMonitor" = "⌃⌥⇧←/→/↑/↓  ウインドウを隣のディスプレイへ移動";
-"shortcut.flyout" = "⌃⌥Z  Snap Layouts、続けて数字でレイアウトとゾーン";
-"shortcut.activeLayout" = "⌃⌥1…9  ディスプレイのアクティブなレイアウトを選択";
-"shortcut.workspace" = "⌃⌥⇧1…9  ワークスペースを復元";
-"shortcut.leftRight" = "⌃⌥←/→  左右の列へ、さらに次のディスプレイへ";
-"shortcut.up" = "⌃⌥↑  最大化 / 列の上半分";
-"shortcut.down" = "⌃⌥↓  元に戻す / 下半分 / しまう";
+"shortcut.moveMonitor" = "%@  ウインドウを隣のディスプレイへ移動";
+"shortcut.flyout" = "%@  Snap Layouts、続けて数字でレイアウトとゾーン";
+"shortcut.activeLayout" = "%@  ディスプレイのアクティブなレイアウトを選択";
+"shortcut.workspace" = "%@  ワークスペースを復元";
+"shortcut.leftRight" = "%@  左右の列へ、さらに次のディスプレイへ";
+"shortcut.up" = "%@  最大化 / 列の上半分";
+"shortcut.down" = "%@  元に戻す / 下半分 / しまう";
 "shortcut.zoneDrag" = "%@ + ドラッグ  アクティブなレイアウトのゾーンにドロップ";
 "shortcut.zoneDragSwitch" = "   … スクロールホイール / 1–9 / Tab  レイアウトを切り替え";
 "shortcut.zoneDragSpan" = "   … %@  複数のゾーンを結合 · Esc  キャンセル";
@@ -113,7 +113,30 @@
 "editor.activeOnDisplay" = "✓ このディスプレイでアクティブ";
 "editor.makeActive" = "アクティブにする";
 "editor.activeTag" = "アクティブ";
-"editor.shortcutActivates" = "⌃⌥%d でこのレイアウトをアクティブにします。";
+"editor.shortcutActivates" = "%@ でこのレイアウトをアクティブにします。";
+
+/* ショートカットの記録 */
+"menu.warning.shortcut" = "⚠️ %@（%@）を登録できませんでした — キーボードショートカット…";
+"recorder.title" = "キーボードショートカット…";
+"recorder.info" = "修飾キーと物理キーを記録します。レイアウトとワークスペースの物理キー1–9は固定で、修飾キーのみ変更できます。Escで記録をキャンセルします。";
+"recorder.left" = "ウインドウを左へ";
+"recorder.right" = "ウインドウを右へ";
+"recorder.up" = "ウインドウを上へ";
+"recorder.down" = "ウインドウを下へ";
+"recorder.flyout" = "Snap Layoutsパネル";
+"recorder.layouts" = "アクティブなレイアウト1–9";
+"recorder.workspaces" = "ワークスペース1–9";
+"recorder.monitor" = "隣のディスプレイへ移動";
+"recorder.disabled" = "無効";
+"recorder.record" = "記録";
+"recorder.reset" = "リセット";
+"recorder.resetAll" = "標準設定に戻す";
+"recorder.pressKey" = "新しいショートカットを押してください（Escでキャンセル）。";
+"recorder.pressModifiers" = "修飾キーを押したまま、別のキーで確定してください（Escでキャンセル）。";
+"recorder.confirmModifiers" = "修飾キー：%@ — キーを押して確定してください。";
+"recorder.missingModifiers" = "Control、Option、Shift、Commandのいずれかの修飾キーが必要です。";
+"recorder.conflict" = "このショートカットは%@で使用されています。別の組み合わせを選んでください。";
+"recorder.saved" = "保存しました。変更はすぐに反映されます。登録エラーはステータスメニューに表示されます。";
 "editor.hint.custom" = "クリック: ゾーンを縦に分割 · ⇧-クリック: 横に分割 · 区切り線をドラッグ: サイズ変更 (¼ ⅓ ½ ⅔ ¾ でスナップ) · ⌥-クリック: ゾーンを削除。";
 "editor.hint.builtIn" = "テンプレート – 編集するには「複製」します。";
 "editor.template.empty" = "空 (ゾーン 1 つ)";

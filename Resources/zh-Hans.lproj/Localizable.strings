@@ -62,13 +62,13 @@
 "columns.quarters" = "四等分";
 
 /* Keyboard shortcuts & gestures submenu */
-"shortcut.moveMonitor" = "⌃⌥⇧←/→/↑/↓  将窗口移到相邻显示器";
-"shortcut.flyout" = "⌃⌥Z  Snap Layouts，再按数字选择布局和区域";
-"shortcut.activeLayout" = "⌃⌥1…9  选择显示器的当前布局";
-"shortcut.workspace" = "⌃⌥⇧1…9  恢复工作区";
-"shortcut.leftRight" = "⌃⌥←/→  左/右一列，继续移到下一个显示器";
-"shortcut.up" = "⌃⌥↑  最大化 / 该列的上半部分";
-"shortcut.down" = "⌃⌥↓  恢复 / 下半部分 / 最小化";
+"shortcut.moveMonitor" = "%@  将窗口移到相邻显示器";
+"shortcut.flyout" = "%@  Snap Layouts，再按数字选择布局和区域";
+"shortcut.activeLayout" = "%@  选择显示器的当前布局";
+"shortcut.workspace" = "%@  恢复工作区";
+"shortcut.leftRight" = "%@  左/右一列，继续移到下一个显示器";
+"shortcut.up" = "%@  最大化 / 该列的上半部分";
+"shortcut.down" = "%@  恢复 / 下半部分 / 最小化";
 "shortcut.zoneDrag" = "%@ + 拖移  放入当前布局的区域";
 "shortcut.zoneDragSwitch" = "   … 滚轮 / 1–9 / Tab  切换布局";
 "shortcut.zoneDragSpan" = "   … %@  合并多个区域 · Esc  取消";
@@ -113,7 +113,30 @@
 "editor.activeOnDisplay" = "✓ 已在此显示器上启用";
 "editor.makeActive" = "设为当前布局";
 "editor.activeTag" = "当前";
-"editor.shortcutActivates" = "⌃⌥%d 启用此布局。";
+"editor.shortcutActivates" = "%@ 启用此布局。";
+
+/* 快捷键录制 */
+"menu.warning.shortcut" = "⚠️ 无法注册 %@（%@）— 键盘快捷键…";
+"recorder.title" = "键盘快捷键…";
+"recorder.info" = "录制修饰键与物理按键。布局和工作区保留物理数字键 1–9，仅修改修饰键。按 Esc 取消录制。";
+"recorder.left" = "窗口向左";
+"recorder.right" = "窗口向右";
+"recorder.up" = "窗口向上";
+"recorder.down" = "窗口向下";
+"recorder.flyout" = "Snap Layouts 面板";
+"recorder.layouts" = "当前布局 1–9";
+"recorder.workspaces" = "工作区 1–9";
+"recorder.monitor" = "移到相邻显示器";
+"recorder.disabled" = "已停用";
+"recorder.record" = "录制";
+"recorder.reset" = "重置";
+"recorder.resetAll" = "恢复默认设置";
+"recorder.pressKey" = "按下新快捷键（Esc 取消）。";
+"recorder.pressModifiers" = "按住所需修饰键，再按任意键确认（Esc 取消）。";
+"recorder.confirmModifiers" = "修饰键：%@ — 按任意键确认。";
+"recorder.missingModifiers" = "至少使用一个修饰键：Control、Option、Shift 或 Command。";
+"recorder.conflict" = "此快捷键已被 %@ 使用。请选择其他快捷键。";
+"recorder.saved" = "已保存。更改立即生效。注册错误会显示在状态菜单中。";
 "editor.hint.custom" = "点按：竖向拆分区域 · ⇧-点按：横向拆分 · 拖移分隔线：调整大小（在 ¼ ⅓ ½ ⅔ ¾ 处吸附） · ⌥-点按：移除区域。";
 "editor.hint.builtIn" = "模板 – 如需编辑，请先“复制”。";
 "editor.template.empty" = "空（一个区域）";

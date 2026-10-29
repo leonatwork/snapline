@@ -50,7 +50,7 @@ Die Bilder sind gerendert, keine Bildschirmfotos: Die Fenster sind erfundene Dem
 | Windows 11 | Snapline |
 |---|---|
 | Hover über Maximieren → Snap Layouts | Hover über den **grünen Knopf** → Layout-Flyout, Zone anklicken |
-| Win + Z | **⌃⌥Z** (auf deutscher Tastatur auch ⌃⌥Y) |
+| Win + Z | Standard **⌃⌥Z**, mit der im aktiven Tastaturlayout als Z beschrifteten Taste |
 | Fenster oben in die Mitte ziehen → Snap Bar | genauso: Leiste mit Layouts erscheint, Fenster auf eine Zone ziehen |
 | Fenster an Rand/Ecke ziehen | linker/rechter Rand → äußere Spalte, Ecke → halbe Spalte, oberer Rand → maximieren, **unterer Rand → Spalte unter dem Cursor** |
 | Snap Assist | Nach dem Snappen per Layout werden die übrigen Fenster in den freien Zonen angeboten |
@@ -64,6 +64,12 @@ Die Bilder sind gerendert, keine Bildschirmfotos: Die Fenster sind erfundene Dem
 | – | **Arbeitsbereiche**: aktuelle Anordnung speichern, mit **⌃⌥⇧1…9** wiederherstellen, fehlende Apps werden gestartet |
 
 Das macOS-eigene Kachel-Menü am grünen Knopf wird unterdrückt. Snapline fängt die Hover-Events dort per Event Tap ab (wie Tappi), sodass nur noch das Snapline-Flyout erscheint. Snap Assist zeigt Live-Vorschauen der Fenster (ScreenCaptureKit, wie in Tappi).
+
+### Tastenkürzel
+
+Die Tabelle zeigt die Standards. Unter **Tastenkürzel & Gesten → Tastenkürzel…** im Statusmenü kannst du die vier Fensterkürzel und das Snap-Layouts-Flyout aufnehmen, löschen oder zurücksetzen sowie die Modifier für Layouts und Arbeitsbereiche 1–9 ändern. Änderungen gelten sofort und bleiben nach Neustarts erhalten. Mindestens ein Modifier ist erforderlich; doppelte Belegungen innerhalb von Snapline (einschließlich der festen Monitorwechsel-Kürzel) werden mit Begründung abgelehnt. **Auf Standard zurücksetzen** stellt ⌃⌥ wieder her, für Arbeitsbereiche mit zusätzlichem ⇧.
+
+Verhindert etwa Rectangle die Registrierung, nennt eine Warnung oben im Statusmenü die Aktion und das Kürzel. Ein Klick öffnet den Recorder. Gelöschte Kürzel erzeugen keine Warnung. Das Standard-Flyout folgt beim Wechsel zwischen QWERTY, QWERTZ und AZERTY der Taste, die Z erzeugt (Fallback: physische US-Z-Taste). Aufgenommene Kürzel behalten ihre physische Taste. Menü, Editor und Recorder beschriften sie passend zur aktiven Eingabequelle. Die physischen Zifferntasten bleiben fest; nur ihre Modifier sind einstellbar. Ziehgesten und Ziffernwahl im Flyout behalten ihre bisherigen Tasten.
 
 ### Mehrere Monitore
 
