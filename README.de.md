@@ -141,6 +141,12 @@ Das legt ein lokales, selbstsigniertes Zertifikat „Snapline Local Signing“ a
 
 Release-Build und selbst gebaute Kopie haben unterschiedliche Signaturen. Wer zwischen beiden wechselt, muss die Berechtigungen neu erteilen (in den Systemeinstellungen den alten Eintrag entfernen und Snapline erneut hinzufügen).
 
+## Datenschutz
+
+Snapline verarbeitet Fensterdaten lokal. Unter [Datenschutz](PRIVACY.de.md)
+findest du Informationen zu gespeicherten Layouts/Arbeitsbereichen (einschließlich
+Fenstertiteln), dem optionalen Debug-Log, Berechtigungen und dem Löschen deiner Daten.
+
 ## Entwicklung
 
 ```bash

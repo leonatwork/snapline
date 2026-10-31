@@ -176,21 +176,13 @@ enum ZoneModifier: String, CaseIterable {
     var spanSymbol: String { self == .shift ? "⌥" : "⇧" }
 }
 
-/// Diagnostics go to a plain file: the unified log redacts NSLog text as <private>.
+/// Opt-in diagnostics without window titles. Callers must not pass titles or
+/// window contents; the file writer only adds rotation and private permissions.
 func debugLog(_ message: @autoclosure () -> String) {
     guard Settings.debugLog else { return }
-    let dir = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Library/Logs/Snapline")
-    let url = dir.appendingPathComponent("debug.log")
     let stamp = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: [.withTime, .withFractionalSeconds])
     guard let data = "\(stamp) \(message())\n".data(using: .utf8) else { return }
-    if let handle = try? FileHandle(forWritingTo: url) {
-        handle.seekToEndOfFile()
-        handle.write(data)
-        try? handle.close()
-    } else {
-        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
-        try? data.write(to: url)
-    }
+    try? DebugLogFile.shared.append(data)
 }
 
 /// Stage Manager and built-in macOS tiling can interfere with snapping.
