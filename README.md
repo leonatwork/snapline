@@ -146,6 +146,12 @@ This creates a local, self-signed certificate "Snapline Local Signing" (like Tap
 
 The release build and a self-built copy carry different signatures. When you switch between them, you have to grant the permissions again (remove the old entry in System Settings and add Snapline again).
 
+## Privacy
+
+Snapline processes window data locally. See [Privacy](PRIVACY.md) for stored
+layouts/workspaces (including window titles), the optional debug log, permissions
+and how to delete your data.
+
 ## Development
 
 ```bash

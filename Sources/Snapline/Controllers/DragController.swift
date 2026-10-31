@@ -106,7 +106,7 @@ final class DragController {
         windowID = Self.windowNumber(at: cursor, pid: window.pid)
         startFrame = windowID.flatMap(Self.bounds(of:)) ?? frame
         startCursor = cursor
-        debugLog("mouseDown: candidate \(window.title) \(startFrame) id \(windowID.map(String.init) ?? "–")")
+        debugLog("mouseDown: candidate \(startFrame) id \(windowID.map(String.init) ?? "–")")
     }
 
     /// Frontmost normal window of `pid` under the cursor, from the window server.
