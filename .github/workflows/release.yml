@@ -6,13 +6,25 @@ on:
   # Manual run: builds and signs without publishing, the zip is kept as an artifact.
   workflow_dispatch:
 
+permissions:
+  contents: read
+
+# One release run per ref at a time; a running publish is never cancelled.
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
-  release:
+  # Test, build, sign and package with a read-only token. Signing key and
+  # keychain never leave this job.
+  build:
     runs-on: macos-15
     permissions:
-      contents: write
+      contents: read
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
 
       - name: Check version
         if: github.event_name == 'push' && github.ref_type == 'tag'
@@ -44,6 +56,8 @@ jobs:
           security import "$RUNNER_TEMP/codesign.p12" -k "$KEYCHAIN" -P "$P12_PASSWORD" -T /usr/bin/codesign
           rm -f "$RUNNER_TEMP/codesign.p12"
           security set-key-partition-list -S apple-tool:,apple: -s -k "$KEYCHAIN_PASSWORD" "$KEYCHAIN" >/dev/null
+          # The existing keychains are passed as separate arguments on purpose.
+          # shellcheck disable=SC2046
           security list-keychains -d user -s "$KEYCHAIN" $(security list-keychains -d user | tr -d '"')
           echo "SIGN_IDENTITY=leonatwork Code Signing" >> "$GITHUB_ENV"
           echo "signed=true" >> "$GITHUB_OUTPUT"
@@ -71,15 +85,44 @@ jobs:
 
       - name: Keep manual build
         if: github.ref_type != 'tag'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: Snapline-manual
           path: Snapline-manual.zip
 
-      - name: Publish release
+      - name: Keep release package
         if: github.ref_type == 'tag'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: release-package
+          path: |
+            Snapline-${{ github.ref_name }}.zip
+            checksum.txt
+          if-no-files-found: error
+          retention-days: 1
+
+  # Only this job may write (create the release). It has no checkout and no
+  # signing secrets; it publishes exactly what the build job packaged.
+  publish:
+    needs: build
+    if: github.ref_type == 'tag'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Fetch release package
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: release-package
+
+      - name: Verify checksum
+        run: sha256sum --check --strict checksum.txt
+
+      - name: Publish release
         env:
           GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
           VERSION: ${{ github.ref_name }}
         run: |
           NOTES=$(cat <<'EOF'
@@ -99,6 +142,8 @@ jobs:
           EOF
           )
           NOTES="${NOTES//__VERSION__/$VERSION}"
+          # The literal backticks and \n are printf format text, not shell expansions.
+          # shellcheck disable=SC2016
           printf '%s\n\n**SHA-256**\n```\n%s\n```\n' "$NOTES" "$(cat checksum.txt)" > notes.md
           gh release create "$VERSION" "Snapline-${VERSION}.zip" \
             --title "Snapline $VERSION" --notes-file notes.md
